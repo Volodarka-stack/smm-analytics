@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMM аналітика — червень 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#F3F5F8; --panel:#FFFFFF; --panel-2:#F1F4F8; --line: rgba(20,30,45,0.09);
+    --teal:#0EA394; --amber:#E68A19; --rose:#E24D6D;
+    --text:#141C28; --muted:#5B6B80;
+    --fb:#3B72E0; --ig:#DB3E82;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:
+      radial-gradient(55% 38% at 88% -5%, rgba(59,114,224,0.10), transparent 60%),
+      radial-gradient(48% 32% at 3% 8%, rgba(219,62,130,0.08), transparent 60%),
+      var(--ink);
+    color:var(--text); font-family:'IBM Plex Sans', sans-serif; -webkit-font-smoothing:antialiased; padding: 40px 20px 90px;}
+  .wrap{max-width:1000px;margin:0 auto;}
+
+  .eyebrow{font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal); margin-bottom:10px;}
+  h1.hero-title{font-family:'Fraunces', serif; font-optical-sizing:auto; font-weight:600; font-size:30px; margin:0 0 6px; color:var(--text);}
+  .hero-sub{color:var(--muted); font-size:14px; margin:0 0 28px;}
+
+  .tabs{display:flex; gap:6px; border-bottom:1px solid var(--line); margin-bottom:32px; flex-wrap:wrap;}
+  .tab-btn{font-family:'IBM Plex Mono', monospace; font-size:13px; padding:12px 18px; background:none; border:none;
+    color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; transition:.15s;}
+  .tab-btn:hover{color:var(--text);}
+  .tab-btn.active{color:var(--teal); border-bottom-color:var(--teal);}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  .chart-hero{border:1px solid var(--line); border-radius:16px; padding:32px 36px; box-shadow:0 1px 2px rgba(20,30,45,0.04), 0 12px 32px rgba(20,30,45,0.06);
+    background:radial-gradient(120% 160% at 15% 0%, rgba(255,182,72,0.10), transparent 55%), var(--panel); margin-bottom:28px;}
+  .chart-row{display:flex; align-items:baseline; justify-content:space-between; gap:24px; border-bottom:1px dashed var(--line); padding:14px 0;}
+  .chart-row:last-child{border-bottom:none;}
+  .chart-row .num{font-family:'Fraunces', serif; font-optical-sizing:auto; font-weight:600; line-height:1;}
+  .chart-row .lbl{font-family:'IBM Plex Mono', monospace; color:var(--muted); font-size:13px; text-align:right;}
+  .row-1 .num{font-size:56px; color:var(--amber);}
+  .row-2 .num{font-size:34px;}
+  .row-3 .num{font-size:24px; color:var(--muted);}
+
+  .split{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:24px;}
+  .split-col{border-radius:14px; padding:22px; position:relative; overflow:hidden;}
+  .split-col.fb{background:linear-gradient(160deg, rgba(59,114,224,0.14), rgba(59,114,224,0.02)); border:1px solid rgba(59,114,224,0.35);}
+  .split-col.ig{background:linear-gradient(160deg, rgba(219,62,130,0.14), rgba(219,62,130,0.02)); border:1px solid rgba(219,62,130,0.35);}
+  .split-col h3{font-family:'Fraunces', serif; font-size:19px; margin:0 0 14px; display:flex; align-items:center; gap:8px;}
+  .dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+  .dot.fb{background:var(--fb); box-shadow:0 0 10px var(--fb);} .dot.ig{background:var(--ig); box-shadow:0 0 10px var(--ig);}
+  .mini-stat{display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid rgba(20,30,45,0.09); font-size:13px;}
+  .mini-stat:last-child{border-bottom:none;}
+  .mini-stat b{font-family:'IBM Plex Mono', monospace; color:var(--text);}
+
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px;}
+  .stat{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px 18px; border-top:2px solid var(--teal); box-shadow:0 1px 2px rgba(20,30,45,0.04), 0 6px 16px rgba(20,30,45,0.05);}
+  .stat.amber{border-top-color:var(--amber);}
+  .stat.rose{border-top-color:var(--rose);}
+  .stat.fb{border-top-color:var(--fb);}
+  .stat .v{font-family:'IBM Plex Mono', monospace; font-size:20px; font-weight:600;}
+  .stat .k{color:var(--muted); font-size:11.5px; margin-top:6px;}
+
+  .chart-card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px 20px 8px; margin-bottom:20px; box-shadow:0 1px 2px rgba(20,30,45,0.04), 0 8px 20px rgba(20,30,45,0.05);}
+  .chart-card h4{font-family:'IBM Plex Mono', monospace; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:0 0 14px; font-weight:600;}
+  .chart-card .note{font-size:11.5px; color:var(--muted); margin-top:6px; font-style:italic;}
+  .chart-wrap{position:relative; height:230px;}
+  .chart-wrap svg{width:100%; height:100%; display:block; overflow:visible;}
+  .chart-wrap .axis-line{stroke:var(--line); stroke-width:1;}
+  .chart-wrap .grid-line{stroke:var(--line); stroke-width:1; stroke-dasharray:3,3;}
+  .chart-wrap .bar-val{font-family:'IBM Plex Mono', monospace; font-size:9.5px; fill:var(--muted);}
+  .chart-wrap .axis-lbl{font-family:'IBM Plex Mono', monospace; font-size:9.5px; fill:var(--muted);}
+  .chart-wrap .legend-item{font-family:'IBM Plex Mono', monospace; font-size:10.5px; fill:var(--muted);}
+  .chart-wrap rect.bar{transition:opacity .15s;}
+  .chart-wrap rect.bar:hover{opacity:0.75;}
+  .chart-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+
+  .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; margin:26px 0 16px;}
+  .group{display:flex; gap:8px; flex-wrap:wrap;}
+  .chip{font-family:'IBM Plex Mono', monospace; font-size:12px; padding:7px 13px; border-radius:999px; border:1px solid var(--line);
+    background:transparent; color:var(--muted); cursor:pointer; transition:.15s;}
+  .chip:hover{border-color:var(--teal); color:var(--text);}
+  .chip.active{background:var(--teal); border-color:var(--teal); color:#FFFFFF; font-weight:600;}
+
+  .post{display:flex; gap:16px; padding:16px; border:1px solid var(--line); border-radius:12px; margin-bottom:10px; background:var(--panel); cursor:pointer; transition:.15s; box-shadow:0 1px 2px rgba(20,30,45,0.03);}
+  .post:hover{border-color:rgba(14,163,148,0.45); box-shadow:0 4px 14px rgba(20,30,45,0.08);}
+  .thumb-wrap{width:78px; height:78px; flex:0 0 78px; border-radius:10px; overflow:hidden; background:var(--panel-2);}
+  .thumb-wrap img{width:100%; height:100%; object-fit:cover; display:block; transition:filter .3s ease;}
+  .post-body{flex:1; min-width:0;}
+  .post-top{display:flex; align-items:center; gap:10px; margin-bottom:5px; flex-wrap:wrap;}
+  .badge{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.04em; padding:3px 8px; border-radius:5px; text-transform:uppercase;}
+  .badge.photo,.badge.IMAGE{background:rgba(70,224,197,0.18); color:var(--teal);}
+  .badge.video_inline,.badge.REELS{background:rgba(255,182,72,0.18); color:var(--amber);}
+  .badge.album,.badge.CAROUSEL_ALBUM{background:rgba(255,122,144,0.18); color:var(--rose);}
+  .date{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted);}
+  .rank-tag{margin-left:auto; font-family:'IBM Plex Mono', monospace; font-size:11px; padding:2px 8px; border-radius:5px;}
+  .rank-tag.best{background:rgba(255,182,72,0.20); color:var(--amber);}
+  .rank-tag.worst{background:rgba(255,122,144,0.20); color:var(--rose);}
+  .post-text{font-size:13.5px; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-bottom:9px;}
+  .post.expanded .post-text{-webkit-line-clamp:unset;}
+  .metrics{display:flex; gap:16px; flex-wrap:wrap;}
+  .metric{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted);}
+  .metric b{color:var(--text); font-weight:600;}
+  .metric.er b{color:var(--teal);}
+  .analysis{display:none; margin-top:14px;}
+  .post.expanded .analysis{display:block;}
+  .factors{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px;}
+  .factor{font-family:'IBM Plex Mono', monospace; font-size:10.5px; padding:3px 8px; border-radius:6px; background:rgba(20,30,45,0.045); color:var(--muted); border:1px solid var(--line);}
+  .ab-row{display:flex; gap:10px; margin-bottom:6px; font-size:12.5px; line-height:1.55;}
+  .ab-tag{flex:0 0 76px; font-family:'IBM Plex Mono', monospace; font-size:10.5px; text-transform:uppercase; padding-top:1px;}
+  .ab-tag.good{color:var(--teal);} .ab-tag.bad{color:var(--rose);} .ab-tag.next{color:var(--amber);}
+  .ab-text{color:var(--text); opacity:0.92;}
+  .link{display:inline-block; margin-top:8px; font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--teal); text-decoration:none; border-bottom:1px dotted var(--teal);}
+
+  .section-title{font-family:'Fraunces', serif; font-weight:600; font-size:21px; margin:36px 0 14px; display:flex; align-items:center; gap:10px;}
+  .section-title:first-child{margin-top:0;}
+  .card{border:1px solid var(--line); border-radius:12px; padding:20px 22px; background:var(--panel); margin-bottom:14px; box-shadow:0 1px 2px rgba(20,30,45,0.03), 0 6px 16px rgba(20,30,45,0.04);}
+  .card p{margin:0 0 10px; font-size:13.5px; line-height:1.65; color:var(--text); opacity:0.92;}
+  .card p:last-child{margin-bottom:0;}
+  .card ul{margin:0; padding-left:18px; font-size:13.5px; line-height:1.7; opacity:0.92;}
+  .card.highlight{border-color:rgba(255,182,72,0.45); background:radial-gradient(140% 120% at 0% 0%, rgba(255,182,72,0.10), transparent 60%), var(--panel);}
+  .src{font-family:'IBM Plex Mono', monospace; font-size:10.5px; color:var(--muted); margin-top:8px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .pill{display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:11px; padding:3px 9px; border-radius:999px; margin:2px 4px 2px 0;}
+  .pill.add{background:rgba(70,224,197,0.18); color:var(--teal);}
+  .pill.cut{background:rgba(255,122,144,0.18); color:var(--rose);}
+
+  table.plan{width:100%; border-collapse:collapse; font-size:12.5px;}
+  table.plan th{font-family:'IBM Plex Mono', monospace; font-size:11px; text-transform:uppercase; color:var(--muted); text-align:left; padding:8px 10px; border-bottom:1px solid var(--line);}
+  table.plan td{padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top;}
+  table.plan tr:last-child td{border-bottom:none;}
+  .plat-tag{font-family:'IBM Plex Mono', monospace; font-size:10px; padding:2px 7px; border-radius:5px;}
+  .plat-tag.fb{background:rgba(59,114,224,0.18); color:var(--fb);}
+  .plat-tag.ig{background:rgba(219,62,130,0.18); color:var(--ig);}
+
+  .kpi-row{display:flex; gap:14px; flex-wrap:wrap;}
+  .kpi{flex:1; min-width:180px; background:var(--panel-2); border-radius:10px; padding:14px 16px;}
+  .kpi .from{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted);}
+  .kpi .to{font-family:'Fraunces', serif; font-size:22px; font-weight:600; color:var(--teal); margin:4px 0;}
+  .kpi .lbl{font-size:11.5px; color:var(--muted);}
+
+  .footer{margin-top:44px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:11.5px; font-family:'IBM Plex Mono', monospace;}
+
+  @media (max-width:700px){
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .split{grid-template-columns:1fr;}
+    .grid2{grid-template-columns:1fr;}
+    .chart-grid{grid-template-columns:1fr;}
+    .row-1 .num{font-size:38px;} .row-2 .num{font-size:26px;}
+    .thumb-wrap{width:60px;height:60px;flex-basis:60px;}
+  }
+  @media (prefers-reduced-motion: reduce){*{transition:none !important;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="eyebrow">SMM · Facebook + Instagram · Всеукраїнський альянс офтальмологів</div>
+  <h1 class="hero-title">Червень 2026: повна картина</h1>
+  <p class="hero-sub">01.06 – 30.06 · 12 постів Facebook · 7 постів Instagram</p>
+
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="overview">Огляд</button>
+    <button class="tab-btn" data-tab="facebook">Facebook</button>
+    <button class="tab-btn" data-tab="instagram">Instagram</button>
+    <button class="tab-btn" data-tab="trends">Тренди та рекомендації</button>
+  </div>
+
+  <!-- ============ OVERVIEW ============ -->
+  <div class="tab-panel active" id="panel-overview">
+    <div class="chart-hero">
+      <div class="chart-row row-1">
+        <div class="num">46×</div>
+        <div class="lbl">різниця в залученості одного й того самого відео (Junior Ophthalmology Summit) —<br>найгірший результат місяця на Facebook і найкращий на Instagram</div>
+      </div>
+      <div class="chart-row row-2">
+        <div class="num">114 051</div>
+        <div class="lbl">переглядів набрав пост-довідник про офтальмотоксичні препарати на Facebook</div>
+      </div>
+      <div class="chart-row row-3">
+        <div class="num">371 підписник, reach 524+</div>
+        <div class="lbl">на кількох Instagram-постах охоплення перевищило кількість підписників</div>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="split-col fb">
+        <h3><span class="dot fb"></span>Facebook</h3>
+        <div class="mini-stat"><span>Публікацій</span><b>12</b></div>
+        <div class="mini-stat"><span>Підписників сторінки</span><b>5 218</b></div>
+        <div class="mini-stat"><span>Сумарні перегляди</span><b>152 004</b></div>
+        <div class="mini-stat"><span>Сумарні реакції+коментарі</span><b>1 138</b></div>
+        <div class="mini-stat"><span>Середній ER (від показів)</span><b>1,11%</b></div>
+        <div class="mini-stat"><span>Найкращий пост</span><b>2,43% · Гіфема</b></div>
+        <div class="mini-stat"><span>Найслабший пост</span><b>0,23% · Reel Junior Summit</b></div>
+      </div>
+      <div class="split-col ig">
+        <h3><span class="dot ig"></span>Instagram</h3>
+        <div class="mini-stat"><span>Публікацій</span><b>7</b></div>
+        <div class="mini-stat"><span>Підписників</span><b>371</b></div>
+        <div class="mini-stat"><span>Сумарне охоплення</span><b>2 551</b></div>
+        <div class="mini-stat"><span>Сумарні лайки+комент.+збереж.</span><b>215</b></div>
+        <div class="mini-stat"><span>Середній ER (від охоплення)</span><b>8,21%</b></div>
+        <div class="mini-stat"><span>Найкращий пост</span><b>10,63% · Reel Junior Summit</b></div>
+        <div class="mini-stat"><span>Найслабший пост</span><b>3,27% · Алкоголь і пресбіопія</b></div>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h4>Динаміка ER протягом місяця (за тижнями)</h4>
+        <div class="chart-wrap" id="chart-weekly"></div>
+        <div class="note">Facebook — суцільна лінія шкали зліва (0-3%), Instagram — пунктир, шкала справа (0-12%). У деяких тижнях 1-2 пости, тому це орієнтовна динаміка.</div>
+      </div>
+      <div class="chart-card">
+        <h4>Середній ER: акаунт проти галузі (медицина, 2026)</h4>
+        <div class="chart-wrap" id="chart-benchmark"></div>
+        <div class="note">Галузеві дані: Growth-onomics Benchmarks 2026.</div>
+      </div>
+    </div>
+
+    <div class="card highlight">
+      <p><b>Головний висновок місяця:</b> той самий рол про Junior Ophthalmology Summit, опублікований в один день на обох платформах, отримав кардинально протилежний прийом — 0,23% ER на Facebook (найгірший показник місяця) проти 10,63% на Instagram (найкращий показник місяця). Це не про якість контенту, а про те, що аудиторії двох платформ реагують на відео зовсім по-різному. Детальний розбір і що з цим робити — на вкладці «Тренди та рекомендації».</p>
+    </div>
+  </div>
+
+  <!-- ============ FACEBOOK ============ -->
+  <div class="tab-panel" id="panel-facebook">
+    <div class="stats" id="fb-stats"></div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h4>ER по кожному посту (%)</h4>
+        <div class="chart-wrap" id="chart-fb-er"></div>
+      </div>
+      <div class="chart-card">
+        <h4>Охоплення по датах (логарифмічна шкала)</h4>
+        <div class="chart-wrap" id="chart-fb-reach"></div>
+        <div class="note">Логарифмічна шкала — щоб один пост на 114к не «зʼїдав» решту стовпців.</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="group" id="sortGroup-fb">
+        <button class="chip active" data-sort="er">За залученістю</button>
+        <button class="chip" data-sort="reach">За охопленням</button>
+        <button class="chip" data-sort="date">За датою</button>
+      </div>
+      <div class="group" id="filterGroup-fb">
+        <button class="chip active" data-filter="all">Усі</button>
+        <button class="chip" data-filter="photo">Фото</button>
+        <button class="chip" data-filter="video_inline">Reels</button>
+        <button class="chip" data-filter="album">Альбоми</button>
+      </div>
+    </div>
+    <div id="list-fb"></div>
+  </div>
+
+  <!-- ============ INSTAGRAM ============ -->
+  <div class="tab-panel" id="panel-instagram">
+    <div class="stats" id="ig-stats"></div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <h4>ER по кожному посту (%)</h4>
+        <div class="chart-wrap" id="chart-ig-er"></div>
+      </div>
+      <div class="chart-card">
+        <h4>Охоплення проти бази підписників (371)</h4>
+        <div class="chart-wrap" id="chart-ig-reach"></div>
+        <div class="note">Пунктирна лінія — кількість підписників. Стовпці вище лінії — пости, що вийшли за межі підписників.</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="group" id="sortGroup-ig">
+        <button class="chip active" data-sort="er">За залученістю</button>
+        <button class="chip" data-sort="reach">За охопленням</button>
+        <button class="chip" data-sort="date">За датою</button>
+      </div>
+      <div class="group" id="filterGroup-ig">
+        <button class="chip active" data-filter="all">Усі</button>
+        <button class="chip" data-filter="IMAGE">Фото</button>
+        <button class="chip" data-filter="CAROUSEL_ALBUM">Карусель</button>
+        <button class="chip" data-filter="REELS">Reels</button>
+      </div>
+    </div>
+    <div id="list-ig"></div>
+  </div>
+
+  <!-- ============ TRENDS ============ -->
+  <div class="tab-panel" id="panel-trends">
+
+    <div class="section-title">Що працює на цьому акаунті</div>
+    <div class="card">
+      <ul>
+        <li>Структурований клінічний розбір (буліти, чіткий алгоритм дій) — найкращий формат на Facebook: пост про гіфему дав 2,43% ER, найвищий за місяць.</li>
+        <li>Формат «клінічний випадок / постав діагноз» — найсильніший освітній формат на Instagram (7,01% ER, карусель від 18.06), плюс класична карусель про міокімію (10,51%).</li>
+        <li>Легкий, гумористичний контент («МедГумор») на Instagram дав другий за величиною ER місяця (10,42%) — аудиторія любить неформальний тон.</li>
+        <li>На Facebook один сильний інформаційний хук («довідник препаратів, що впливають на зір») здатен органічно зібрати охоплення у 13 разів вище середнього — без жодного просування.</li>
+        <li>Reach на Instagram-постах регулярно перевищує кількість підписників (371) — контент виходить за межі підписників через хештеги і Explore.</li>
+      </ul>
+    </div>
+
+    <div class="section-title">Що не працює</div>
+    <div class="card">
+      <ul>
+        <li><b>Довгі «лекційні» Reels на Facebook.</b> Усі три відео цього формату опинилися внизу рейтингу ER на Facebook — аудиторія сторінки (5 218 підписників) явно не той сегмент, що дивиться довгі відео у стрічці Facebook.</li>
+        <li><b>Кросспостинг відео без адаптації.</b> Той самий Junior Summit ролик на Instagram — найкращий пост місяця. Проблема не у відео, а у бездумному дублюванні контенту на платформи з різною поведінкою аудиторії.</li>
+        <li><b>Пости без підпису.</b> Фотоальбом 10.06 на Facebook отримав рекордні 925 кліків, але лише 25 залучень — люди гортали фото, але підпис (привід відреагувати чи прокоментувати) був відсутній.</li>
+        <li><b>Занадто довгі підписи на Instagram.</b> Пост про алкоголь і пресбіопію (19.06) — найслабший на Instagram: текст надто «сухий» і довгий для формату, де перші 1-2 рядки вирішують, чи людина розгорне текст.</li>
+      </ul>
+    </div>
+
+    <div class="section-title">Що каже індустрія у 2026</div>
+    <div class="grid2">
+      <div class="card">
+        <p>Короткі відео в середньому дають у 2,5 рази більше залучення, ніж довгий формат, а Reels на Instagram — на 35–36% більше охоплення за звичайні дописи. Водночас organic engagement на Facebook продовжує падати рік до року і зараз тримається на рівні приблизно 0,15%.</p>
+        <div class="src">Джерела: Hootsuite Social Trends 2026, Social Insider Benchmarks 2026</div>
+      </div>
+      <div class="card">
+        <p>Для медичних акаунтів найкраще працюють: короткі відео-відповіді лікаря на одне конкретне питання пацієнта (30 секунд), формат «постав діагноз/miф чи факт», і контент з чіткою прив'язкою до автора-лікаря — це підсилює довіру.</p>
+        <div class="src">Джерела: Medelite Healthcare Social Media 2026, Hootsuite Healthcare Guide 2026</div>
+      </div>
+      <div class="card">
+        <p>На Instagram у 2026 carousel-формат в середньому дає більше залучення на один показ, ніж Reels (Reels виграють за охопленням, carousel — за залученістю та збереженнями). Рекомендований баланс: 60–70% Reels для відкриття аудиторії, 20–30% carousel для утримання.</p>
+        <div class="src">Джерело: Growth-onomics Social Media Benchmarks 2026</div>
+      </div>
+      <div class="card">
+        <p>Середній ER для медичної галузі: Instagram ≈ 1,2% (від підписників), Facebook ≈ 0,15%. Обидва — суттєво нижчі за середні цифри цього акаунта, тобто акаунт вже працює краще за галузевий бенчмарк, і є що масштабувати.</p>
+        <div class="src">Джерело: Growth-onomics Social Media Benchmarks 2026</div>
+      </div>
+    </div>
+
+    <div class="section-title">Цілі на липень</div>
+    <div class="card">
+      <div class="kpi-row">
+        <div class="kpi"><div class="from">FB середній ER: 1,11%</div><div class="to">→ 1,5%</div><div class="lbl">за рахунок частіших клінічних кейсів замість reels-лекцій</div></div>
+        <div class="kpi"><div class="from">IG постів: 7/міс</div><div class="to">→ 12+/міс</div><div class="lbl">довести частоту до галузевих 4-7 постів/тиждень</div></div>
+        <div class="kpi"><div class="from">IG Reels: 1 з 7</div><div class="to">→ 4-5 з 12+</div><div class="lbl">наблизитись до рекомендованих 60-70% Reels</div></div>
+        <div class="kpi"><div class="from">Коментарі/пост FB: ~1,3</div><div class="to">→ 3+</div><div class="lbl">явний CTA-питання в кінці кожного освітнього посту</div></div>
+      </div>
+    </div>
+
+    <div class="section-title">Пропонований ритм контенту на липень</div>
+    <div class="card">
+      <table class="plan">
+        <tr><th>День</th><th>Платформа</th><th>Рубрика</th></tr>
+        <tr><td>Понеділок</td><td><span class="plat-tag fb">FB</span></td><td>Клінічний розбір (формат «Гіфема»)</td></tr>
+        <tr><td>Вівторок</td><td><span class="plat-tag ig">IG</span></td><td>Reel: 30-сек відповідь лікаря на 1 питання</td></tr>
+        <tr><td>Середа</td><td><span class="plat-tag ig">IG</span></td><td>Карусель: «постав діагноз» / клінічний випадок</td></tr>
+        <tr><td>Четвер</td><td><span class="plat-tag fb">FB</span></td><td>Новина/можливість (курси, конференції) з посиланням у тексті</td></tr>
+        <tr><td>П'ятниця</td><td><span class="plat-tag fb">FB</span> + <span class="plat-tag ig">IG</span></td><td>#назлобудня (FB) / МедГумор (IG) — легкий контент</td></tr>
+        <tr><td>Субота</td><td>—</td><td>Пауза або repost сторіс</td></tr>
+        <tr><td>Неділя</td><td><span class="plat-tag ig">IG</span></td><td>Reel по темі тижня (discovery-формат)</td></tr>
+      </table>
+    </div>
+
+    <div class="section-title">Нові формати, які варто спробувати</div>
+    <div class="card">
+      <p><span class="pill add">+ додати</span> Відео-відповідь лікаря на одне питання пацієнта, 30 сек, вертикальний формат — найефективніший формат довіри для медичних акаунтів у 2026.</p>
+      <p><span class="pill add">+ додати</span> Рубрика «Провайдер-спотлайт» — коротке знайомство з лікарями альянсу; такого контенту зараз немає, а це один із топ-форматів для медичних брендів.</p>
+      <p><span class="pill add">+ додати</span> Регулярна серія «постав діагноз» на Instagram (вже показала 7% ER з одного разу) — тижнева рубрика з відповіддю через 2-3 дні.</p>
+      <p><span class="pill cut">– скоротити</span> Повні лекційні відео як Reels на Facebook — жоден із трьох таких постів цього місяця не увійшов навіть у середину рейтингу за ER.</p>
+      <p><span class="pill cut">– скоротити</span> Дублювання відео 1-в-1 між платформами без адаптації хука під формат і аудиторію.</p>
+    </div>
+
+  </div>
+
+  <div class="footer">Джерело даних: Facebook Page Insights + Instagram Insights (Windsor.ai) · Період 01.06.2026–30.06.2026 · Галузеві дані — відкриті звіти Hootsuite, Social Insider, Growth-onomics, Medelite (2026) · Натисніть на пост, щоб розгорнути аналіз</div>
+
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const fbPosts = [
+  {id:"1", date:"2026-06-01", type:"photo", text:"Амбліопія у дорослих: чи можливе покращення зору? Тривалий час вважалося, що лікування амбліопії ефективне лише в дитячому віці. Сучасні дослідження показали, що певна нейропластичність зорової системи зберігається і після завершення критичного періоду розвитку.",
+   img:"https://scontent-fra5-2.xx.fbcdn.net/v/t39.30808-6/712468865_1418605070311489_8869228929191777451_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_ohc=NaAJMf1-HRoQ7kNvwH-OLrc&_nc_oc=Adqvu3Qh9KuUbzL7NiSdTXQLcyujMsM7HXpVNIKOUvKzRUNtACe7CRHVPhmbcL4odqg&_nc_zt=23&_nc_ht=scontent-fra5-2.xx&edm=AJfPMC4EAAAA&_nc_gid=H1tiOcpcmOTFvBVfYTtsoA&_nc_tpa=Q5bMBQGjf1VCIc6f26Bi_jc75oJB4n_IPAW2qS7oMKwUliicBPKxgesQUqWn8f8aoSx5XUQfNH7kFTBzJw&oh=00_AQAsHWTjlwSNcrbcJJR7qWh48ktfGhwrdTs-OZURlmBzEg&oe=6A5AB3CF",
+   url:"https://www.facebook.com/1456143826557613/posts/1418605410311455", impressions:7211, engagements:49, reactions:41, comments:1, clicks:90,
+   good:"Хороша структура і практична цінність тексту.", bad:"ER нижче середнього по місяцю (0,68% проти 1,11%), майже немає коментарів попри інформативний текст.", next:"Додати запитання наприкінці посту, щоб стимулювати коментарі."},
+  {id:"2", date:"2026-06-05", type:"photo", text:"#назлобудня",
+   img:"https://scontent-fra5-1.xx.fbcdn.net/v/t39.30808-6/716270564_1422333536605309_2164530717375700266_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=110&ccb=1-7&_nc_sid=127cfc&_nc_ohc=rt1aDVMB-msQ7kNvwFKuOHE&_nc_oc=Ado-CW_8xzzwClAnuzCuGq3wurGDaD9J181wHRQbTNcWf7KqXFIS7zpz5omIfQcg2DY&_nc_zt=23&_nc_ht=scontent-fra5-1.xx&edm=AJfPMC4EAAAA&_nc_gid=o6iO-lKZVATN2MmZ2aGaHQ&_nc_tpa=Q5bMBQFleBLAxBMg4aZUTZsD4D1sDTtrYmqnGfYgeoC1jMC-mpoZyov_UN8KBILHL3rIwu9HnjyIt8yx1w&oh=00_AQAiQ0GzJepFh7d7i5tpwqV7c6ltctEpZvNnrPp1ElzTsQ&oe=6A5AB77E",
+   url:"https://www.facebook.com/1456143826557613/posts/1422333816605281", impressions:1747, engagements:32, reactions:27, comments:1, clicks:22,
+   good:"ER вище середнього (1,83%) — короткий формат без тексту все одно працює завдяки візуалу.", bad:"Немає освітньої цінності, не будує авторитет бренду.", next:"Тримати рубрику, але не частіше 1 разу на тиждень."},
+  {id:"3", date:"2026-06-08", type:"photo", text:"Гіфема: сучасний алгоритм ведення пацієнта. Гіфема — це кров у передній камері ока, найчастіше після тупої травми. Основні ризики пов'язані не стільки з самою кровотечею, скільки з її ускладненнями.",
+   img:"https://scontent-fra3-2.xx.fbcdn.net/v/t39.30808-6/719782309_1425088246329838_3277710147040966868_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_ohc=fsb2JHI70DcQ7kNvwEvrbqi&_nc_oc=AdqqzAOJQ5qMffLWSLScf6qaXmdHcFCEixB2HxGdxcKKOX-aTdDYsAlXKoU5EFOA2y0&_nc_zt=23&_nc_ht=scontent-fra3-2.xx&edm=AJfPMC4EAAAA&_nc_gid=dI6JJ09V9xQvcojLxOsS3g&_nc_tpa=Q5bMBQFtrfFcJnPKZLd4Q4H5sNZVzPk4bUG8cEQ3JgamIzoT8cvNvOd-TEQLiSnZZ2bTz0MTcWwXPT8_Lg&oh=00_AQCxTrEjmc7VSQsxCgJTH9xYN6_jYRgA0Q5dlJ8ROdyBnA&oe=6A5A9A79",
+   url:"https://www.facebook.com/1456143826557613/posts/1425088382996491", impressions:1398, engagements:34, reactions:29, comments:0, clicks:12,
+   good:"Найвищий ER місяця (2,43%) — чіткі буліти-алгоритми і практична цінність для колег-лікарів.", bad:"Низьке абсолютне охоплення (1398) — сторінка не проштовхнула хороший контент широко, 0 коментарів попри якість.", next:"Взяти цей формат клінічного розбору за шаблон і повторювати щотижня; спробувати додати запитання в кінці для коментарів."},
+  {id:"4", date:"2026-06-10", type:"album", text:"(Пост без тексту — фотоальбом)",
+   img:"https://scontent-fra5-1.xx.fbcdn.net/v/t39.30808-6/719740591_1426834402821889_3328146882408889262_n.jpg?stp=dst-jpg_s1080x2048_tt6&_nc_cat=100&ccb=1-7&_nc_sid=f727a1&_nc_ohc=JC3-DI-E5K0Q7kNvwGS4Ri3&_nc_oc=AdqXp_Zup4_GnQV-i61EQoI3SaUgIW7MOwc7KOHgV9433M7yL3L2uUPyBHBwGtrerw0&_nc_zt=23&_nc_ht=scontent-fra5-1.xx&edm=AJfPMC4EAAAA&_nc_gid=gq6mxzMvvBS4I2aYyG5dAg&_nc_tpa=Q5bMBQGA1Lcsybmd7U-zEQEfakWzzS0JrVsxlFhpzvZl4slFrWb5CnWg7-uR8SqVkO_KodPvZii2lZZppQ&oh=00_AQC0vos94O1ZZV4RI-wlJ-dvafIssUaw78LrSFIuS-HuZA&oe=6A5AA11B",
+   url:"https://www.facebook.com/1456143826557613/posts/1426845302820799", impressions:3190, engagements:25, reactions:22, comments:0, clicks:925,
+   good:"Дуже високий CTR (925 кліків на 3190 показів) — сама галерея зацікавила достатньо, щоб гортати.", bad:"Немає підпису — 925 людей погортали фото, але лише 22 поставили реакцію: нема за що зачепитись, щоб відреагувати.", next:"Завжди додавати хоча б 1-2 речення підпису до фотоальбомів — це конвертує гортання у реакції."},
+  {id:"5", date:"2026-06-11", type:"video_inline", text:"Measure Twice, Implant Once! — Лекція 2. Де ховаються помилки при розрахунку ІОЛ? Друга лекція серії — від Dr. Daniela Riedmaier. Розбір реальних кейсів.",
+   img:"https://scontent-fra5-1.xx.fbcdn.net/v/t15.5256-10/720563297_1491366308860392_4147185209682656274_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=d2b52d&_nc_ohc=Sui-mPb3J9EQ7kNvwFrNgTl&_nc_oc=AdpVf7e5s3CWKvW0pGR26A4Yt_Nm4seaKR9UM4kQ6-2ZUdBNL7SBC-Fm8o0g3DkAPdU&_nc_zt=23&_nc_ht=scontent-fra5-1.xx&edm=AJfPMC4EAAAA&_nc_gid=mA1dGIB_2sTRGq5bNoBGUw&_nc_tpa=Q5bMBQF9Spx5LQazTga0vzAgARK5-Qp73B8QR5QShGtwypYf8Vf1sEqZaxTS1qmsuzfNAeVxUMl3HU7OWA&oh=00_AQDZG-Mdjz1wmifnvUl9v8Cc3GJZAkP8qx7xF_mxdfzIUQ&oe=6A5A9F79",
+   url:"https://www.facebook.com/reel/1414687077356017/", impressions:1173, engagements:5, reactions:0, comments:1, clicks:26,
+   good:"Дає змогу поширити експертний відеоконтент серії.", bad:"Один із найслабших постів місяця (0,43% ER, 0 реакцій) — довгий лекційний формат погано заходить у стрічці Facebook.", next:"Не постити повні лекції як Reels; на соцмережі — лише 15-30 сек тизер з одним інсайтом, повну версію — на YouTube."},
+  {id:"6", date:"2026-06-12", type:"photo", text:"#назлобудня",
+   img:"https://scontent-fra3-1.xx.fbcdn.net/v/t39.30808-6/720737295_1428680225970640_2210805166220719613_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=pFYVD99iXJ8Q7kNvwFlbFpN&_nc_oc=AdpIWBDWLLTmbJ7P1FVw4QAYmNiFpmmL2aC57RiOYJMwxMLj0lHx9IZjzlABal-G5t0&_nc_zt=23&_nc_ht=scontent-fra3-1.xx&edm=AJfPMC4EAAAA&_nc_gid=14SxrjfocHaP1feB3OIHqg&_nc_tpa=Q5bMBQFVQHsrrMJxz-UCorSx3jDJI6krE2Z6sQ_hyyJ_-z1ATLkRk1Wkt47Tf421npWPUkxaD1kp7PNXcA&oh=00_AQC1zTbFHOxvPKnpy8xt8qMS2NJd2VpnIodC3DTj_C_6mg&oe=6A5AAE29",
+   url:"https://www.facebook.com/1456143826557613/posts/1428680429303953", impressions:3490, engagements:40, reactions:32, comments:1, clicks:41,
+   good:"Стабільний середній результат рубрики (1,15% ER) — трохи вище середнього по місяцю.", bad:"Нічого не виділяється, звичайний прохідний пост рубрики.", next:"Без змін, тримати частоту 1 раз/тиждень."},
+  {id:"7", date:"2026-06-17", type:"photo", text:"Увага, українські офтальмологи! Можливість долучитися до Lancaster Course in Ophthalmology Гарвардської медичної школи. Завдяки підтримці професорки Lucy H. Young вартість участі для лікарів з України безкоштовна замість 1250 USD.",
+   img:"https://scontent-fra3-1.xx.fbcdn.net/v/t39.30808-6/724578088_1433122768859719_2306077058368939747_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_ohc=aiasJOUospsQ7kNvwGKtuCt&_nc_oc=AdpnCHh-xKvGrpnJ9V2rM9haApJYoyfTDcNhc_ME5bWPkNq9niFf7Ic2FLNjCGA1TtE&_nc_zt=23&_nc_ht=scontent-fra3-1.xx&edm=AJfPMC4EAAAA&_nc_gid=qAIagk3HRj1LWUltvglPJQ&_nc_tpa=Q5bMBQHl8m3DLukiOaUyurWbTIjtGXF2fto2HusnxG2kuPnPUqfnQkON9Iiep9koYeraeG_99PQKHlNvew&oh=00_AQC4GzInBjtXrqWaktriBi6p-auuR_ksDNufr4rS4xgPIQ&oe=6A5A9708",
+   url:"https://www.facebook.com/1456143826557613/posts/1433123202193009", impressions:3404, engagements:43, reactions:23, comments:1, clicks:102,
+   good:"Новинний контент з чітким приводом (безкоштовний курс від Гарварду) — вищий за середній ER (1,26%) і високий CTR (102 кліки).", bad:"Ключове посилання для подачі заявки — лише в першому коментарі, а не в тексті поста, що ускладнює шлях користувача.", next:"Дублювати ключовий контакт/посилання прямо в тексті поста."},
+  {id:"8", date:"2026-06-18", type:"video_inline", text:"Measure Twice, Implant Once! — Лекція 3. Мистецтво бачити: історії та помилки в офтальмологічній діагностиці.",
+   img:"https://scontent-fra3-2.xx.fbcdn.net/v/t15.5256-10/725663978_1028214943000342_9003315829717803302_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=d2b52d&_nc_aid=0&_nc_ohc=0LR_XgzvKmoQ7kNvwEW1k42&_nc_oc=AdpJv8g9ctyFfE_uaz26CEmtXUQ5TrsmFzzp2IszbUV_09STExd1uBdmVirWAKHiF6Q&_nc_zt=23&_nc_ht=scontent-fra3-2.xx&edm=AJfPMC4EAAAA&_nc_gid=ssjKtgeoGiT5v0gemeqJMA&_nc_tpa=Q5bMBQEYUIeG6rt-QknymlGcNYis6cljH7rS0xnKPyMLGp3Dh3W96XnZf5uCot3XMHj_q41ePMl_z2fqIQ&oh=00_AQB9n0jlxK52jNYvxtd4FxyovWxbOm1uyccHmCrSWTm9SA&oe=6A5A8066",
+   url:"https://www.facebook.com/reel/1792319165453482/", impressions:963, engagements:4, reactions:0, comments:1, clicks:5,
+   good:"Продовжує серію, підтримує послідовність контенту.", bad:"Найслабший тип контенту місяця повторюється вдруге (0,42% ER, 0 реакцій, лише 5 кліків) — той самий провал, що й у Лекції 2.", next:"Той самий рецепт: тизер 15-30 сек замість повної лекції."},
+  {id:"9", date:"2026-06-19", type:"photo", text:"#назлобудня",
+   img:"https://scontent-fra5-1.xx.fbcdn.net/v/t39.30808-6/726380941_1434937158678280_803835568821276125_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=100&ccb=1-7&_nc_sid=127cfc&_nc_ohc=CXdxVP6wfSIQ7kNvwEr6iz1&_nc_oc=Adp6TantZUAScpFX4tuikYO2BQfrjkQt0kEBOUXRKjQQn4-2N6sL0T8ggs3Y18noO8c&_nc_zt=23&_nc_ht=scontent-fra5-1.xx&edm=AJfPMC4EAAAA&_nc_gid=iyXIbIUSOshenZdleUyvgw&_nc_tpa=Q5bMBQHfaoLTc57iVq888_NMbEH2_xOr6ZLznIRuHrxB-ZI9GTEibEjmvna65sgsLJtMG9v7Bhno9XArkA&oh=00_AQBkdcS8t8iCM6o_xQeflc6HtWjvlzh6hbLEXMhwuqFI0g&oe=6A5AB494",
+   url:"https://www.facebook.com/1456143826557613/posts/1434937322011597", impressions:8019, engagements:106, reactions:85, comments:5, clicks:309,
+   good:"Друге за охопленням (8019), високий ER (1,32%) і 5 коментарів — саме цей випуск рубрики резонує сильніше за інші.", bad:"—", next:"Розібрати, що саме в цьому візуалі спрацювало, і повторити підхід у наступних випусках рубрики."},
+  {id:"10", date:"2026-06-22", type:"photo", text:"Лікарські препарати, що можуть спричиняти зміни зору: короткий довідник для офтальмолога. Гідроксихлорохін, кортикостероїди, топірамат, етамбутол, аміодарон, тамоксифен, ізотретиноїн, дигоксин.",
+   img:"https://scontent-fra5-1.xx.fbcdn.net/v/t39.30808-6/727629007_1437572481748081_7886175087128033118_n.jpg?stp=dst-jpg_p720x720_tt6&_nc_cat=102&ccb=1-7&_nc_sid=127cfc&_nc_ohc=u_qG8I7q6gQQ7kNvwFqcc7e&_nc_oc=AdpABdF93HqF9UBiKznjNPx_eZ7Afk_F-iyosqXE1-Ue7fwjf1CM7Apq7nbGwpI1EtQ&_nc_zt=23&_nc_ht=scontent-fra5-1.xx&edm=AJfPMC4EAAAA&_nc_gid=3UljETERUaYYCec8gmDBgA&_nc_tpa=Q5bMBQGbib3TAoN47n8se4scGz6J6IGzaXWnVgrs11mpYbOForcEEh9X-wwxoJ54Jk5dP_-cELmojhOuuw&oh=00_AQCE_bhq_PKPgWVukJDcdk-Ij3GudQ9FGpogrm7t64jcqQ&oe=6A5AA806",
+   url:"https://www.facebook.com/1456143826557613/posts/1437573045081358", impressions:114051, engagements:785, reactions:644, comments:22, clicks:1974,
+   good:"Найбільший вибух охоплення місяця (у 13 разів вище середнього), 22 коментарі, майже 2000 кліків — довідниковий формат зі списком препаратів явно розлетівся органічно (шери/рекомендації).", bad:"ER відносно охоплення нижче середнього (0,69%) — багато людей побачили, менша частка залучилась, типово для «вірусних» постів.", next:"Розібрати, чому пост розлетівся (тема/формат/час), і свідомо повторити структуру «короткий довідник» для інших тем."},
+  {id:"11", date:"2026-06-26", type:"video_inline", text:"Junior Ophthalmology Summit руйнує шаблони. Простір, де молоді офтальмологи сперечаються, грають, дискутують і знаходять власний шлях у професії. 30–31 жовтня, Львів.",
+   img:"https://scontent-fra5-1.xx.fbcdn.net/v/t15.5256-10/732441573_1819857736089503_1279703647038446087_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=d2b52d&_nc_ohc=EjYdqY8DES0Q7kNvwEC41vi&_nc_oc=Adog5OxAwiI0NF0XSRqjwlpnWY5vM4klY8j04VF1C5wHO4tSqsMEghS7CSFwFIpyhwI&_nc_zt=23&_nc_ht=scontent-fra5-1.xx&edm=AJfPMC4EAAAA&_nc_gid=peEOXTB7EbFWTRG1n5NBKQ&_nc_tpa=Q5bMBQGxazBx4Xob_YJEnW4Tvqu62YMGnX1xCdyGVQm8uf6pmt6_xqP90qhadXpHfY9a3c2WRx-bc7ogqg&oh=00_AQCHFXm9W6YfHxT74D0YZPIBHFjG1uP2jnmvPimg77EFVA&oe=6A5A90D0",
+   url:"https://www.facebook.com/reel/1537796067727160/", impressions:6962, engagements:16, reactions:0, comments:1, clicks:115,
+   good:"Хороше охоплення (6962) — сторінка все ж показала ролик достатньо широко.", bad:"Найгірший ER місяця на Facebook (0,23%, 0 реакцій) — при цьому той самий ролик показав найкращий результат в Instagram (10,63%).", next:"Не дублювати цей ролик у Facebook без адаптації; або короткий тизер, або взагалі не постити на цю платформу."},
+  {id:"12", date:"2026-06-28", type:"photo", text:"З Днем Конституції України! Одні тримають зброю, інші лікують, навчають, волонтерять, працюють, підтримують економіку й допомагають армії.",
+   img:"https://scontent-fra3-1.xx.fbcdn.net/v/t39.30808-6/732533427_1442889054549757_5214085358577471575_n.jpg?stp=cp1_dst-jpegr_p720x720_tt6&_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_ohc=BAfn1Ey83GUQ7kNvwH8lrry&_nc_oc=Adq6gETAQ6CRnjCVL0Vyne5Z_h4_jMUlSWumBJcrGUabXAtZrh6l68tB24HRz_-a48A&_nc_zt=23&se=-1&_nc_ht=scontent-fra3-1.xx&edm=AJfPMC4EAAAA&_nc_gid=5yJUJsMf1z2zUmZHauOmew&_nc_tpa=Q5bMBQGxUFBmiHDTrdOg3fd0Z-oFOO-Z6XjWnSqKHIisbyEAB-jEweJC4ggsoJoQHSZH59p75Z6fHZBJ3g&oh=00_AQCMi5G2KW7MheRP0ATgU3EIpXbp3jSyUhh_zYQUPRQHGw&oe=6A5AAAD7",
+   url:"https://www.facebook.com/1456143826557613/posts/1442889581216371", impressions:1396, engagements:29, reactions:25, comments:2, clicks:15,
+   good:"Високий ER (2,08%), емоційний і суспільно значущий контент резонує без прив'язки до офтальмології.", bad:"Не пов'язаний з експертизою бренду — працює на лояльність, не на позиціонування.", next:"Тримати 1 такий пост на місяць у важливі дати, не частіше."}
+];
+
+const igPosts = [
+  {id:"i1", date:"2026-06-04", type:"IMAGE", text:"FDA схвалює перший нехірургічний пристрій для зниження ВОТ при глаукомі. Компанія Balance Ophthalmics отримала дозвіл FDA 510(k) на бездротову версію пристрою FSYX OPAP.",
+   img:"https://scontent-fra5-1.cdninstagram.com/v/t51.82787-15/716975050_17889488610551741_5943746864208549078_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=102&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=5NYyVN7s_4cQ7kNvwG2YLKr&_nc_oc=AdpX8xloUnRWP-XsDhGYas6Ma0vhbgsQO8L1YxClPoh3Kkhdx5CTo8xc65Q99oy4UhU&_nc_zt=23&_nc_ht=scontent-fra5-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=d4zFAbSs0J7nRXuFCm4uwQ&oh=00_AQCTP5u7uvdNwP-NrBHC9IACy-QClCzQKhPcT4yb6ouwjA&oe=6A5A8B4B",
+   url:"https://www.instagram.com/p/DZKHtHyjElb/", reach:524, views:939, engagements:47, likes:31, comments:0, saved:10, shares:6,
+   good:"Високий ER (8,97%), багато збережень (10) і поширень (6) — люди хочуть повернутися і поділитись науковою новиною.", bad:"0 коментарів попри питання наприкінці підпису.", next:"Ставити конкретніше/провокативніше питання, щоб реально стимулювати відповіді."},
+  {id:"i2", date:"2026-06-07", type:"CAROUSEL_ALBUM", text:"Коли посіпування очей не просто втома. Міокімія — мимовільні хвилеподібні скорочення м'язових волокон повік. Симптоми, тригери, коли потрібен невролог.",
+   img:"https://scontent-fra3-1.cdninstagram.com/v/t39.30808-6/714722740_1421517253353604_1354387571097667740_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=Xo1kjjvFCfcQ7kNvwEjagsK&_nc_oc=Adq94E0PchgWs8dVg852Ddg98FCdnk-3wTYoUrK9VkFkAbPlMuv0xtZp8aTJ50wlaZk&_nc_zt=23&_nc_ht=scontent-fra3-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=d4zFAbSs0J7nRXuFCm4uwQ&oh=00_AQBSmHdSsehrzJYBFMcy6yS1NxoNh3fHRXPJkJp6DxQ1pQ&oe=6A5A8675",
+   url:"https://www.instagram.com/p/DZStLFsnXg1/", reach:257, views:731, engagements:27, likes:21, comments:0, saved:5, shares:1,
+   good:"Один із найкращих ER місяця (10,51%) — карусель зі структурованими буліт-пунктами явно заходить.", bad:"Найменше абсолютне охоплення серед постів місяця (257).", next:"Публікувати карусельний освітній контент частіше — за галузевими даними, це найсильніший формат за залученістю на Instagram у 2026."},
+  {id:"i3", date:"2026-06-18", type:"CAROUSEL_ALBUM", text:"Клінічний випадок. Пацієнтка А. 70р., раптова втрата зору на правому оці, головний біль, дискомфорт у щелепі при жуванні. Діліться в коментарях: який ймовірний діагноз?",
+   img:"https://scontent-fra3-1.cdninstagram.com/v/t39.30808-6/726440337_1433738612131468_5736735152779968865_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=xb_Z53euMf0Q7kNvwFlhyjQ&_nc_oc=Ado49BtvkqXjPFeScB45EzvJdh3lNpA-uMjbFNxFPcYFkSBGNwRiws3XGnsjJvVwUy0&_nc_zt=23&_nc_ht=scontent-fra3-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=d4zFAbSs0J7nRXuFCm4uwQ&oh=00_AQBhp2CzaQAQTgNZUOin9ZolA2y9jP_TK3KaUVBJzR-nMg&oe=6A5AB51A",
+   url:"https://www.instagram.com/p/DZvPm8ICLy5/", reach:271, views:875, engagements:19, likes:15, comments:2, saved:1, shares:0,
+   good:"Формат «постав діагноз» — один з найефективніших форматів для медичних акаунтів; 2 коментарі підтверджують залучення завдяки прямому CTA у підписі.", bad:"Невелике охоплення (271).", next:"Зробити регулярною рубрикою щотижня, з явним CTA і відповіддю в наступному пості."},
+  {id:"i4", date:"2026-06-19", type:"IMAGE", text:"Чи може алкоголь прискорювати розвиток пресбіопії? Нове дослідження японських науковців, опубліковане у Clinical Optometry (травень 2026).",
+   img:"https://scontent-fra3-2.cdninstagram.com/v/t39.30808-6/726420895_1433744635464199_9070838917359042680_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=111&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=mlTDaUTeMwgQ7kNvwEYR4GY&_nc_oc=AdokAnxlda4od1AqTAB5HiuFEPsYYeiWaE3SnVDEkZwsL5KEKl7rQ2ce1QjXe2FS9eI&_nc_zt=23&_nc_ht=scontent-fra3-2.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=d4zFAbSs0J7nRXuFCm4uwQ&oh=00_AQA2AnBXEmS11jydMh8CrHgRCNDtP6tPulaKBhUgkQv83A&oe=6A5AA8DA",
+   url:"https://www.instagram.com/p/DZxSG7zCIEV/", reach:336, views:579, engagements:11, likes:5, comments:1, saved:0, shares:4,
+   good:"Науково-популярна тема з посиланням на конкретне дослідження, непогане поширення (4 шери).", bad:"Найнижчий ER місяця на Instagram (3,27%) — підпис довгий і «сухий» для формату, 0 збережень.", next:"Скорочувати підписи: головний інсайт у перших 2 рядках, деталі — в карусель."},
+  {id:"i5", date:"2026-06-21", type:"IMAGE", text:"Здається, кожен офтальмолог хоча б раз на день чує: «Лікарю, яке ж це сухе око, якщо воно постійно сльозиться?» Колеги, а яка фраза пацієнтів трапляється вам найчастіше?",
+   img:"https://scontent-fra3-1.cdninstagram.com/v/t39.30808-6/722809117_1433748772130452_8420065080385577584_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=BeJ5QiBoQk8Q7kNvwGn86W7&_nc_oc=AdqJx7bnKUJUXDKgOL9UlFcE8kF3Jqrj5Fgaqw-tMIpvOGi6RRBuP0lF0yAOCiXC1gA&_nc_zt=23&_nc_ht=scontent-fra3-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=d4zFAbSs0J7nRXuFCm4uwQ&oh=00_AQC24hdNQaGWq0yZkt3W8rDbHcsA7r9XlLPxToA12cHOOw&oe=6A5AAFD2",
+   url:"https://www.instagram.com/p/DZ2wScIjY55/", reach:307, views:715, engagements:32, likes:29, comments:0, saved:1, shares:0,
+   good:"Другий за ER пост місяця (10,42%) — гумор і живий тон явно резонують з колегами-лікарями, пряме звернення в підписі («колеги, а яка фраза...») працює як CTA.", bad:"0 збережень — «посміялись і забули», не evergreen-контент, попри високий ER.", next:"Робити такий контент легкою регулярною рубрикою (1-2 рази/місяць) для балансу з важким клінічним контентом."},
+  {id:"i6", date:"2026-06-26", type:"REELS", text:"Junior Ophthalmology Summit руйнує шаблони. Простір, де молоді офтальмологи сперечаються, грають, дискутують і знаходять власний шлях у професії. 30–31 жовтня, Львів.",
+   img:"https://scontent-fra3-1.cdninstagram.com/v/t51.82787-15/727286000_17893238184551741_594148655315700353_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=103&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0xJUFMuYmVzdF9pbWFnZV91cmxnZW4uQzMifQ%3D%3D&_nc_ohc=D1_ynq8M_h4Q7kNvwF-501U&_nc_oc=AdrJH1VICQeWhhPWVP9BAA3iFnLnimGwqBxThK0d7ajgtMM8-iU2VEQIUSTWrp0NKxk&_nc_zt=23&_nc_ht=scontent-fra3-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=d4zFAbSs0J7nRXuFCm4uwQ&_nc_tpa=Q5bMBQEWthQm9L7Z7KvvlxTxj_snduF1G8CL61emO-ufhoYhsMWowcwygm_4vmZZxAbeyMmWlg17dJ-aKw&oh=00_AQCYMadCEadXPjnCq24TkO6ZKmZXSDX3ogL4ew2V-M0q7g&oe=6A5A8B24",
+   url:"https://www.instagram.com/reel/DaC5t6XKiJG/", reach:555, views:887, engagements:59, likes:42, comments:1, saved:8, shares:7,
+   good:"Найкращий пост місяця на Instagram (10,63% ER) і другий за охопленням, 8 збережень і 7 поширень — формат Reel явно нативний для цієї платформи.", bad:"—", next:"Знімати відеоконтент насамперед під Instagram Reels; на Facebook — не дублювати без адаптації."},
+  {id:"i7", date:"2026-06-29", type:"IMAGE", text:"Астма у матері та ризик ретинопатії недоношених: нові дані дослідження. Ризик ROP 1 типу — у 2,39 раза вищий у дітей матерів з астмою.",
+   img:"https://scontent-fra3-1.cdninstagram.com/v/t51.82787-15/728093425_17893854918551741_6138347704355080358_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=108&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiRkVFRC5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=tCVt8Io_jXQQ7kNvwGgi_TL&_nc_oc=AdoYJ8TasQiYEj4_wtSiicmJ1Q5F7Cs8ABGkklzGzvQQ_7zNACbSSpIAy-lezNKg57k&_nc_zt=23&_nc_ht=scontent-fra3-1.cdninstagram.com&edm=AM6HXa8EAAAA&_nc_gid=d4zFAbSs0J7nRXuFCm4uwQ&oh=00_AQBcYq1JOOIu6IpgFNNHTNW37P3AZ9dJiyv5iFgEiIUfEg&oe=6A5AA0A8",
+   url:"https://www.instagram.com/p/DaKRq5WjNI5/", reach:301, views:518, engagements:20, likes:15, comments:0, saved:1, shares:3,
+   good:"Вище середнього ER (6,64%); вузькоспеціалізована тема (неонатологія) теж працює, 3 поширення.", bad:"Малий абсолютний обхват аудиторії (301).", next:"Тегати суміжні спільноти (неонатологія, педіатрія), щоб вийти за межі базової аудиторії."}
+];
+
+/* ---------------- HELPERS ---------------- */
+fbPosts.forEach(p=>{ p.er = p.engagements/p.impressions*100; p.reachVal = p.impressions; });
+igPosts.forEach(p=>{ p.er = p.engagements/p.reach*100; p.reachVal = p.reach; });
+
+function fmt(n){ return Math.round(n).toLocaleString('uk-UA'); }
+function fmtDate(d){ const dt=new Date(d+'T00:00:00'); return dt.toLocaleDateString('uk-UA',{day:'2-digit',month:'2-digit'})+'.2026'; }
+function weekdayOf(d){ const dt=new Date(d+'T00:00:00'); return dt.toLocaleDateString('uk-UA',{weekday:'long'}); }
+
+function analyzeFactors(p){
+  const weekday = weekdayOf(p.date);
+  const len = p.text.length;
+  let lenBucket = 'короткий текст';
+  if(len>500) lenBucket='довгий текст';
+  else if(len>120) lenBucket='середній текст';
+  const hasQuestion = p.text.includes('?');
+  const hasCTA = /коментар|поділ|думк|діліться/i.test(p.text);
+  return [weekday, lenBucket, hasQuestion?'є запитання':'без запитання', hasCTA?'явний CTA':null].filter(Boolean);
+}
+
+/* ---------------- STAT CARDS ---------------- */
+function renderStatCards(containerId, items){
+  const el = document.getElementById(containerId);
+  el.innerHTML = items.map(i=>`<div class="stat ${i.cls||''}"><div class="v">${i.v}</div><div class="k">${i.k}</div></div>`).join('');
+}
+renderStatCards('fb-stats', [
+  {v:'12', k:'публікацій за червень'},
+  {v:'152 004', k:'сумарні перегляди', cls:'fb'},
+  {v:'1,11%', k:'середній ER'},
+  {v:'2,43% / 0,23%', k:'найкращий / найслабший ER', cls:'rose'}
+]);
+renderStatCards('ig-stats', [
+  {v:'7', k:'публікацій за червень'},
+  {v:'2 551', k:'сумарне охоплення', cls:'fb'},
+  {v:'8,21%', k:'середній ER'},
+  {v:'10,63% / 3,27%', k:'найкращий / найслабший ER', cls:'rose'}
+]);
+
+/* ---------------- POST LISTS ---------------- */
+function buildList(containerId, posts, typeLabels, isFB){
+  const erSorted = [...posts].sort((a,b)=>a.er-b.er);
+  const bestId = erSorted[erSorted.length-1].id;
+  const worstId = erSorted[0].id;
+  let currentSort='er', currentFilter='all';
+
+  function render(){
+    let data = posts.filter(p=>currentFilter==='all'||p.type===currentFilter);
+    if(currentSort==='er') data=[...data].sort((a,b)=>b.er-a.er);
+    if(currentSort==='reach') data=[...data].sort((a,b)=>b.reachVal-a.reachVal);
+    if(currentSort==='date') data=[...data].sort((a,b)=>new Date(a.date)-new Date(b.date));
+
+    const list = document.getElementById(containerId);
+    list.innerHTML='';
+    data.forEach(p=>{
+      const rankIdx = erSorted.findIndex(x=>x.id===p.id);
+      const pct = rankIdx/(erSorted.length-1);
+      const blur = (1-pct)*3.2;
+      const factors = analyzeFactors(p);
+      const el = document.createElement('div');
+      el.className='post';
+      const metricsHtml = isFB
+        ? `<span class="metric">покази <b>${fmt(p.impressions)}</b></span><span class="metric">реакції <b>${fmt(p.reactions)}</b></span><span class="metric">коментарі <b>${fmt(p.comments)}</b></span><span class="metric">кліки <b>${fmt(p.clicks)}</b></span><span class="metric er">ER <b>${p.er.toFixed(2)}%</b></span>`
+        : `<span class="metric">охоплення <b>${fmt(p.reach)}</b></span><span class="metric">лайки <b>${fmt(p.likes)}</b></span><span class="metric">коментарі <b>${fmt(p.comments)}</b></span><span class="metric">збереж. <b>${fmt(p.saved)}</b></span><span class="metric">поширення <b>${fmt(p.shares)}</b></span><span class="metric er">ER <b>${p.er.toFixed(2)}%</b></span>`;
+      el.innerHTML = `
+        <div class="thumb-wrap"><img src="${p.img}" style="filter:blur(${blur.toFixed(1)}px) saturate(${0.5+pct*0.6})" onerror="this.style.display='none'"></div>
+        <div class="post-body">
+          <div class="post-top">
+            <span class="badge ${p.type}">${typeLabels[p.type]}</span>
+            <span class="date">${fmtDate(p.date)}</span>
+            ${p.id===bestId?'<span class="rank-tag best">найкращий ER</span>':''}
+            ${p.id===worstId?'<span class="rank-tag worst">найслабший ER</span>':''}
+          </div>
+          <div class="post-text">${p.text}</div>
+          <div class="metrics">${metricsHtml}</div>
+          <div class="analysis">
+            <div class="factors">${factors.map(f=>`<span class="factor">${f}</span>`).join('')}</div>
+            <div class="ab-row"><span class="ab-tag good">спрацювало</span><span class="ab-text">${p.good}</span></div>
+            <div class="ab-row"><span class="ab-tag bad">не спрацювало</span><span class="ab-text">${p.bad}</span></div>
+            <div class="ab-row"><span class="ab-tag next">далі</span><span class="ab-text">${p.next}</span></div>
+            <a class="link" href="${p.url}" target="_blank" rel="noopener">Відкрити пост →</a>
+          </div>
+        </div>`;
+      el.addEventListener('click', ()=> el.classList.toggle('expanded'));
+      list.appendChild(el);
+    });
+  }
+  return {render, setSort:(s)=>{currentSort=s; render();}, setFilter:(f)=>{currentFilter=f; render();}};
+}
+
+const fbTypeLabels = {photo:"Фото", video_inline:"Reel", album:"Альбом"};
+const igTypeLabels = {IMAGE:"Фото", CAROUSEL_ALBUM:"Карусель", REELS:"Reel"};
+
+const fbCtrl = buildList('list-fb', fbPosts, fbTypeLabels, true);
+const igCtrl = buildList('list-ig', igPosts, igTypeLabels, false);
+fbCtrl.render();
+igCtrl.render();
+
+function wireToolbar(sortGroupId, filterGroupId, ctrl){
+  document.getElementById(sortGroupId).addEventListener('click', e=>{
+    if(e.target.dataset.sort){
+      [...document.getElementById(sortGroupId).children].forEach(c=>c.classList.remove('active'));
+      e.target.classList.add('active');
+      ctrl.setSort(e.target.dataset.sort);
+    }
+  });
+  document.getElementById(filterGroupId).addEventListener('click', e=>{
+    if(e.target.dataset.filter){
+      [...document.getElementById(filterGroupId).children].forEach(c=>c.classList.remove('active'));
+      e.target.classList.add('active');
+      ctrl.setFilter(e.target.dataset.filter);
+    }
+  });
+}
+wireToolbar('sortGroup-fb','filterGroup-fb', fbCtrl);
+wireToolbar('sortGroup-ig','filterGroup-ig', igCtrl);
+
+/* ---------------- SVG CHARTS (no external deps) ---------------- */
+const SVGNS = 'http://www.w3.org/2000/svg';
+function svgEl(tag, attrs){
+  const el = document.createElementNS(SVGNS, tag);
+  for(const k in attrs) el.setAttribute(k, attrs[k]);
+  return el;
+}
+const chartsRendered = {};
+
+/* Simple grouped/single bar chart. series: [{label, data:[...], color, axis:'left'|'right', type:'bar'|'line'}], scales: {left:{min,max}, right:{min,max}} */
+function renderChart(containerId, {labels, series, scales, refLine, logScale}){
+  if(chartsRendered[containerId]) return;
+  const container = document.getElementById(containerId);
+  if(!container) return;
+  chartsRendered[containerId] = true;
+
+  const W = 680, H = 220;
+  const padL = 42, padR = scales.right ? 42 : 14, padT = 16, padB = 40;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+
+  const svg = svgEl('svg', {viewBox:`0 0 ${W} ${H}`, preserveAspectRatio:'xMidYMid meet'});
+
+  function mapY(val, scale){
+    if(logScale){
+      const lv = Math.log10(Math.max(val,0.05));
+      const lmin = Math.log10(Math.max(scale.min,0.05));
+      const lmax = Math.log10(Math.max(scale.max,0.05));
+      return padT + plotH - ((lv-lmin)/(lmax-lmin))*plotH;
+    }
+    return padT + plotH - ((val-scale.min)/(scale.max-scale.min))*plotH;
+  }
+
+  // gridlines (left scale, 4 lines)
+  const leftScale = scales.left;
+  for(let i=0;i<=3;i++){
+    const val = leftScale.min + (leftScale.max-leftScale.min)*i/3;
+    const y = mapY(val, leftScale);
+    svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:y.toFixed(1), y2:y.toFixed(1), class:'grid-line'}));
+    const lbl = svgEl('text', {x:padL-6, y:(y+3).toFixed(1), 'text-anchor':'end', class:'axis-lbl'});
+    lbl.textContent = leftScale.fmt ? leftScale.fmt(val) : val.toFixed(1);
+    svg.appendChild(lbl);
+  }
+  if(scales.right){
+    const rightScale = scales.right;
+    for(let i=0;i<=3;i++){
+      const val = rightScale.min + (rightScale.max-rightScale.min)*i/3;
+      const y = padT + plotH - (i/3)*plotH;
+      const lbl = svgEl('text', {x:W-padR+6, y:(y+3).toFixed(1), 'text-anchor':'start', class:'axis-lbl'});
+      lbl.textContent = rightScale.fmt ? rightScale.fmt(val) : val.toFixed(1);
+      svg.appendChild(lbl);
+    }
+  }
+
+  // x axis baseline
+  svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:padT+plotH, y2:padT+plotH, class:'axis-line'}));
+
+  const barSeries = series.filter(s=>s.type!=='line');
+  const n = labels.length;
+  const groupW = plotW/n;
+  const barCount = barSeries.length;
+  const barGap = 4;
+  const barW = Math.min(26, (groupW - barGap*(barCount+1)) / barCount);
+
+  labels.forEach((lab,i)=>{
+    const groupX = padL + i*groupW;
+    barSeries.forEach((s,si)=>{
+      const val = s.data[i];
+      if(val===null || val===undefined) return;
+      const scale = s.axis==='right' ? scales.right : scales.left;
+      const y = mapY(val, scale);
+      const x = groupX + barGap + si*(barW+barGap) + (groupW - (barW*barCount + barGap*(barCount+1)))/2;
+      const h = (padT+plotH) - y;
+      const rect = svgEl('rect', {class:'bar', x:x.toFixed(1), y:y.toFixed(1), width:barW.toFixed(1), height:Math.max(h,1).toFixed(1), rx:3, fill:s.color(i,val)});
+      svg.appendChild(rect);
+      const valLbl = svgEl('text', {x:(x+barW/2).toFixed(1), y:(y-4).toFixed(1), 'text-anchor':'middle', class:'bar-val'});
+      valLbl.textContent = s.valFmt ? s.valFmt(val) : val;
+      svg.appendChild(valLbl);
+    });
+    const xLbl = svgEl('text', {x:(groupX+groupW/2).toFixed(1), y:(padT+plotH+16).toFixed(1), 'text-anchor':'middle', class:'axis-lbl'});
+    xLbl.textContent = lab;
+    svg.appendChild(xLbl);
+  });
+
+  // line series (drawn over bars)
+  series.filter(s=>s.type==='line').forEach(s=>{
+    const scale = s.axis==='right' ? scales.right : scales.left;
+    const pts = labels.map((lab,i)=>{
+      const x = padL + i*groupW + groupW/2;
+      const y = mapY(s.data[i], scale);
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(' ');
+    svg.appendChild(svgEl('polyline', {points:pts, fill:'none', stroke:s.color(), 'stroke-width':2, 'stroke-dasharray':s.dashed?'6,4':'none'}));
+  });
+
+  // reference line (constant)
+  if(refLine){
+    const y = mapY(refLine.value, scales.left);
+    svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:y.toFixed(1), y2:y.toFixed(1), stroke:refLine.color, 'stroke-width':2, 'stroke-dasharray':'6,4'}));
+    const lbl = svgEl('text', {x:W-padR-4, y:(y-6).toFixed(1), 'text-anchor':'end', class:'axis-lbl', fill:refLine.color});
+    lbl.textContent = refLine.label;
+    svg.appendChild(lbl);
+  }
+
+  container.appendChild(svg);
+
+  // legend
+  if(series.length>1 || series[0].showLegend){
+    const legendWrap = document.createElement('div');
+    legendWrap.style.cssText = 'display:flex; gap:16px; justify-content:center; margin-top:8px; flex-wrap:wrap;';
+    series.forEach(s=>{
+      const item = document.createElement('div');
+      item.style.cssText = 'display:flex; align-items:center; gap:6px; font-family:IBM Plex Mono,monospace; font-size:10.5px; color:var(--muted);';
+      item.innerHTML = `<span style="width:10px;height:10px;border-radius:3px;background:${typeof s.color==='function'?s.color(0):s.color};display:inline-block;"></span>${s.label}`;
+      legendWrap.appendChild(item);
+    });
+    container.parentElement.appendChild(legendWrap);
+  }
+}
+
+function initOverviewCharts(){
+  renderChart('chart-weekly', {
+    labels:['1-7 черв.','8-14 черв.','15-21 черв.','22-30 черв.'],
+    series:[
+      {label:'Facebook ER %', data:[1.26,1.20,1.00,1.00], color:()=>'#3B72E0', axis:'left', valFmt:v=>v.toFixed(2)},
+      {label:'Instagram ER %', data:[9.74,null,6.90,8.64], color:()=>'#DB3E82', axis:'right', valFmt:v=>v.toFixed(1)}
+    ],
+    scales:{ left:{min:0,max:3, fmt:v=>v.toFixed(1)}, right:{min:0,max:12, fmt:v=>v.toFixed(0)} }
+  });
+  renderChart('chart-benchmark', {
+    labels:['Facebook','Instagram'],
+    series:[
+      {label:'Цей акаунт', data:[1.11, 8.21], color:()=>'#3B72E0', axis:'left', valFmt:v=>v.toFixed(2)+'%'},
+      {label:'Галузь (медицина)', data:[0.15, 1.21], color:()=>'rgba(140,155,176,0.7)', axis:'left', valFmt:v=>v.toFixed(2)+'%'}
+    ],
+    scales:{ left:{min:0.05, max:10, fmt:v=>v.toFixed(1)+'%'} },
+    logScale:true
+  });
+}
+
+function initFacebookCharts(){
+  const sorted = [...fbPosts].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const maxER = Math.max(...fbPosts.map(p=>p.er));
+  const minER = Math.min(...fbPosts.map(p=>p.er));
+  renderChart('chart-fb-er', {
+    labels: sorted.map(p=>fmtDate(p.date).slice(0,5)),
+    series:[{
+      label:'ER %', data: sorted.map(p=>p.er), valFmt:v=>v.toFixed(2),
+      color:(i,v)=> v===maxER ? '#E68A19' : (v===minER ? '#E24D6D' : '#3B72E0')
+    }],
+    scales:{ left:{min:0, max:maxER*1.2, fmt:v=>v.toFixed(1)+'%'} }
+  });
+  renderChart('chart-fb-reach', {
+    labels: sorted.map(p=>fmtDate(p.date).slice(0,5)),
+    series:[{
+      label:'Покази', data: sorted.map(p=>p.impressions), valFmt:v=>v>=1000?(v/1000).toFixed(0)+'к':v,
+      color:()=>'#3B72E0'
+    }],
+    scales:{ left:{min:500, max:130000, fmt:v=>v>=1000?(v/1000).toFixed(0)+'к':v.toFixed(0)} },
+    logScale:true
+  });
+}
+
+function initInstagramCharts(){
+  const sorted = [...igPosts].sort((a,b)=>new Date(a.date)-new Date(b.date));
+  const maxER = Math.max(...igPosts.map(p=>p.er));
+  const minER = Math.min(...igPosts.map(p=>p.er));
+  renderChart('chart-ig-er', {
+    labels: sorted.map(p=>fmtDate(p.date).slice(0,5)),
+    series:[{
+      label:'ER %', data: sorted.map(p=>p.er), valFmt:v=>v.toFixed(2),
+      color:(i,v)=> v===maxER ? '#E68A19' : (v===minER ? '#E24D6D' : '#DB3E82')
+    }],
+    scales:{ left:{min:0, max:maxER*1.2, fmt:v=>v.toFixed(1)+'%'} }
+  });
+  renderChart('chart-ig-reach', {
+    labels: sorted.map(p=>fmtDate(p.date).slice(0,5)),
+    series:[{ label:'Охоплення', data: sorted.map(p=>p.reach), valFmt:v=>v, color:()=>'#DB3E82' }],
+    scales:{ left:{min:0, max:Math.max(...igPosts.map(p=>p.reach))*1.2, fmt:v=>v.toFixed(0)} },
+    refLine:{value:371, color:'#E68A19', label:'371 підписники'}
+  });
+}
+
+initOverviewCharts();
+
+/* ---------------- TABS ---------------- */
+document.getElementById('tabs').addEventListener('click', e=>{
+  if(e.target.dataset.tab){
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    e.target.classList.add('active');
+    document.getElementById('panel-'+e.target.dataset.tab).classList.add('active');
+    if(e.target.dataset.tab==='facebook') initFacebookCharts();
+    if(e.target.dataset.tab==='instagram') initInstagramCharts();
+  }
+});
+</script>
+</body>
+</html>
