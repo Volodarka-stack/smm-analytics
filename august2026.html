@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Всеукраїнський альянс офтальмологів · SMM Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg-0:#0A0C10;
+  --bg-1:#0F1218;
+  --bg-2:#151923;
+  --surface:rgba(255,255,255,0.035);
+  --surface-hover:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.08);
+  --border-soft:rgba(255,255,255,0.05);
+  --text-0:#F3F5F7;
+  --text-1:#AEB6C2;
+  --text-2:#6E7683;
+  --teal:#5EEAD4;
+  --teal-deep:#2DD4BF;
+  --violet:#8B8CF6;
+  --violet-deep:#6366F1;
+  --grad-brand: linear-gradient(120deg, #5EEAD4 0%, #8B8CF6 100%);
+  --amber:#F5B942;
+  --rose:#FB7CA5;
+  --fb-a:#5B9CF6; --fb-b:#7C7CF0;
+  --ig-a:#FB7CA5; --ig-b:#C084FC;
+  --pos:#4ADE80;
+  --neg:#FB7185;
+  --radius:20px;
+  --radius-sm:12px;
+  --ease: cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(1100px 600px at 12% -8%, rgba(94,234,212,0.10), transparent 60%),
+    radial-gradient(900px 560px at 90% 8%, rgba(139,140,246,0.10), transparent 55%),
+    radial-gradient(900px 700px at 50% 110%, rgba(251,124,165,0.06), transparent 60%),
+    var(--bg-0);
+  color:var(--text-0);
+  font-family:'Inter', sans-serif; font-size:15px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+::selection{background:var(--violet-deep); color:#fff;}
+h1,h2,h3,h4{font-family:'Space Grotesk', sans-serif; font-weight:600; margin:0; color:var(--text-0); letter-spacing:-.01em;}
+a{color:var(--teal);}
+.mono{font-family:'JetBrains Mono', monospace;}
+.wrap{max-width:1220px; margin:0 auto; padding:0 32px;}
+@media(max-width:680px){.wrap{padding:0 18px;}}
+::-webkit-scrollbar{height:8px; width:8px;}
+::-webkit-scrollbar-thumb{background:var(--border); border-radius:8px;}
+
+/* ---------- HEADER ---------- */
+header.top{padding:52px 0 0; position:relative;}
+.eyebrow{
+  font-family:'JetBrains Mono', monospace; font-size:12px; color:var(--teal);
+  letter-spacing:.08em; margin-bottom:18px; display:flex; align-items:center; gap:10px; text-transform:uppercase;
+}
+.eyebrow .pulse{width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 0 0 rgba(94,234,212,.6); animation:pulse 2.2s infinite;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(94,234,212,.55);}70%{box-shadow:0 0 0 9px rgba(94,234,212,0);}100%{box-shadow:0 0 0 0 rgba(94,234,212,0);}}
+h1.title{font-size:44px; line-height:1.1; max-width:880px; font-weight:700;}
+h1.title .grad{background:var(--grad-brand); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.subtitle{margin-top:16px; color:var(--text-1); font-size:16.5px; max-width:700px; font-weight:400;}
+@media(max-width:640px){h1.title{font-size:30px;}}
+
+/* ---------- TABS (pill segmented, sliding indicator) ---------- */
+nav.tabs{position:sticky; top:18px; z-index:60; margin-top:38px;}
+.tabs-inner{
+  display:inline-flex; gap:2px; position:relative; padding:5px;
+  background:rgba(15,18,24,0.72); backdrop-filter:blur(16px) saturate(160%);
+  border:1px solid var(--border); border-radius:16px; max-width:100%; overflow-x:auto;
+}
+.tabs-inner .slider{
+  position:absolute; top:5px; bottom:5px; left:5px; border-radius:11px;
+  background:var(--surface-hover); border:1px solid var(--border);
+  transition:transform .45s var(--ease), width .45s var(--ease);
+  z-index:0;
+}
+.tab-btn{
+  appearance:none; border:none; background:transparent; cursor:pointer; position:relative; z-index:1;
+  font-family:'Inter', sans-serif; font-weight:600; font-size:14px;
+  color:var(--text-1); padding:11px 20px; white-space:nowrap; border-radius:11px;
+  transition:color .25s var(--ease);
+}
+.tab-btn.active{color:var(--text-0);}
+.tab-btn:hover:not(.active){color:var(--text-0);}
+
+main{padding:44px 0 90px;}
+.panel{display:none;}
+.panel.active{display:block; animation:panelIn .5s var(--ease);}
+@keyframes panelIn{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+
+section{margin-bottom:60px;}
+section > h2{font-size:24px; margin-bottom:8px; font-weight:600;}
+section > .lede{color:var(--text-1); font-size:14.5px; max-width:740px; margin-bottom:26px;}
+hr.rule{border:none; border-top:1px solid var(--border-soft); margin:54px 0;}
+
+/* ---------- MONTH SWITCH (pill, sliding) ---------- */
+.month-switch{position:relative; display:inline-flex; gap:2px; background:var(--surface); padding:4px; border-radius:13px; margin-bottom:30px; border:1px solid var(--border);}
+.month-switch .slider{position:absolute; top:4px; bottom:4px; left:4px; border-radius:9px; background:var(--grad-brand); transition:transform .4s var(--ease), width .4s var(--ease); z-index:0;}
+.month-switch button{
+  appearance:none; border:none; background:transparent; cursor:pointer; border-radius:9px; position:relative; z-index:1;
+  font-family:'JetBrains Mono', monospace; font-size:12.5px; padding:9px 17px; color:var(--text-1);
+  transition:color .3s var(--ease);
+}
+.month-switch button.active{color:#0A0C10; font-weight:500;}
+.month-switch button:hover:not(.active){color:var(--text-0);}
+
+/* ---------- GLASS CARD ---------- */
+.card{
+  background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  transition:border-color .3s var(--ease), transform .3s var(--ease), background .3s var(--ease);
+}
+.card:hover{border-color:rgba(255,255,255,0.14); background:var(--surface-hover);}
+
+/* ---------- HERO NUMBER ---------- */
+.hero-stat{
+  display:flex; gap:50px; align-items:center; flex-wrap:wrap; padding:44px 40px;
+  border-radius:28px; margin-bottom:44px; position:relative; overflow:hidden;
+  background:linear-gradient(135deg, rgba(94,234,212,0.09), rgba(139,140,246,0.09));
+  border:1px solid var(--border);
+}
+.hero-stat::before{
+  content:""; position:absolute; width:420px; height:420px; border-radius:50%;
+  background:radial-gradient(circle, rgba(94,234,212,.18), transparent 70%);
+  top:-180px; right:-140px; pointer-events:none;
+}
+.hero-num{font-family:'Space Grotesk', sans-serif; font-size:128px; font-weight:700; line-height:.82; letter-spacing:-.03em;
+  background:var(--grad-brand); -webkit-background-clip:text; background-clip:text; color:transparent; position:relative;}
+.hero-num sup{font-size:42px; top:-.6em;}
+.hero-copy{max-width:540px; position:relative;}
+.hero-copy h3{font-size:21px; margin-bottom:12px; line-height:1.35; color:var(--text-0); font-weight:600;}
+.hero-copy p{color:var(--text-1); font-size:14.5px; margin:0; line-height:1.65;}
+@media(max-width:760px){.hero-num{font-size:78px;} .hero-stat{padding:32px 24px;}}
+
+/* ---------- KPI GRID ---------- */
+.kpi-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(168px,1fr)); gap:14px; margin-bottom:8px;}
+.kpi{padding:22px 22px 20px; position:relative; overflow:hidden;}
+.kpi .accent{position:absolute; top:0; left:0; right:0; height:3px; background:var(--text-2); opacity:.5;}
+.kpi.fb .accent{background:linear-gradient(90deg,var(--fb-a),var(--fb-b)); opacity:1;}
+.kpi.ig .accent{background:linear-gradient(90deg,var(--ig-a),var(--ig-b)); opacity:1;}
+.kpi .label{font-size:11.5px; color:var(--text-2); margin-bottom:12px; font-family:'JetBrains Mono',monospace; letter-spacing:.01em;}
+.kpi .value{font-family:'Space Grotesk', sans-serif; font-size:29px; font-weight:600; color:var(--text-0); font-variant-numeric:tabular-nums;}
+.kpi .delta{font-size:12px; margin-top:8px; font-weight:600; display:inline-flex; align-items:center; gap:4px;}
+.kpi .delta.up{color:var(--pos);}
+.kpi .delta.down{color:var(--neg);}
+
+/* ---------- CALLOUTS ---------- */
+.callouts{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:36px;}
+.callout{padding:26px 24px;}
+.callout .tag{font-family:'JetBrains Mono', monospace; font-size:10.5px; color:var(--teal); margin-bottom:14px; letter-spacing:.04em; text-transform:uppercase;}
+.callout .num{font-family:'Space Grotesk', sans-serif; font-size:38px; font-weight:700; color:var(--text-0); margin-bottom:10px;}
+.callout p{font-size:13.5px; color:var(--text-1); margin:0; line-height:1.6;}
+@media(max-width:860px){.callouts{grid-template-columns:1fr;}}
+
+/* ---------- CHART CARD ---------- */
+.chart-card{padding:28px 28px 22px; margin-bottom:22px;}
+.chart-card h4{font-size:15.5px; margin-bottom:4px; font-weight:600;}
+.chart-card .note{font-size:12.5px; color:var(--text-2); margin-bottom:20px;}
+.two-col{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media(max-width:880px){.two-col{grid-template-columns:1fr;}}
+
+/* ---------- SVG chart ---------- */
+.svg-chart{width:100%; height:auto; display:block; overflow:visible; font-family:'JetBrains Mono', monospace;}
+.svg-chart .axis-label{fill:var(--text-2); font-size:10.5px;}
+.svg-chart .gridline{stroke:rgba(255,255,255,0.055); stroke-width:1;}
+.svg-chart .zero-line{stroke:rgba(255,255,255,0.14); stroke-width:1;}
+.bar-rect{cursor:pointer; transition:filter .18s var(--ease), opacity .18s var(--ease);}
+.bar-rect:hover{filter:brightness(1.25); opacity:1;}
+.chart-canvas-wrap{position:relative;}
+.svg-tooltip{
+  position:absolute; pointer-events:none; background:rgba(15,18,24,0.96); color:var(--text-0);
+  font-family:'Inter', sans-serif; font-size:12.5px; padding:9px 13px; border-radius:10px;
+  border:1px solid var(--border); box-shadow:0 12px 30px rgba(0,0,0,0.45);
+  transform:translate(-50%,-118%); white-space:nowrap; opacity:0; transition:opacity .12s var(--ease); z-index:30; line-height:1.55;
+}
+.svg-tooltip b{color:var(--teal); font-family:'JetBrains Mono',monospace; font-weight:500;}
+
+.filter-row{display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;}
+.filter-btn{
+  font-family:'JetBrains Mono', monospace; font-size:12px; border:1px solid var(--border);
+  background:transparent; padding:8px 16px; cursor:pointer; color:var(--text-1); border-radius:20px;
+  transition:all .25s var(--ease);
+}
+.filter-btn.active{background:var(--text-0); color:#0A0C10; border-color:var(--text-0);}
+.filter-btn:hover:not(.active){border-color:var(--text-1); color:var(--text-0);}
+
+/* ---------- FINDINGS ---------- */
+.split-two{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media(max-width:860px){.split-two{grid-template-columns:1fr;}}
+.finding-card{padding:26px 24px;}
+.finding-card > h4{margin-bottom:16px; font-size:15px; display:flex; align-items:center; gap:8px;}
+.finding-list{list-style:none; margin:0; padding:0;}
+.finding-list li{padding:15px 0; border-bottom:1px solid var(--border-soft); position:relative; padding-left:26px; font-size:13.5px; color:var(--text-0);}
+.finding-list li:last-child{border-bottom:none; padding-bottom:0;}
+.finding-list li:before{content:"→"; position:absolute; left:0; color:var(--text-2);}
+.finding-list.good li:before{content:"✓"; color:var(--pos); font-weight:700;}
+.finding-list.bad li:before{content:"✕"; color:var(--neg); font-weight:700;}
+.finding-list b{font-weight:600;}
+.finding-list .small{display:block; color:var(--text-1); font-size:12.5px; margin-top:5px; line-height:1.55;}
+
+/* ---------- POST TABLE ---------- */
+.table-card{padding:6px; overflow:hidden;}
+.post-table{width:100%; border-collapse:collapse; font-size:13.5px;}
+.post-table thead th{
+  text-align:left; font-family:'JetBrains Mono', monospace; font-weight:500; font-size:10.5px;
+  color:var(--text-2); border-bottom:1px solid var(--border); padding:14px 16px; cursor:pointer; white-space:nowrap;
+  user-select:none; text-transform:uppercase; letter-spacing:.03em;
+}
+.post-table thead th:hover{color:var(--text-0);}
+.post-table tbody tr.row{border-bottom:1px solid var(--border-soft); cursor:pointer; transition:background .15s var(--ease);}
+.post-table tbody tr.row:hover{background:var(--surface-hover);}
+.post-table td{padding:14px 16px; vertical-align:top; color:var(--text-1);}
+.post-table td.num{font-family:'JetBrains Mono', monospace; text-align:right; white-space:nowrap; color:var(--text-0);}
+.er-pill{display:inline-block; padding:4px 11px; border-radius:20px; font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:500;}
+.type-tag{font-size:10.5px; font-family:'JetBrains Mono',monospace; color:var(--text-1); padding:3px 9px; border:1px solid var(--border); border-radius:20px;}
+.post-detail{display:none;}
+.post-detail.open{display:table-row;}
+.post-detail td{padding:0 16px 20px; background:transparent;}
+.post-detail-inner{padding:16px 18px; border-radius:12px; background:rgba(255,255,255,0.03); border-left:3px solid var(--teal);}
+.post-msg{font-weight:600; margin-bottom:14px; font-size:14.5px; color:var(--text-0); line-height:1.5;}
+.post-insight{color:var(--text-1); font-size:13.5px; line-height:1.65;}
+
+.metric-chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px;}
+.metric-chip{
+  display:flex; flex-direction:column; gap:3px; padding:9px 14px; border-radius:10px;
+  background:rgba(255,255,255,0.035); border:1px solid var(--border-soft); min-width:100px;
+}
+.metric-chip .mc-label{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--text-2); text-transform:uppercase; letter-spacing:.03em;}
+.metric-chip .mc-value{font-family:'Space Grotesk',sans-serif; font-size:16px; font-weight:600; color:var(--text-0);}
+.metric-chip.follow-chip{border-width:1px; border-style:solid;}
+.metric-chip.follow-chip .mc-value{font-family:'Inter',sans-serif; font-size:12.5px; font-weight:600;}
+
+.pc-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;}
+@media(max-width:600px){.pc-grid{grid-template-columns:1fr;}}
+.pc-col .pc-head{font-family:'JetBrains Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; margin-bottom:8px; color:var(--text-2);}
+.pc-col.pc-good .pc-head{color:var(--pos);}
+.pc-col.pc-bad .pc-head{color:var(--neg);}
+.pc-col ul{list-style:none; margin:0; padding:0;}
+.pc-col li{font-size:13px; color:var(--text-1); padding:6px 0 6px 18px; position:relative; line-height:1.5;}
+.pc-col.pc-good li:before{content:"✓"; position:absolute; left:0; color:var(--pos); font-size:11px;}
+.pc-col.pc-bad li:before{content:"✕"; position:absolute; left:0; color:var(--neg); font-size:11px;}
+
+.rec-callout{
+  background:linear-gradient(120deg, rgba(94,234,212,0.08), rgba(139,140,246,0.08));
+  border:1px solid rgba(94,234,212,0.18); border-radius:10px; padding:13px 16px;
+  font-size:13px; color:var(--text-0); line-height:1.55;
+}
+.rec-tag{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--teal); text-transform:uppercase; letter-spacing:.04em; display:block; margin-bottom:5px;}
+
+/* ---------- GOAL FRAMEWORK ---------- */
+.goal-framework{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px;}
+@media(max-width:860px){.goal-framework{grid-template-columns:1fr;}}
+.gf-card{padding:22px 22px 20px;}
+.gf-card .gf-icon{font-family:'Space Grotesk',sans-serif; font-size:22px; margin-bottom:12px; color:var(--teal);}
+.gf-card h4{font-size:14.5px; margin-bottom:8px;}
+.gf-card p{font-size:13px; color:var(--text-1); margin:0; line-height:1.6;}
+.gf-priority{
+  margin-top:8px; padding:18px 22px; border-radius:14px;
+  background:linear-gradient(120deg, rgba(94,234,212,0.1), rgba(139,140,246,0.1));
+  border:1px solid rgba(94,234,212,0.2); font-size:13.5px; color:var(--text-0); line-height:1.6;
+}
+.gf-priority b{color:var(--teal);}
+
+/* ---------- TOP THEME BLOCK ---------- */
+.theme-block{padding:24px 26px; margin-bottom:24px;}
+.theme-block .tb-label{font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--text-2); text-transform:uppercase; letter-spacing:.04em; margin-bottom:10px;}
+.theme-block h3{font-size:19px; margin-bottom:10px;}
+.theme-block h3 .tb-er{color:var(--teal);}
+.theme-block p{font-size:13.5px; color:var(--text-1); line-height:1.65; margin:0 0 8px;}
+.theme-block .tb-evidence{font-size:12.5px; color:var(--text-2); font-family:'JetBrains Mono',monospace;}
+.chev{display:inline-block; transition:transform .25s var(--ease); color:var(--text-2); margin-right:8px; font-size:11px;}
+.row.expanded .chev{transform:rotate(90deg); color:var(--teal);}
+
+/* ---------- BENCHMARK ---------- */
+.bench-row{display:flex; align-items:center; gap:18px; padding:13px 0;}
+.bench-label{width:250px; font-size:13.5px; color:var(--text-1); flex-shrink:0;}
+.bench-bar-wrap{flex:1; background:rgba(255,255,255,0.04); height:24px; border-radius:8px; position:relative; overflow:hidden; border:1px solid var(--border-soft);}
+.bench-bar{height:100%; border-radius:7px; transition:width 1s var(--ease); background:linear-gradient(90deg, var(--text-2), var(--text-1));}
+.bench-bar.us{background:var(--grad-brand); box-shadow:0 0 18px rgba(94,234,212,0.35);}
+.bench-val{width:66px; text-align:right; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--text-0); flex-shrink:0;}
+
+.goal-table{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:14px;}
+.goal-table th{text-align:left; font-family:'JetBrains Mono',monospace; font-size:10.5px; color:var(--text-2); border-bottom:1px solid var(--border); padding:11px 16px; text-transform:uppercase; letter-spacing:.03em;}
+.goal-table td{padding:14px 16px; border-bottom:1px solid var(--border-soft); color:var(--text-1);}
+.goal-table td:first-child{color:var(--text-0); font-weight:500;}
+.goal-arrow{color:var(--teal); font-weight:700;}
+.goal-target{color:var(--text-0)!important; font-weight:600!important;}
+
+.source-list{font-size:12.5px; color:var(--text-1); line-height:2.1;}
+.source-list a{color:var(--teal); text-decoration:none; border-bottom:1px dotted rgba(94,234,212,.4);}
+.badge{display:inline-block; font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:3px 10px; border:1px solid var(--border); border-radius:20px; color:var(--text-2); margin-left:8px; vertical-align:middle;}
+
+footer{border-top:1px solid var(--border-soft); padding:30px 0 60px; margin-top:10px;}
+footer p{font-size:12px; color:var(--text-2); max-width:760px;}
+
+@media(max-width:640px){.hero-stat{gap:26px;}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow"><span class="pulse"></span>SMM Intelligence · Facebook + Instagram · Windsor.ai</div>
+    <h1 class="title">Всеукраїнський альянс <span class="grad">офтальмологів</span></h1>
+    <p class="subtitle">Червень – серпень 2026. 32 публікації на Facebook і 22 на Instagram розібрані по кожному посту: що спрацювало, що ні, звідки прийшли нові підписники і як акаунт виглядає на тлі ринку.</p>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="wrap">
+    <div class="tabs-inner" id="tabs-inner">
+      <div class="slider" id="tabs-slider"></div>
+      <button class="tab-btn active" data-tab="overview">Огляд</button>
+      <button class="tab-btn" data-tab="facebook">Facebook</button>
+      <button class="tab-btn" data-tab="instagram">Instagram</button>
+      <button class="tab-btn" data-tab="trends">Ринок і рекомендації</button>
+    </div>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="panel active" id="panel-overview"></div>
+  <div class="panel" id="panel-facebook"></div>
+  <div class="panel" id="panel-instagram"></div>
+  <div class="panel" id="panel-trends"></div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b style="color:var(--text-1)">Всеукраїнський альянс офтальмологів</b> · Facebook Page Insights та Instagram Insights, отримані через Windsor.ai. ER на Facebook — від показів, на Instagram — від охоплення. Ринкові дані — відкриті звіти Hootsuite, Socialinsider, Growth-onomics, Apaya, Sprout Social, Branding Pioneers (2026). Клікніть на рядок таблиці, щоб розгорнути розбір посту.</p>
+  </div>
+</footer>
+
+<script id="raw-data" type="application/json">
+{"fb": [{"post_id": "...1418605410311455", "date": "2026-06-01", "type": "photo", "msg": "Амбліопія у дорослих", "impressions": 7271, "reach": 5377, "engagements": 49, "reactions": 41, "comments": 1, "shares": 7, "clicks": 90, "permalink": "https://www.facebook.com/1456143826557613/posts/1418605410311455", "er": 0.673910053637739, "cat": "Клінічний розбір", "insight": "ER 0.67% — у 1.8× нижче середнього по сторінці (1.20%).", "fb_net_d0": 1, "fb_net_d0d1": 1, "fb_net_d0d1d2": 1, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 7271}, {"label": "Охоплення", "value": 5377}, {"label": "Залучення", "value": 49}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Показники в межах очікуваного для цієї рубрики — без явних точок росту"], "cons": ["ER 0.67% — у 1.8× нижче середнього по сторінці"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1422333816605281", "date": "2026-06-05", "type": "photo", "msg": "#назлобудня", "impressions": 1849, "reach": 1141, "engagements": 33, "reactions": 27, "comments": 2, "shares": 4, "clicks": 22, "permalink": "", "er": 1.7847485127095726, "cat": "Легкий контент / гумор", "insight": "ER 1.78% — близько до середнього по сторінці (1.20%).", "fb_net_d0": 0, "fb_net_d0d1": 0, "fb_net_d0d1d2": 0, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 1849}, {"label": "Охоплення", "value": 1141}, {"label": "Залучення", "value": 33}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["ER 1.78% — у 1.5× вище середнього по сторінці (1.20%)", "Простий у виробництві формат, що стабільно тримає ER вище середнього"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1425088382996491", "date": "2026-06-08", "type": "photo", "msg": "Гіфема: сучасний алгоритм", "impressions": 1467, "reach": 687, "engagements": 34, "reactions": 29, "comments": 0, "shares": 5, "clicks": 12, "permalink": "", "er": 2.3176550783912746, "cat": "Клінічний розбір", "insight": "ER 2.32% — у 1.9× вище середнього по сторінці (1.20%).", "fb_net_d0": 0, "fb_net_d0d1": 0, "fb_net_d0d1d2": 1, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 1467}, {"label": "Охоплення", "value": 687}, {"label": "Залучення", "value": 34}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["ER 2.32% — у 1.9× вище середнього по сторінці (1.20%)"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1426845302820799", "date": "2026-06-10", "type": "album", "msg": "Фотоальбом (без підпису)", "impressions": 3446, "reach": 1408, "engagements": 25, "reactions": 22, "comments": 0, "shares": 3, "clicks": 927, "permalink": "", "er": 0.7254788160185722, "cat": "Альбом без підпису", "insight": "ER 0.73% — близько до середнього по сторінці (1.20%). Кліків значно більше, ніж реакцій — люди гортали/переходили, але не залишали слід (лайк/коментар/шер).", "fb_net_d0": 1, "fb_net_d0d1": 4, "fb_net_d0d1d2": 4, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 3446}, {"label": "Охоплення", "value": 1408}, {"label": "Залучення", "value": 25}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Показники в межах очікуваного для цієї рубрики — без явних точок росту"], "cons": ["Багато кліків, мало реакцій — люди гортали/переходили, але не лишали слід", "Немає підпису й питання до аудиторії — нема приводу коментувати"], "recommendation": "Додати підпис із прямим питанням до аудиторії — перетворить перегляд фото на коментар."}}, {"post_id": "...1428002136038449", "date": "2026-06-11", "type": "reel", "msg": "Measure Twice Лекція 2", "impressions": 1354, "reach": 901, "engagements": 5, "reactions": 17, "comments": 1, "shares": 4, "clicks": 26, "permalink": "", "er": 0.3692762186115214, "cat": "Освітній курс/подія (анонс)", "insight": "ER 0.37% — у 3.2× нижче середнього по сторінці (1.20%). Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі. Формат reel на Facebook: історично найслабший ER-формат цього акаунта.", "fb_net_d0": 3, "fb_net_d0d1": 3, "fb_net_d0d1d2": 3, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 1354}, {"label": "Охоплення", "value": 901}, {"label": "Залучення", "value": 5}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Високий відсоток репостів у структурі залучення — контент активно поширювали"], "cons": ["ER 0.37% — у 3.2× нижче середнього по сторінці", "Формат reel — історично найслабший ER-формат на цій сторінці (0,32% у середньому)"], "recommendation": "Скоротити відео до 15–20 сек і адаптувати перші секунди хука під стрічку Facebook, або публікувати цей контент лише в Instagram без дублювання."}}, {"post_id": "...1428680429303953", "date": "2026-06-12", "type": "photo", "msg": "#назлобудня", "impressions": 3611, "reach": 2118, "engagements": 40, "reactions": 32, "comments": 1, "shares": 7, "clicks": 41, "permalink": "", "er": 1.1077263915812794, "cat": "Легкий контент / гумор", "insight": "ER 1.11% — близько до середнього по сторінці (1.20%). Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі.", "fb_net_d0": 0, "fb_net_d0d1": 0, "fb_net_d0d1d2": 0, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 3611}, {"label": "Охоплення", "value": 2118}, {"label": "Залучення", "value": 40}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Високий відсоток репостів у структурі залучення — контент активно поширювали", "Простий у виробництві формат, що стабільно тримає ER вище середнього"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1433123202193009", "date": "2026-06-17", "type": "photo", "msg": "Lancaster Course запрошення", "impressions": 3560, "reach": 1811, "engagements": 43, "reactions": 23, "comments": 1, "shares": 19, "clicks": 102, "permalink": "", "er": 1.2078651685393258, "cat": "Освітній курс/подія (анонс)", "insight": "ER 1.21% — близько до середнього по сторінці (1.20%). Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі.", "fb_net_d0": 1, "fb_net_d0d1": 1, "fb_net_d0d1d2": 1, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 3560}, {"label": "Охоплення", "value": 1811}, {"label": "Залучення", "value": 43}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Високий відсоток репостів у структурі залучення — контент активно поширювали"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1434363012069028", "date": "2026-06-18", "type": "reel", "msg": "Measure Twice Лекція 3", "impressions": 1157, "reach": 852, "engagements": 4, "reactions": 10, "comments": 1, "shares": 3, "clicks": 5, "permalink": "", "er": 0.34572169403630076, "cat": "Освітній курс/подія (анонс)", "insight": "ER 0.35% — у 3.5× нижче середнього по сторінці (1.20%). Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі. Формат reel на Facebook: історично найслабший ER-формат цього акаунта.", "fb_net_d0": 0, "fb_net_d0d1": 0, "fb_net_d0d1d2": 2, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 1157}, {"label": "Охоплення", "value": 852}, {"label": "Залучення", "value": 4}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Високий відсоток репостів у структурі залучення — контент активно поширювали"], "cons": ["ER 0.35% — у 3.5× нижче середнього по сторінці", "Формат reel — історично найслабший ER-формат на цій сторінці (0,32% у середньому)"], "recommendation": "Скоротити відео до 15–20 сек і адаптувати перші секунди хука під стрічку Facebook, або публікувати цей контент лише в Instagram без дублювання."}}, {"post_id": "...1434937322011597", "date": "2026-06-19", "type": "photo", "msg": "#назлобудня", "impressions": 8278, "reach": 4844, "engagements": 107, "reactions": 86, "comments": 5, "shares": 16, "clicks": 309, "permalink": "", "er": 1.2925827494563904, "cat": "Легкий контент / гумор", "insight": "ER 1.29% — близько до середнього по сторінці (1.20%).", "fb_net_d0": 0, "fb_net_d0d1": 2, "fb_net_d0d1d2": 2, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 8278}, {"label": "Охоплення", "value": 4844}, {"label": "Залучення", "value": 107}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Простий у виробництві формат, що стабільно тримає ER вище середнього"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1437573045081358", "date": "2026-06-22", "type": "photo", "msg": "Довідник офтальмотоксичних препаратів", "impressions": 114895, "reach": 82890, "engagements": 787, "reactions": 645, "comments": 22, "shares": 120, "clicks": 1977, "permalink": "", "er": 0.6849732364332651, "cat": "Клінічний розбір", "insight": "ER 0.68% — у 1.8× нижче середнього по сторінці (1.20%). Охоплення (114 895) значно вище середнього — органічний виліт за межі базової аудиторії. Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі. Помітно високий рівень коментарів — тема викликала дискусію.", "fb_net_d0": 33, "fb_net_d0d1": 52, "fb_net_d0d1d2": 63, "follow_verdict": "приніс: +33 у день публікації", "analysis": {"metrics": [{"label": "Покази", "value": 114895}, {"label": "Охоплення", "value": 82890}, {"label": "Залучення", "value": 787}], "follow_verdict": "приніс: +33 у день публікації", "pros": ["Покази (114 895) значно вище типових 11053 — органічний виліт за межі бази", "Високий відсоток репостів у структурі залучення — контент активно поширювали", "22 коментарів — тема викликала дискусію, а не тільки лайки", "Привів помітний приплив нових підписників сторінки"], "cons": ["ER 0.68% — у 1.8× нижче середнього по сторінці"], "recommendation": "Повторити цей формат (структурований довідник/практичний чек-лист) свідомо ще раз наступного місяця — саме такі пости конвертують охоплення в підписників."}}, {"post_id": "...1441168684721794", "date": "2026-06-26", "type": "reel", "msg": "Junior Ophthalmology Summit (реліз)", "impressions": 7239, "reach": 5753, "engagements": 16, "reactions": 88, "comments": 1, "shares": 15, "clicks": 116, "permalink": "", "er": 0.2210250034535157, "cat": "Освітній курс/подія (анонс)", "insight": "ER 0.22% — у 5.4× нижче середнього по сторінці (1.20%). Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі. Кліків значно більше, ніж реакцій — люди гортали/переходили, але не залишали слід (лайк/коментар/шер). Формат reel на Facebook: історично найслабший ER-формат цього акаунта.", "fb_net_d0": 5, "fb_net_d0d1": 8, "fb_net_d0d1d2": 7, "follow_verdict": "приніс: +5 у день публікації", "analysis": {"metrics": [{"label": "Покази", "value": 7239}, {"label": "Охоплення", "value": 5753}, {"label": "Залучення", "value": 16}], "follow_verdict": "приніс: +5 у день публікації", "pros": ["Високий відсоток репостів у структурі залучення — контент активно поширювали", "Привів помітний приплив нових підписників сторінки"], "cons": ["ER 0.22% — у 5.4× нижче середнього по сторінці", "Формат reel — історично найслабший ER-формат на цій сторінці (0,32% у середньому)", "Багато кліків, мало реакцій — люди гортали/переходили, але не лишали слід"], "recommendation": "Скоротити відео до 15–20 сек і адаптувати перші секунди хука під стрічку Facebook, або публікувати цей контент лише в Instagram без дублювання."}}, {"post_id": "...1442889581216371", "date": "2026-06-28", "type": "photo", "msg": "День Конституції", "impressions": 1550, "reach": 860, "engagements": 31, "reactions": 27, "comments": 2, "shares": 2, "clicks": 16, "permalink": "", "er": 2.0, "cat": "Свято/подія країни", "insight": "ER 2.00% — у 1.7× вище середнього по сторінці (1.20%).", "fb_net_d0": -1, "fb_net_d0d1": 1, "fb_net_d0d1d2": 2, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 1550}, {"label": "Охоплення", "value": 860}, {"label": "Залучення", "value": 31}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["ER 2.00% — у 1.7× вище середнього по сторінці (1.20%)", "Емоційний, не клінічний контент — і саме тому дав високий ER"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати цей емоційний тон; можна додати заклик поділитися постом для ще ширшого охоплення."}}, {"post_id": "...1446809954157667", "date": "2026-07-02", "type": "reel", "msg": "Оптометрія IOLCon", "impressions": 1250, "reach": 860, "engagements": 8, "reactions": 27, "comments": 1, "shares": 7, "clicks": 11, "permalink": "", "er": 0.64, "cat": "Освітній курс/подія (анонс)", "insight": "ER 0.64% — у 1.9× нижче середнього по сторінці (1.20%). Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі. Формат reel на Facebook: історично найслабший ER-формат цього акаунта.", "fb_net_d0": -1, "fb_net_d0d1": -1, "fb_net_d0d1d2": 0, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 1250}, {"label": "Охоплення", "value": 860}, {"label": "Залучення", "value": 8}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Високий відсоток репостів у структурі залучення — контент активно поширювали"], "cons": ["ER 0.64% — у 1.9× нижче середнього по сторінці", "Формат reel — історично найслабший ER-формат на цій сторінці (0,32% у середньому)"], "recommendation": "Скоротити відео до 15–20 сек і адаптувати перші секунди хука під стрічку Facebook, або публікувати цей контент лише в Instagram без дублювання."}}, {"post_id": "...1447378197434176", "date": "2026-07-03", "type": "photo", "msg": "#назлобудня", "impressions": 10290, "reach": 7000, "engagements": 108, "reactions": 97, "comments": 2, "shares": 9, "clicks": 176, "permalink": "", "er": 1.0495626822157436, "cat": "Легкий контент / гумор", "insight": "ER 1.05% — близько до середнього по сторінці (1.20%).", "fb_net_d0": 0, "fb_net_d0d1": 1, "fb_net_d0d1d2": 1, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 10290}, {"label": "Охоплення", "value": 7000}, {"label": "Залучення", "value": 108}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Простий у виробництві формат, що стабільно тримає ER вище середнього"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1449993103839352", "date": "2026-07-06", "type": "photo", "msg": "Дисфотопсії після ІОЛ", "impressions": 21310, "reach": 15328, "engagements": 113, "reactions": 83, "comments": 7, "shares": 23, "clicks": 300, "permalink": "", "er": 0.5302674800563116, "cat": "Клінічний розбір", "insight": "ER 0.53% — у 2.3× нижче середнього по сторінці (1.20%). Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі.", "fb_net_d0": 8, "fb_net_d0d1": 10, "fb_net_d0d1d2": 10, "follow_verdict": "приніс: +8 у день публікації", "analysis": {"metrics": [{"label": "Покази", "value": 21310}, {"label": "Охоплення", "value": 15328}, {"label": "Залучення", "value": 113}], "follow_verdict": "приніс: +8 у день публікації", "pros": ["Покази (21 310) значно вище типових 11053 — органічний виліт за межі бази", "Високий відсоток репостів у структурі залучення — контент активно поширювали", "Привів помітний приплив нових підписників сторінки"], "cons": ["ER 0.53% — у 2.3× нижче середнього по сторінці"], "recommendation": "Повторити цей формат (структурований довідник/практичний чек-лист) свідомо ще раз наступного місяця — саме такі пости конвертують охоплення в підписників."}}, {"post_id": "...1456034939901835", "date": "2026-07-13", "type": "photo", "msg": "Синдром Ірвіна-Гасса", "impressions": 27531, "reach": 19506, "engagements": 148, "reactions": 121, "comments": 4, "shares": 23, "clicks": 488, "permalink": "", "er": 0.5375758236170135, "cat": "Клінічний розбір", "insight": "ER 0.54% — у 2.2× нижче середнього по сторінці (1.20%). Охоплення (27 531) значно вище середнього — органічний виліт за межі базової аудиторії. Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі. Кліків значно більше, ніж реакцій — люди гортали/переходили, але не залишали слід (лайк/коментар/шер).", "fb_net_d0": 5, "fb_net_d0d1": 7, "fb_net_d0d1d2": 6, "follow_verdict": "приніс: +5 у день публікації", "analysis": {"metrics": [{"label": "Покази", "value": 27531}, {"label": "Охоплення", "value": 19506}, {"label": "Залучення", "value": 148}], "follow_verdict": "приніс: +5 у день публікації", "pros": ["Покази (27 531) значно вище типових 11053 — органічний виліт за межі бази", "Високий відсоток репостів у структурі залучення — контент активно поширювали", "Привів помітний приплив нових підписників сторінки"], "cons": ["ER 0.54% — у 2.2× нижче середнього по сторінці", "Багато кліків, мало реакцій — люди гортали/переходили, але не лишали слід"], "recommendation": "Повторити цей формат (структурований довідник/практичний чек-лист) свідомо ще раз наступного місяця — саме такі пости конвертують охоплення в підписників."}}, {"post_id": "...1459569922881670", "date": "2026-07-17", "type": "photo", "msg": "#назлобудня (проШІрені пацієнти)", "impressions": 2358, "reach": 1349, "engagements": 38, "reactions": 36, "comments": 1, "shares": 1, "clicks": 77, "permalink": "", "er": 1.6115351993214586, "cat": "Легкий контент / гумор", "insight": "ER 1.61% — близько до середнього по сторінці (1.20%).", "fb_net_d0": 2, "fb_net_d0d1": 3, "fb_net_d0d1d2": 5, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 2358}, {"label": "Охоплення", "value": 1349}, {"label": "Залучення", "value": 38}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Простий у виробництві формат, що стабільно тримає ER вище середнього"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1462676185904377", "date": "2026-07-21", "type": "photo", "msg": "Дефіцит B12", "impressions": 29283, "reach": 21281, "engagements": 291, "reactions": 268, "comments": 4, "shares": 19, "clicks": 501, "permalink": "", "er": 0.9937506403032476, "cat": "Клінічний розбір", "insight": "ER 0.99% — близько до середнього по сторінці (1.20%). Охоплення (29 283) значно вище середнього — органічний виліт за межі базової аудиторії.", "fb_net_d0": 3, "fb_net_d0d1": 4, "fb_net_d0d1d2": 4, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 29283}, {"label": "Охоплення", "value": 21281}, {"label": "Залучення", "value": 291}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Покази (29 283) значно вище типових 11053 — органічний виліт за межі бази"], "cons": ["Попри велике охоплення — не конвертував у нових підписників"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1465159598989369", "date": "2026-07-24", "type": "reel", "msg": "CASTROP формула", "impressions": 6172, "reach": 4711, "engagements": 11, "reactions": 144, "comments": 2, "shares": 9, "clicks": 193, "permalink": "", "er": 0.1782242384964355, "cat": "Освітній курс/подія (анонс)", "insight": "ER 0.18% — у 6.7× нижче середнього по сторінці (1.20%). Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі. Кліків значно більше, ніж реакцій — люди гортали/переходили, але не залишали слід (лайк/коментар/шер). Формат reel на Facebook: історично найслабший ER-формат цього акаунта.", "fb_net_d0": 0, "fb_net_d0d1": 2, "fb_net_d0d1d2": 2, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 6172}, {"label": "Охоплення", "value": 4711}, {"label": "Залучення", "value": 11}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Високий відсоток репостів у структурі залучення — контент активно поширювали"], "cons": ["ER 0.18% — у 6.7× нижче середнього по сторінці", "Формат reel — історично найслабший ER-формат на цій сторінці (0,32% у середньому)", "Багато кліків, мало реакцій — люди гортали/переходили, але не лишали слід"], "recommendation": "Скоротити відео до 15–20 сек і адаптувати перші секунди хука під стрічку Facebook, або публікувати цей контент лише в Instagram без дублювання."}}, {"post_id": "...1467782602060402", "date": "2026-07-27", "type": "photo", "msg": "День медпрацівника", "impressions": 7447, "reach": 4431, "engagements": 201, "reactions": 180, "comments": 17, "shares": 4, "clicks": 144, "permalink": "", "er": 2.6990734523969384, "cat": "Свято/подія країни", "insight": "ER 2.70% — у 2.3× вище середнього по сторінці (1.20%). Помітно високий рівень коментарів — тема викликала дискусію.", "fb_net_d0": 1, "fb_net_d0d1": 1, "fb_net_d0d1d2": 1, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 7447}, {"label": "Охоплення", "value": 4431}, {"label": "Залучення", "value": 201}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["ER 2.70% — у 2.3× вище середнього по сторінці (1.20%)", "17 коментарів — тема викликала дискусію, а не тільки лайки", "Емоційний, не клінічний контент — і саме тому дав високий ER"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати цей емоційний тон; можна додати заклик поділитися постом для ще ширшого охоплення."}}, {"post_id": "...1471513778353951", "date": "2026-07-31", "type": "photo", "msg": "Зниження зору після сну", "impressions": 2068, "reach": 1044, "engagements": 37, "reactions": 27, "comments": 0, "shares": 10, "clicks": 12, "permalink": "", "er": 1.7891682785299807, "cat": "Клінічний розбір", "insight": "ER 1.79% — близько до середнього по сторінці (1.20%). Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі.", "fb_net_d0": -1, "fb_net_d0d1": -1, "fb_net_d0d1d2": -1, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 2068}, {"label": "Охоплення", "value": 1044}, {"label": "Залучення", "value": 37}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["ER 1.79% — у 1.5× вище середнього по сторінці (1.20%)", "Високий відсоток репостів у структурі залучення — контент активно поширювали"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1474176388087690", "date": "2026-08-03", "type": "photo", "msg": "Рефракційна хірургія і слізна плівка", "impressions": 25236, "reach": 18359, "engagements": 195, "reactions": 177, "comments": 3, "shares": 15, "clicks": 288, "permalink": "", "er": 0.7727056585829767, "cat": "Клінічний розбір", "insight": "ER 0.77% — близько до середнього по сторінці (1.20%). Охоплення (25 236) значно вище середнього — органічний виліт за межі базової аудиторії.", "fb_net_d0": 7, "fb_net_d0d1": 12, "fb_net_d0d1d2": 14, "follow_verdict": "приніс: +7 у день публікації", "analysis": {"metrics": [{"label": "Покази", "value": 25236}, {"label": "Охоплення", "value": 18359}, {"label": "Залучення", "value": 195}], "follow_verdict": "приніс: +7 у день публікації", "pros": ["Покази (25 236) значно вище типових 11053 — органічний виліт за межі бази", "Привів помітний приплив нових підписників сторінки"], "cons": ["Явних слабких місць немає"], "recommendation": "Повторити цей формат (структурований довідник/практичний чек-лист) свідомо ще раз наступного місяця — саме такі пости конвертують охоплення в підписників."}}, {"post_id": "...1477684694403526", "date": "2026-08-07", "type": "photo", "msg": "#назлобудня", "impressions": 5886, "reach": 3640, "engagements": 77, "reactions": 65, "comments": 1, "shares": 11, "clicks": 82, "permalink": "", "er": 1.308188922867822, "cat": "Легкий контент / гумор", "insight": "ER 1.31% — близько до середнього по сторінці (1.20%).", "fb_net_d0": 3, "fb_net_d0d1": 3, "fb_net_d0d1d2": 6, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 5886}, {"label": "Охоплення", "value": 3640}, {"label": "Залучення", "value": 77}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Простий у виробництві формат, що стабільно тримає ER вище середнього"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1480166137488715", "date": "2026-08-10", "type": "photo", "msg": "Junior Summit анонс 2", "impressions": 2102, "reach": 1187, "engagements": 41, "reactions": 38, "comments": 0, "shares": 3, "clicks": 83, "permalink": "", "er": 1.9505233111322549, "cat": "Освітній курс/подія (анонс)", "insight": "ER 1.95% — у 1.6× вище середнього по сторінці (1.20%).", "fb_net_d0": 0, "fb_net_d0d1": 1, "fb_net_d0d1d2": 3, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 2102}, {"label": "Охоплення", "value": 1187}, {"label": "Залучення", "value": 41}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["ER 1.95% — у 1.6× вище середнього по сторінці (1.20%)"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1482004043971591", "date": "2026-08-12", "type": "reel", "msg": "Кома чи крапка (ІОЛ)", "impressions": 4688, "reach": 3722, "engagements": 12, "reactions": 98, "comments": 5, "shares": 7, "clicks": 145, "permalink": "", "er": 0.25597269624573377, "cat": "Освітній курс/подія (анонс)", "insight": "ER 0.26% — у 4.7× нижче середнього по сторінці (1.20%). Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі. Кліків значно більше, ніж реакцій — люди гортали/переходили, але не залишали слід (лайк/коментар/шер). Формат reel на Facebook: історично найслабший ER-формат цього акаунта.", "fb_net_d0": 2, "fb_net_d0d1": 2, "fb_net_d0d1d2": 3, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 4688}, {"label": "Охоплення", "value": 3722}, {"label": "Залучення", "value": 12}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Високий відсоток репостів у структурі залучення — контент активно поширювали"], "cons": ["ER 0.26% — у 4.7× нижче середнього по сторінці", "Формат reel — історично найслабший ER-формат на цій сторінці (0,32% у середньому)", "Багато кліків, мало реакцій — люди гортали/переходили, але не лишали слід"], "recommendation": "Скоротити відео до 15–20 сек і адаптувати перші секунди хука під стрічку Facebook, або публікувати цей контент лише в Instagram без дублювання."}}, {"post_id": "...1483709523801043", "date": "2026-08-14", "type": "photo", "msg": "#назлобудня", "impressions": 2706, "reach": 1655, "engagements": 76, "reactions": 71, "comments": 3, "shares": 2, "clicks": 68, "permalink": "", "er": 2.8085735402808574, "cat": "Легкий контент / гумор", "insight": "ER 2.81% — у 2.3× вище середнього по сторінці (1.20%).", "fb_net_d0": 1, "fb_net_d0d1": 0, "fb_net_d0d1d2": 0, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 2706}, {"label": "Охоплення", "value": 1655}, {"label": "Залучення", "value": 76}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["ER 2.81% — у 2.3× вище середнього по сторінці (1.20%)", "Простий у виробництві формат, що стабільно тримає ER вище середнього"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1486390336866295", "date": "2026-08-17", "type": "photo", "msg": "Клінічний випадок: некротичний склерит", "impressions": 6841, "reach": 4871, "engagements": 42, "reactions": 37, "comments": 3, "shares": 2, "clicks": 242, "permalink": "", "er": 0.613945329630171, "cat": "Клінічний розбір", "insight": "ER 0.61% — у 2.0× нижче середнього по сторінці (1.20%). Кліків значно більше, ніж реакцій — люди гортали/переходили, але не залишали слід (лайк/коментар/шер).", "fb_net_d0": 2, "fb_net_d0d1": 3, "fb_net_d0d1d2": 3, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 6841}, {"label": "Охоплення", "value": 4871}, {"label": "Залучення", "value": 42}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Показники в межах очікуваного для цієї рубрики — без явних точок росту"], "cons": ["ER 0.61% — у 2.0× нижче середнього по сторінці", "Багато кліків, мало реакцій — люди гортали/переходили, але не лишали слід"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1489924416512887", "date": "2026-08-21", "type": "photo", "msg": "Ophthalmic iSchool листопад", "impressions": 22300, "reach": 14718, "engagements": 284, "reactions": 261, "comments": 5, "shares": 18, "clicks": 427, "permalink": "", "er": 1.2735426008968609, "cat": "Освітній курс/подія (анонс)", "insight": "ER 1.27% — близько до середнього по сторінці (1.20%). Охоплення (22 300) значно вище середнього — органічний виліт за межі базової аудиторії.", "fb_net_d0": 2, "fb_net_d0d1": 2, "fb_net_d0d1d2": 3, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 22300}, {"label": "Охоплення", "value": 14718}, {"label": "Залучення", "value": 284}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Покази (22 300) значно вище типових 11053 — органічний виліт за межі бази"], "cons": ["Попри велике охоплення — не конвертував у нових підписників"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1492531439585518", "date": "2026-08-24", "type": "photo", "msg": "День Незалежності", "impressions": 2943, "reach": 1679, "engagements": 115, "reactions": 104, "comments": 3, "shares": 8, "clicks": 57, "permalink": "", "er": 3.907577302072715, "cat": "Свято/подія країни", "insight": "ER 3.91% — у 3.3× вище середнього по сторінці (1.20%).", "fb_net_d0": 1, "fb_net_d0d1": 1, "fb_net_d0d1d2": 2, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 2943}, {"label": "Охоплення", "value": 1679}, {"label": "Залучення", "value": 115}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["ER 3.91% — у 3.3× вище середнього по сторінці (1.20%)", "Емоційний, не клінічний контент — і саме тому дав високий ER"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати цей емоційний тон; можна додати заклик поділитися постом для ще ширшого охоплення."}}, {"post_id": "...1494380126067316", "date": "2026-08-26", "type": "reel", "msg": "Біометрія лекція 7", "impressions": 8075, "reach": 6637, "engagements": 18, "reactions": 207, "comments": 3, "shares": 15, "clicks": 200, "permalink": "", "er": 0.22291021671826625, "cat": "Освітній курс/подія (анонс)", "insight": "ER 0.22% — у 5.4× нижче середнього по сторінці (1.20%). Високий відсоток репостів у структурі залучення — контент явно розповсюджували далі. Кліків значно більше, ніж реакцій — люди гортали/переходили, але не залишали слід (лайк/коментар/шер). Формат reel на Facebook: історично найслабший ER-формат цього акаунта.", "fb_net_d0": 1, "fb_net_d0d1": 2, "fb_net_d0d1d2": 2, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 8075}, {"label": "Охоплення", "value": 6637}, {"label": "Залучення", "value": 18}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Високий відсоток репостів у структурі залучення — контент активно поширювали"], "cons": ["ER 0.22% — у 5.4× нижче середнього по сторінці", "Формат reel — історично найслабший ER-формат на цій сторінці (0,32% у середньому)", "Багато кліків, мало реакцій — люди гортали/переходили, але не лишали слід"], "recommendation": "Скоротити відео до 15–20 сек і адаптувати перші секунди хука під стрічку Facebook, або публікувати цей контент лише в Instagram без дублювання."}}, {"post_id": "...1496222432549752", "date": "2026-08-28", "type": "photo", "msg": "Окуляри? (питання читачам)", "impressions": 3337, "reach": 1975, "engagements": 57, "reactions": 48, "comments": 4, "shares": 5, "clicks": 106, "permalink": "", "er": 1.7081210668264908, "cat": "Легкий контент / гумор", "insight": "ER 1.71% — близько до середнього по сторінці (1.20%).", "fb_net_d0": 0, "fb_net_d0d1": 2, "fb_net_d0d1d2": 2, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 3337}, {"label": "Охоплення", "value": 1975}, {"label": "Залучення", "value": 57}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["ER 1.71% — у 1.4× вище середнього по сторінці (1.20%)", "Простий у виробництві формат, що стабільно тримає ER вище середнього"], "cons": ["Явних слабких місць немає"], "recommendation": "Тримати поточний підхід — результат у межах очікуваного для цієї рубрики, точок для термінового втручання немає."}}, {"post_id": "...1498852385620090", "date": "2026-08-31", "type": "photo", "msg": "Junior Summit анонс 3 (секції)", "impressions": 6191, "reach": 3690, "engagements": 49, "reactions": 41, "comments": 1, "shares": 7, "clicks": 122, "permalink": "", "er": 0.7914714908738493, "cat": "Освітній курс/подія (анонс)", "insight": "ER 0.79% — близько до середнього по сторінці (1.20%).", "fb_net_d0": 0, "fb_net_d0d1": 0, "fb_net_d0d1d2": 0, "follow_verdict": "не приніс (у межах звичайного шуму)", "analysis": {"metrics": [{"label": "Покази", "value": 6191}, {"label": "Охоплення", "value": 3690}, {"label": "Залучення", "value": 49}], "follow_verdict": "не приніс (у межах звичайного шуму)", "pros": ["Показники в межах очікуваного для цієї рубрики — без явних точок росту"], "cons": ["Явних слабких місць немає"], "recommendation": "Протестувати той самий анонс у форматі фото-картки з текстом на зображенні замість посту-«простирадла»."}}], "ig": [{"date": "2026-06-04", "type": "IMAGE", "msg": "FDA пристрій для ВОТ (глаукома)", "reach": 526, "views": 943, "likes": 31, "comments": 0, "saved": 10, "shares": 6, "engagement": 47, "follows": 3, "profile_visits": 7, "er": 8.935361216730039, "cat": "Науковий дайджест", "insight": "ER 8.94% — на рівні середнього по акаунту (9.09%). Пост привів 3 нових підписників напряму (Instagram media_follows). Охоплення перевищило поточну кількість підписників (427) — контент вийшов за межі бази через хештеги/Explore. Високий відсоток збережень відносно лайків — типово для довідкового/навчального контенту, який зберігають \"на потім\".", "analysis": {"metrics": [{"label": "Перегляди", "value": 943}, {"label": "Охоплення", "value": 526}, {"label": "Залучення", "value": 47}], "follow_verdict": "приніс: +3 нових підписників напряму", "pros": ["Привів 3 нових підписників напряму (media_follows)", "Охоплення перевищило поточну кількість підписників (427) — вихід за межі бази через хештеги/Explore", "Високий відсоток збережень відносно лайків — типово для довідкового контенту, який зберігають «на потім»"], "cons": ["Нуль коментарів — підпис не провокує обговорення"], "recommendation": "Повторити тему і формат — саме такий контент безпосередньо конвертує охоплення в підписників."}}, {"date": "2026-06-07", "type": "CAROUSEL", "msg": "Міокімія (посіпування ока)", "reach": 259, "views": 737, "likes": 21, "comments": 0, "saved": 5, "shares": 1, "engagement": 27, "follows": 0, "profile_visits": 4, "er": 10.424710424710424, "cat": "Освітній розбір", "insight": "ER 10.42% — на рівні середнього по акаунту (9.09%).", "analysis": {"metrics": [{"label": "Перегляди", "value": 737}, {"label": "Охоплення", "value": 259}, {"label": "Залучення", "value": 27}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["Показники в межах очікуваного для цієї рубрики"], "cons": ["Нуль коментарів — підпис не провокує обговорення", "Не привів жодного нового підписника напряму"], "recommendation": "Тримати поточний підхід; для росту бази додати заклик підписатися в підписі або в останньому слайді."}}, {"date": "2026-06-18", "type": "CAROUSEL", "msg": "Клінічний випадок: раптова втрата зору", "reach": 273, "views": 879, "likes": 15, "comments": 2, "saved": 1, "shares": 0, "engagement": 19, "follows": 0, "profile_visits": 13, "er": 6.95970695970696, "cat": "Клінічний випадок (постав діагноз)", "insight": "ER 6.96% — на рівні середнього по акаунту (9.09%).", "analysis": {"metrics": [{"label": "Перегляди", "value": 879}, {"label": "Охоплення", "value": 273}, {"label": "Залучення", "value": 19}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["Показники в межах очікуваного для цієї рубрики"], "cons": ["Не привів жодного нового підписника напряму"], "recommendation": "Тримати поточний підхід; для росту бази додати заклик підписатися в підписі або в останньому слайді."}}, {"date": "2026-06-19", "type": "IMAGE", "msg": "Алкоголь і пресбіопія", "reach": 341, "views": 589, "likes": 5, "comments": 1, "saved": 0, "shares": 4, "engagement": 11, "follows": 0, "profile_visits": 2, "er": 3.225806451612903, "cat": "Освітній розбір", "insight": "ER 3.23% — у 2.8× нижче середнього по акаунту (9.09%).", "analysis": {"metrics": [{"label": "Перегляди", "value": 589}, {"label": "Охоплення", "value": 341}, {"label": "Залучення", "value": 11}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["Показники в межах очікуваного для цієї рубрики"], "cons": ["ER 3.23% — у 2.8× нижче середнього по акаунту", "Не привів жодного нового підписника напряму"], "recommendation": "Тримати поточний підхід; для росту бази додати заклик підписатися в підписі або в останньому слайді."}}, {"date": "2026-06-21", "type": "IMAGE", "msg": "МедГумор: сухе око сльозиться", "reach": 313, "views": 724, "likes": 29, "comments": 0, "saved": 1, "shares": 0, "engagement": 32, "follows": 0, "profile_visits": 2, "er": 10.223642172523961, "cat": "МедГумор", "insight": "ER 10.22% — на рівні середнього по акаунту (9.09%).", "analysis": {"metrics": [{"label": "Перегляди", "value": 724}, {"label": "Охоплення", "value": 313}, {"label": "Залучення", "value": 32}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["Показники в межах очікуваного для цієї рубрики"], "cons": ["Нуль коментарів — підпис не провокує обговорення", "Не привів жодного нового підписника напряму"], "recommendation": "Тримати поточний підхід; для росту бази додати заклик підписатися в підписі або в останньому слайді."}}, {"date": "2026-06-26", "type": "REELS", "msg": "Junior Ophthalmology Summit (реліз)", "reach": 592, "views": 938, "likes": 46, "comments": 1, "saved": 8, "shares": 8, "engagement": 64, "follows": null, "profile_visits": null, "er": 10.81081081081081, "cat": "Освітній розбір", "insight": "ER 10.81% — на рівні середнього по акаунту (9.09%). Охоплення перевищило поточну кількість підписників (427) — контент вийшов за межі бази через хештеги/Explore. Reels — головний драйвер охоплення на цьому акаунті (в середньому вище за фото та карусель).", "analysis": {"metrics": [{"label": "Перегляди", "value": 938}, {"label": "Охоплення", "value": 592}, {"label": "Залучення", "value": 64}], "follow_verdict": "дані недоступні (Meta не рахує для Reels)", "pros": ["Охоплення перевищило поточну кількість підписників (427) — вихід за межі бази через хештеги/Explore", "Reels — головний драйвер охоплення на цьому акаунті"], "cons": ["Явних слабких місць немає"], "recommendation": "Продовжувати формат, але додати чіткий текстовий CTA 'підписуйся' в останньому кадрі для конверсії охоплення в підписки."}}, {"date": "2026-06-29", "type": "IMAGE", "msg": "Астма матері й ROP", "reach": 308, "views": 539, "likes": 15, "comments": 0, "saved": 1, "shares": 3, "engagement": 20, "follows": 0, "profile_visits": 2, "er": 6.493506493506493, "cat": "Освітній розбір", "insight": "ER 6.49% — на рівні середнього по акаунту (9.09%).", "analysis": {"metrics": [{"label": "Перегляди", "value": 539}, {"label": "Охоплення", "value": 308}, {"label": "Залучення", "value": 20}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["Показники в межах очікуваного для цієї рубрики"], "cons": ["Нуль коментарів — підпис не провокує обговорення", "Не привів жодного нового підписника напряму"], "recommendation": "Тримати поточний підхід; для росту бази додати заклик підписатися в підписі або в останньому слайді."}}, {"date": "2026-07-02", "type": "IMAGE", "msg": "Клінічний випадок: анізокорія", "reach": 429, "views": 954, "likes": 22, "comments": 1, "saved": 13, "shares": 5, "engagement": 41, "follows": 2, "profile_visits": 6, "er": 9.557109557109557, "cat": "Клінічний випадок (постав діагноз)", "insight": "ER 9.56% — на рівні середнього по акаунту (9.09%). Пост привів 2 нових підписників напряму (Instagram media_follows). Охоплення перевищило поточну кількість підписників (427) — контент вийшов за межі бази через хештеги/Explore. Високий відсоток збережень відносно лайків — типово для довідкового/навчального контенту, який зберігають \"на потім\".", "analysis": {"metrics": [{"label": "Перегляди", "value": 954}, {"label": "Охоплення", "value": 429}, {"label": "Залучення", "value": 41}], "follow_verdict": "приніс: +2 нових підписників напряму", "pros": ["Привів 2 нових підписників напряму (media_follows)", "Охоплення перевищило поточну кількість підписників (427) — вихід за межі бази через хештеги/Explore", "Високий відсоток збережень відносно лайків — типово для довідкового контенту, який зберігають «на потім»"], "cons": ["Явних слабких місць немає"], "recommendation": "Повторити тему і формат — саме такий контент безпосередньо конвертує охоплення в підписників."}}, {"date": "2026-07-04", "type": "IMAGE", "msg": "Нерви рогівки", "reach": 380, "views": 834, "likes": 35, "comments": 0, "saved": 14, "shares": 7, "engagement": 56, "follows": 3, "profile_visits": 4, "er": 14.736842105263156, "cat": "Освітній розбір", "insight": "ER 14.74% — у 1.6× вище середнього по акаунту (9.09%). Пост привів 3 нових підписників напряму (Instagram media_follows). Високий відсоток збережень відносно лайків — типово для довідкового/навчального контенту, який зберігають \"на потім\".", "analysis": {"metrics": [{"label": "Перегляди", "value": 834}, {"label": "Охоплення", "value": 380}, {"label": "Залучення", "value": 56}], "follow_verdict": "приніс: +3 нових підписників напряму", "pros": ["ER 14.74% — у 1.6× вище середнього по акаунту (9.09%)", "Привів 3 нових підписників напряму (media_follows)", "Високий відсоток збережень відносно лайків — типово для довідкового контенту, який зберігають «на потім»"], "cons": ["Нуль коментарів — підпис не провокує обговорення"], "recommendation": "Повторити тему і формат — саме такий контент безпосередньо конвертує охоплення в підписників."}}, {"date": "2026-07-07", "type": "IMAGE", "msg": "МедГумор: який колір?", "reach": 650, "views": 1133, "likes": 21, "comments": 3, "saved": 0, "shares": 30, "engagement": 54, "follows": 0, "profile_visits": 4, "er": 8.307692307692308, "cat": "МедГумор", "insight": "ER 8.31% — на рівні середнього по акаунту (9.09%). Охоплення перевищило поточну кількість підписників (427) — контент вийшов за межі бази через хештеги/Explore.", "analysis": {"metrics": [{"label": "Перегляди", "value": 1133}, {"label": "Охоплення", "value": 650}, {"label": "Залучення", "value": 54}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["Охоплення перевищило поточну кількість підписників (427) — вихід за межі бази через хештеги/Explore"], "cons": ["Не привів жодного нового підписника напряму", "Гумор без прямого запитання в кінці — менше приводів для реакції"], "recommendation": "Додати наприкінці підпису пряме запитання ('А як у вас?') — гумор конвертується в коментарі, коли є привід відповісти."}}, {"date": "2026-07-14", "type": "IMAGE", "msg": "FDA препарат TED", "reach": 337, "views": 730, "likes": 29, "comments": 0, "saved": 14, "shares": 5, "engagement": 49, "follows": 0, "profile_visits": 1, "er": 14.540059347181009, "cat": "Науковий дайджест", "insight": "ER 14.54% — у 1.6× вище середнього по акаунту (9.09%). Високий відсоток збережень відносно лайків — типово для довідкового/навчального контенту, який зберігають \"на потім\".", "analysis": {"metrics": [{"label": "Перегляди", "value": 730}, {"label": "Охоплення", "value": 337}, {"label": "Залучення", "value": 49}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["ER 14.54% — у 1.6× вище середнього по акаунту (9.09%)", "Високий відсоток збережень відносно лайків — типово для довідкового контенту, який зберігають «на потім»"], "cons": ["Нуль коментарів — підпис не провокує обговорення", "Не привів жодного нового підписника напряму"], "recommendation": "Тримати поточний підхід; для росту бази додати заклик підписатися в підписі або в останньому слайді."}}, {"date": "2026-07-16", "type": "CAROUSEL", "msg": "Нечіткий зір і мозок", "reach": 464, "views": 844, "likes": 12, "comments": 0, "saved": 3, "shares": 2, "engagement": 17, "follows": 0, "profile_visits": 4, "er": 3.6637931034482754, "cat": "Освітній розбір", "insight": "ER 3.66% — у 2.5× нижче середнього по акаунту (9.09%). Охоплення перевищило поточну кількість підписників (427) — контент вийшов за межі бази через хештеги/Explore.", "analysis": {"metrics": [{"label": "Перегляди", "value": 844}, {"label": "Охоплення", "value": 464}, {"label": "Залучення", "value": 17}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["Охоплення перевищило поточну кількість підписників (427) — вихід за межі бази через хештеги/Explore"], "cons": ["ER 3.66% — у 2.5× нижче середнього по акаунту", "Нуль коментарів — підпис не провокує обговорення", "Не привів жодного нового підписника напряму"], "recommendation": "Тримати поточний підхід; для росту бази додати заклик підписатися в підписі або в останньому слайді."}}, {"date": "2026-07-18", "type": "IMAGE", "msg": "МедГумор: гороскоп офтальмологів", "reach": 250, "views": 648, "likes": 18, "comments": 0, "saved": 1, "shares": 1, "engagement": 21, "follows": 0, "profile_visits": 0, "er": 8.4, "cat": "МедГумор", "insight": "ER 8.40% — на рівні середнього по акаунту (9.09%).", "analysis": {"metrics": [{"label": "Перегляди", "value": 648}, {"label": "Охоплення", "value": 250}, {"label": "Залучення", "value": 21}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["Показники в межах очікуваного для цієї рубрики"], "cons": ["Нуль коментарів — підпис не провокує обговорення", "Не привів жодного нового підписника напряму", "Гумор без прямого запитання в кінці — менше приводів для реакції"], "recommendation": "Додати наприкінці підпису пряме запитання ('А як у вас?') — гумор конвертується в коментарі, коли є привід відповісти."}}, {"date": "2026-07-24", "type": "REELS", "msg": "CASTROP формула", "reach": 966, "views": 1444, "likes": 70, "comments": 0, "saved": 19, "shares": 4, "engagement": 94, "follows": null, "profile_visits": null, "er": 9.730848861283643, "cat": "Освітній розбір", "insight": "ER 9.73% — на рівні середнього по акаунту (9.09%). Охоплення перевищило поточну кількість підписників (427) — контент вийшов за межі бази через хештеги/Explore. Reels — головний драйвер охоплення на цьому акаунті (в середньому вище за фото та карусель).", "analysis": {"metrics": [{"label": "Перегляди", "value": 1444}, {"label": "Охоплення", "value": 966}, {"label": "Залучення", "value": 94}], "follow_verdict": "дані недоступні (Meta не рахує для Reels)", "pros": ["Охоплення перевищило поточну кількість підписників (427) — вихід за межі бази через хештеги/Explore", "Reels — головний драйвер охоплення на цьому акаунті"], "cons": ["Явних слабких місць немає"], "recommendation": "Продовжувати формат, але додати чіткий текстовий CTA 'підписуйся' в останньому кадрі для конверсії охоплення в підписки."}}, {"date": "2026-07-27", "type": "IMAGE", "msg": "День медпрацівника", "reach": 242, "views": 448, "likes": 22, "comments": 0, "saved": 0, "shares": 1, "engagement": 23, "follows": 0, "profile_visits": 1, "er": 9.50413223140496, "cat": "Свято", "insight": "ER 9.50% — на рівні середнього по акаунту (9.09%).", "analysis": {"metrics": [{"label": "Перегляди", "value": 448}, {"label": "Охоплення", "value": 242}, {"label": "Залучення", "value": 23}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["Показники в межах очікуваного для цієї рубрики"], "cons": ["Нуль коментарів — підпис не провокує обговорення", "Не привів жодного нового підписника напряму"], "recommendation": "Тримати поточний підхід; для росту бази додати заклик підписатися в підписі або в останньому слайді."}}, {"date": "2026-07-29", "type": "CAROUSEL", "msg": "LASEK vs LASIK сухе око", "reach": 363, "views": 767, "likes": 18, "comments": 0, "saved": 4, "shares": 2, "engagement": 25, "follows": 2, "profile_visits": 3, "er": 6.887052341597796, "cat": "Освітній розбір", "insight": "ER 6.89% — на рівні середнього по акаунту (9.09%). Пост привів 2 нових підписників напряму (Instagram media_follows).", "analysis": {"metrics": [{"label": "Перегляди", "value": 767}, {"label": "Охоплення", "value": 363}, {"label": "Залучення", "value": 25}], "follow_verdict": "приніс: +2 нових підписників напряму", "pros": ["Привів 2 нових підписників напряму (media_follows)"], "cons": ["Нуль коментарів — підпис не провокує обговорення"], "recommendation": "Повторити тему і формат — саме такий контент безпосередньо конвертує охоплення в підписників."}}, {"date": "2026-08-02", "type": "IMAGE", "msg": "Fundus albipunctatus", "reach": 340, "views": 792, "likes": 27, "comments": 0, "saved": 10, "shares": 3, "engagement": 42, "follows": 1, "profile_visits": 5, "er": 12.352941176470589, "cat": "Освітній розбір", "insight": "ER 12.35% — у 1.4× вище середнього по акаунту (9.09%). Пост привів 1 нових підписників напряму (Instagram media_follows). Високий відсоток збережень відносно лайків — типово для довідкового/навчального контенту, який зберігають \"на потім\".", "analysis": {"metrics": [{"label": "Перегляди", "value": 792}, {"label": "Охоплення", "value": 340}, {"label": "Залучення", "value": 42}], "follow_verdict": "приніс: +1 нових підписників напряму", "pros": ["ER 12.35% — у 1.4× вище середнього по акаунту (9.09%)", "Привів 1 нових підписників напряму (media_follows)", "Високий відсоток збережень відносно лайків — типово для довідкового контенту, який зберігають «на потім»"], "cons": ["Нуль коментарів — підпис не провокує обговорення"], "recommendation": "Повторити тему і формат — саме такий контент безпосередньо конвертує охоплення в підписників."}}, {"date": "2026-08-11", "type": "CAROUSEL", "msg": "Зір під час вагітності", "reach": 835, "views": 1702, "likes": 47, "comments": 0, "saved": 27, "shares": 6, "engagement": 81, "follows": 1, "profile_visits": 8, "er": 9.70059880239521, "cat": "Освітній розбір", "insight": "ER 9.70% — на рівні середнього по акаунту (9.09%). Пост привів 1 нових підписників напряму (Instagram media_follows). Охоплення перевищило поточну кількість підписників (427) — контент вийшов за межі бази через хештеги/Explore. Високий відсоток збережень відносно лайків — типово для довідкового/навчального контенту, який зберігають \"на потім\".", "analysis": {"metrics": [{"label": "Перегляди", "value": 1702}, {"label": "Охоплення", "value": 835}, {"label": "Залучення", "value": 81}], "follow_verdict": "приніс: +1 нових підписників напряму", "pros": ["Привів 1 нових підписників напряму (media_follows)", "Охоплення перевищило поточну кількість підписників (427) — вихід за межі бази через хештеги/Explore", "Високий відсоток збережень відносно лайків — типово для довідкового контенту, який зберігають «на потім»"], "cons": ["Нуль коментарів — підпис не провокує обговорення"], "recommendation": "Повторити тему і формат — саме такий контент безпосередньо конвертує охоплення в підписників."}}, {"date": "2026-08-12", "type": "REELS", "msg": "Кома чи крапка (ІОЛ)", "reach": 597, "views": 905, "likes": 41, "comments": 0, "saved": 5, "shares": 1, "engagement": 48, "follows": null, "profile_visits": null, "er": 8.040201005025125, "cat": "Освітній розбір", "insight": "ER 8.04% — на рівні середнього по акаунту (9.09%). Охоплення перевищило поточну кількість підписників (427) — контент вийшов за межі бази через хештеги/Explore. Reels — головний драйвер охоплення на цьому акаунті (в середньому вище за фото та карусель).", "analysis": {"metrics": [{"label": "Перегляди", "value": 905}, {"label": "Охоплення", "value": 597}, {"label": "Залучення", "value": 48}], "follow_verdict": "дані недоступні (Meta не рахує для Reels)", "pros": ["Охоплення перевищило поточну кількість підписників (427) — вихід за межі бази через хештеги/Explore", "Reels — головний драйвер охоплення на цьому акаунті"], "cons": ["Явних слабких місць немає"], "recommendation": "Продовжувати формат, але додати чіткий текстовий CTA 'підписуйся' в останньому кадрі для конверсії охоплення в підписки."}}, {"date": "2026-08-13", "type": "IMAGE", "msg": "МедГумор: Гаррі Поттер", "reach": 260, "views": 595, "likes": 11, "comments": 0, "saved": 0, "shares": 2, "engagement": 13, "follows": 0, "profile_visits": 2, "er": 5.0, "cat": "МедГумор", "insight": "ER 5.00% — у 1.8× нижче середнього по акаунту (9.09%).", "analysis": {"metrics": [{"label": "Перегляди", "value": 595}, {"label": "Охоплення", "value": 260}, {"label": "Залучення", "value": 13}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["Показники в межах очікуваного для цієї рубрики"], "cons": ["ER 5.00% — у 1.8× нижче середнього по акаунту", "Нуль коментарів — підпис не провокує обговорення", "Не привів жодного нового підписника напряму", "Гумор без прямого запитання в кінці — менше приводів для реакції"], "recommendation": "Додати наприкінці підпису пряме запитання ('А як у вас?') — гумор конвертується в коментарі, коли є привід відповісти."}}, {"date": "2026-08-20", "type": "IMAGE", "msg": "Tyrvaya (сухе око спрей)", "reach": 265, "views": 612, "likes": 13, "comments": 0, "saved": 7, "shares": 6, "engagement": 26, "follows": 0, "profile_visits": 4, "er": 9.811320754716983, "cat": "Науковий дайджест", "insight": "ER 9.81% — на рівні середнього по акаунту (9.09%). Високий відсоток збережень відносно лайків — типово для довідкового/навчального контенту, який зберігають \"на потім\".", "analysis": {"metrics": [{"label": "Перегляди", "value": 612}, {"label": "Охоплення", "value": 265}, {"label": "Залучення", "value": 26}], "follow_verdict": "не приніс (0 напряму атрибутованих підписників)", "pros": ["Високий відсоток збережень відносно лайків — типово для довідкового контенту, який зберігають «на потім»"], "cons": ["Нуль коментарів — підпис не провокує обговорення", "Не привів жодного нового підписника напряму"], "recommendation": "Тримати поточний підхід; для росту бази додати заклик підписатися в підписі або в останньому слайді."}}, {"date": "2026-08-25", "type": "IMAGE", "msg": "Нікотинамід і глаукома", "reach": 840, "views": 1692, "likes": 58, "comments": 1, "saved": 28, "shares": 18, "engagement": 107, "follows": 6, "profile_visits": 11, "er": 12.738095238095237, "cat": "Науковий дайджест", "insight": "ER 12.74% — у 1.4× вище середнього по акаунту (9.09%). Пост привів 6 нових підписників напряму (Instagram media_follows). Охоплення перевищило поточну кількість підписників (427) — контент вийшов за межі бази через хештеги/Explore. Високий відсоток збережень відносно лайків — типово для довідкового/навчального контенту, який зберігають \"на потім\".", "analysis": {"metrics": [{"label": "Перегляди", "value": 1692}, {"label": "Охоплення", "value": 840}, {"label": "Залучення", "value": 107}], "follow_verdict": "приніс: +6 нових підписників напряму", "pros": ["ER 12.74% — у 1.4× вище середнього по акаунту (9.09%)", "Привів 6 нових підписників напряму (media_follows)", "Охоплення перевищило поточну кількість підписників (427) — вихід за межі бази через хештеги/Explore", "Високий відсоток збережень відносно лайків — типово для довідкового контенту, який зберігають «на потім»"], "cons": ["Явних слабких місць немає"], "recommendation": "Повторити тему і формат — саме такий контент безпосередньо конвертує охоплення в підписників."}}], "fb_avg_er": 1.1991766516854339, "ig_avg_er": 9.092919607331156}
+</script>
+<script>
+/* ================= DATA ================= */
+const RAW = JSON.parse(document.getElementById('raw-data').textContent);
+const FB_ALL = RAW.fb, IG_ALL = RAW.ig;
+const FB_AVG_ER = RAW.fb_avg_er, IG_AVG_ER = RAW.ig_avg_er;
+
+const C = {
+  text0:'#F3F5F7', text1:'#AEB6C2', text2:'#6E7683',
+  teal:'#5EEAD4', tealDeep:'#2DD4BF', violet:'#8B8CF6', violetDeep:'#6366F1',
+  amber:'#F5B942', rose:'#FB7CA5',
+  fbA:'#5B9CF6', fbB:'#7C7CF0', igA:'#FB7CA5', igB:'#C084FC',
+  pos:'#4ADE80', neg:'#FB7185', gridline:'rgba(255,255,255,0.055)'
+};
+
+const MONTHS = [
+  {key:'2026-06', label:'Червень'},
+  {key:'2026-07', label:'Липень'},
+  {key:'2026-08', label:'Серпень'}
+];
+
+const RAF = window.requestAnimationFrame ? window.requestAnimationFrame.bind(window) : (fn)=>setTimeout(fn,16);
+
+function fmt(n){ return Math.round(n).toLocaleString('uk-UA'); }
+function pct(n, d=2){ return (isFinite(n)?n:0).toFixed(d).replace('.', ',') + '%'; }
+function short(msg, n=46){ return msg.length>n ? msg.slice(0,n-1)+'…' : msg; }
+function dmy(d){ const [y,m,day]=d.split('-'); return `${day}.${m}`; }
+function monthKey(d){ return d.slice(0,7); }
+function byMonth(arr, key){ return key==='all' ? arr : arr.filter(p=>monthKey(p.date)===key); }
+function avg(arr, f){ return arr.length ? arr.reduce((s,x)=>s+f(x),0)/arr.length : 0; }
+function sum(arr, f){ return arr.reduce((s,x)=>s+f(x),0); }
+
+/* ================= NUMBER COUNT-UP ================= */
+function animateValue(el, target, opts){
+  opts = opts || {};
+  const dur = opts.duration || 900;
+  const decimals = opts.decimals || 0;
+  const suffix = opts.suffix || '';
+  const prefix = opts.prefix || '';
+  const start = 0;
+  const t0 = performance.now ? performance.now() : Date.now();
+  function frame(now){
+    const elapsed = (now - t0);
+    const p = Math.min(elapsed/dur, 1);
+    const eased = 1 - Math.pow(1-p, 3);
+    const val = start + (target-start)*eased;
+    el.textContent = prefix + val.toLocaleString('uk-UA', {minimumFractionDigits:decimals, maximumFractionDigits:decimals}) + suffix;
+    if(p<1) RAF(frame);
+  }
+  RAF(frame);
+}
+/* find all [data-count] inside a root and animate them based on data-target/data-decimals/data-suffix */
+function animateCounts(root){
+  root.querySelectorAll('[data-count]').forEach(el=>{
+    const target = parseFloat(el.dataset.target);
+    const decimals = parseInt(el.dataset.decimals||'0',10);
+    const suffix = el.dataset.suffix||'';
+    const prefix = el.dataset.prefix||'';
+    if(!isNaN(target)) animateValue(el, target, {decimals, suffix, prefix, duration:1000});
+  });
+}
+
+/* ================= SLIDING SEGMENTED CONTROL ================= */
+function initSlider(containerSel, sliderSel, btnSel){
+  const container = document.querySelector(containerSel);
+  const slider = document.querySelector(sliderSel);
+  if(!container || !slider) return;
+  function move(){
+    const active = container.querySelector(btnSel+'.active');
+    if(!active) return;
+    slider.style.width = active.offsetWidth+'px';
+    slider.style.transform = `translateX(${active.offsetLeft - 5}px)`;
+  }
+  move();
+  window.addEventListener('resize', move);
+  container.querySelectorAll(btnSel).forEach(btn=>btn.addEventListener('click', ()=>RAF(move)));
+  return move;
+}
+
+/* ================= SVG CHART PRIMITIVES ================= */
+const NS = 'http://www.w3.org/2000/svg';
+let GRAD_ID = 0;
+function svgEl(tag, attrs){
+  const e = document.createElementNS(NS, tag);
+  for(const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+function ensureTooltip(container){
+  let tip = container.querySelector('.svg-tooltip');
+  if(!tip){
+    tip = document.createElement('div');
+    tip.className = 'svg-tooltip';
+    container.style.position = 'relative';
+    container.appendChild(tip);
+  }
+  return tip;
+}
+function showTip(tip, container, evt, html){
+  tip.innerHTML = html;
+  const rect = container.getBoundingClientRect();
+  tip.style.left = (evt.clientX - rect.left) + 'px';
+  tip.style.top = (evt.clientY - rect.top) + 'px';
+  tip.style.opacity = '1';
+}
+function hideTip(tip){ tip.style.opacity = '0'; }
+
+function addLinearGradient(svg, id, colorA, colorB, vertical){
+  const defs = svgEl('defs', {});
+  const grad = svgEl('linearGradient', {id, x1:'0', y1: vertical?'0':'0', x2: vertical?'0':'1', y2: vertical?'1':'0'});
+  grad.appendChild(svgEl('stop', {offset:'0%', 'stop-color':colorA}));
+  grad.appendChild(svgEl('stop', {offset:'100%', 'stop-color':colorB}));
+  defs.appendChild(grad);
+  svg.appendChild(defs);
+  return `url(#${id})`;
+}
+
+/* Vertical bar chart with gradient bars + stagger grow-in animation.
+   opts:{data:[{label,value,color,color2,tip}], height, yMax, yTicks, valueFmt} */
+function barChart(container, opts){
+  container.innerHTML = '';
+  const W = Math.max(container.clientWidth || 640, 320);
+  const H = opts.height || 260;
+  const padL = 42, padR = 8, padT = 14, padB = 30;
+  const innerW = W - padL - padR, innerH = H - padT - padB;
+  const data = opts.data;
+  const yMax = opts.yMax !== undefined ? opts.yMax : Math.max(...data.map(d=>d.value), 0.01) * 1.18;
+  const svg = svgEl('svg', {viewBox:`0 0 ${W} ${H}`, class:'svg-chart', style:'width:100%; height:auto;'});
+  const n = data.length || 1;
+  const bw = innerW / n;
+  const barW = Math.min(bw * 0.6, 42);
+
+  const yTicks = opts.yTicks || 4;
+  for(let i=0;i<=yTicks;i++){
+    const val = yMax * i / yTicks;
+    const y = padT + innerH - (val/yMax)*innerH;
+    svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:y, y2:y, class:'gridline'}));
+    const t = svgEl('text', {x:padL-8, y:y+3, class:'axis-label', 'text-anchor':'end'});
+    t.textContent = (opts.valueFmt ? opts.valueFmt(val) : val.toFixed(1));
+    svg.appendChild(t);
+  }
+  svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:padT+innerH, y2:padT+innerH, class:'zero-line'}));
+
+  const tip = ensureTooltip(container);
+  const labelEvery = Math.max(1, Math.ceil(n / (innerW/38)));
+
+  data.forEach((d,i)=>{
+    const x = padL + i*bw + (bw-barW)/2;
+    const targetH = Math.max((d.value/yMax)*innerH, d.value>0?2:0);
+    const y0 = padT + innerH;
+    let fill = d.color || C.fbA;
+    if(d.color2){
+      GRAD_ID++;
+      const gid = 'bg'+GRAD_ID;
+      fill = addLinearGradient(svg, gid, d.color, d.color2, true);
+    }
+    const rect = svgEl('rect', {x, y:y0, width:barW, height:0, fill, class:'bar-rect', rx:6});
+    rect.addEventListener('mouseenter', e=>showTip(tip, container, e, d.tip || `${d.label}<br><b>${(opts.valueFmt?opts.valueFmt(d.value):d.value)}</b>`));
+    rect.addEventListener('mousemove', e=>showTip(tip, container, e, d.tip || `${d.label}<br><b>${(opts.valueFmt?opts.valueFmt(d.value):d.value)}</b>`));
+    rect.addEventListener('mouseleave', ()=>hideTip(tip));
+    svg.appendChild(rect);
+    rect.style.transition = `height .6s cubic-bezier(.16,1,.3,1) ${i*18}ms, y .6s cubic-bezier(.16,1,.3,1) ${i*18}ms`;
+    RAF(()=>RAF(()=>{ rect.setAttribute('height', targetH); rect.setAttribute('y', y0-targetH); }));
+
+    if(i % labelEvery === 0 || n<=12){
+      const t = svgEl('text', {x:x+barW/2, y:H-8, class:'axis-label', 'text-anchor':'middle'});
+      t.textContent = d.label;
+      svg.appendChild(t);
+    }
+  });
+  container.appendChild(svg);
+}
+
+/* Horizontal bar chart for categories. */
+function hBarChart(container, opts){
+  container.innerHTML = '';
+  const W = Math.max(container.clientWidth || 640, 320);
+  const data = opts.data;
+  const rowH = 38;
+  const H = data.length*rowH + 16;
+  const padL = Math.min(Math.max(...data.map(d=>d.label.length))*6.2 + 8, 200);
+  const padR = 50, padT = 8;
+  const innerW = W - padL - padR;
+  const xMax = opts.xMax !== undefined ? opts.xMax : Math.max(...data.map(d=>d.value))*1.15;
+  const svg = svgEl('svg', {viewBox:`0 0 ${W} ${H}`, class:'svg-chart', style:'width:100%; height:auto;'});
+  const tip = ensureTooltip(container);
+
+  data.forEach((d,i)=>{
+    const y = padT + i*rowH;
+    const targetW = Math.max((d.value/xMax)*innerW, 2);
+    const lbl = svgEl('text', {x:padL-10, y:y+rowH*0.6, class:'axis-label', 'text-anchor':'end'});
+    lbl.textContent = d.label;
+    svg.appendChild(lbl);
+    svg.appendChild(svgEl('rect', {x:padL, y:y+7, width:innerW, height:rowH-18, fill:'rgba(255,255,255,0.04)', rx:6}));
+    let fill = d.color || C.teal;
+    if(d.color2){ GRAD_ID++; const gid='hg'+GRAD_ID; fill = addLinearGradient(svg, gid, d.color, d.color2, false); }
+    const rect = svgEl('rect', {x:padL, y:y+7, width:0, height:rowH-18, fill, class:'bar-rect', rx:6});
+    rect.addEventListener('mouseenter', e=>showTip(tip, container, e, d.tip || `${d.label}: <b>${d.value.toFixed(2)}%</b>`));
+    rect.addEventListener('mousemove', e=>showTip(tip, container, e, d.tip || `${d.label}: <b>${d.value.toFixed(2)}%</b>`));
+    rect.addEventListener('mouseleave', ()=>hideTip(tip));
+    svg.appendChild(rect);
+    rect.style.transition = `width .7s cubic-bezier(.16,1,.3,1) ${i*60}ms`;
+    RAF(()=>RAF(()=>rect.setAttribute('width', targetW)));
+    const vt = svgEl('text', {x:padL+targetW+10, y:y+rowH*0.6, class:'axis-label'});
+    vt.textContent = d.value.toFixed(2)+'%';
+    svg.appendChild(vt);
+  });
+  container.appendChild(svg);
+}
+
+/* Smooth line/area chart with gradient fill + animated draw-in.
+   opts:{points:[{x,y,label,tip}], height, color, color2, yMax, yMin, area, annotations} */
+function smoothPath(pts, xAt, yAt){
+  if(pts.length<2) return '';
+  let d = `M ${xAt(0)} ${yAt(pts[0].y)}`;
+  for(let i=0;i<pts.length-1;i++){
+    const p0 = pts[Math.max(i-1,0)], p1 = pts[i], p2 = pts[i+1], p3 = pts[Math.min(i+2,pts.length-1)];
+    const x1 = xAt(i), y1 = yAt(p1.y), x2 = xAt(i+1), y2 = yAt(p2.y);
+    const cp1x = x1 + (x2 - xAt(Math.max(i-1,0)))/6;
+    const cp1y = y1 + (y2 - yAt(p0.y))/6;
+    const cp2x = x2 - (xAt(Math.min(i+2,pts.length-1)) - x1)/6;
+    const cp2y = y2 - (yAt(p3.y) - y1)/6;
+    d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x2} ${y2}`;
+  }
+  return d;
+}
+function lineChart(container, opts){
+  container.innerHTML = '';
+  const W = Math.max(container.clientWidth || 640, 320);
+  const H = opts.height || 260;
+  const padL = 46, padR = 14, padT = 18, padB = 30;
+  const innerW = W - padL - padR, innerH = H - padT - padB;
+  const pts = opts.points;
+  const yVals = pts.map(p=>p.y);
+  const yMin = opts.yMin !== undefined ? opts.yMin : Math.min(...yVals)*0.94;
+  const yMax = opts.yMax !== undefined ? opts.yMax : Math.max(...yVals)*1.1 || 1;
+  const svg = svgEl('svg', {viewBox:`0 0 ${W} ${H}`, class:'svg-chart', style:'width:100%; height:auto;'});
+  const n = pts.length;
+  const stepX = n>1 ? innerW/(n-1) : 0;
+  const xAt = i => padL + i*stepX;
+  const yAt = v => padT + innerH - ((v-yMin)/((yMax-yMin)||1))*innerH;
+
+  const yTicks = opts.yTicks || 4;
+  for(let i=0;i<=yTicks;i++){
+    const val = yMin + (yMax-yMin)*i/yTicks;
+    const y = yAt(val);
+    svg.appendChild(svgEl('line', {x1:padL, x2:W-padR, y1:y, y2:y, class:'gridline'}));
+    const t = svgEl('text', {x:padL-8, y:y+3, class:'axis-label', 'text-anchor':'end'});
+    t.textContent = (opts.valueFmt ? opts.valueFmt(val) : val.toFixed(1));
+    svg.appendChild(t);
+  }
+
+  const color = opts.color || C.teal;
+  const path = smoothPath(pts, xAt, yAt);
+
+  if(opts.area && path){
+    GRAD_ID++;
+    const gid = 'ag'+GRAD_ID;
+    const defs = svgEl('defs',{});
+    const grad = svgEl('linearGradient', {id:gid, x1:'0', y1:'0', x2:'0', y2:'1'});
+    grad.appendChild(svgEl('stop', {offset:'0%', 'stop-color':color, 'stop-opacity':'0.35'}));
+    grad.appendChild(svgEl('stop', {offset:'100%', 'stop-color':color, 'stop-opacity':'0'}));
+    defs.appendChild(grad);
+    svg.appendChild(defs);
+    const areaPath = path + ` L ${xAt(n-1)} ${padT+innerH} L ${xAt(0)} ${padT+innerH} Z`;
+    const areaEl = svgEl('path', {d:areaPath, fill:`url(#${gid})`, stroke:'none', opacity:'0'});
+    svg.appendChild(areaEl);
+    areaEl.style.transition = 'opacity .8s ease .3s';
+    RAF(()=>RAF(()=>areaEl.setAttribute('opacity','1')));
+  }
+  if(path){
+    const lineEl = svgEl('path', {d:path, fill:'none', stroke:color, 'stroke-width':3, 'stroke-linecap':'round'});
+    svg.appendChild(lineEl);
+    try{
+      const len = lineEl.getTotalLength();
+      lineEl.style.strokeDasharray = len;
+      lineEl.style.strokeDashoffset = len;
+      lineEl.style.transition = 'stroke-dashoffset 1.1s cubic-bezier(.16,1,.3,1)';
+      RAF(()=>RAF(()=>lineEl.style.strokeDashoffset = '0'));
+    }catch(e){ /* getTotalLength unsupported in test env — skip animation */ }
+  }
+
+  const tip = ensureTooltip(container);
+  pts.forEach((p,i)=>{
+    const cx = xAt(i), cy = yAt(p.y);
+    const glow = svgEl('circle', {cx, cy, r:9, fill:color, opacity:0.14});
+    svg.appendChild(glow);
+    const c = svgEl('circle', {cx, cy, r:4, fill:'#0F1218', stroke:color, 'stroke-width':2.5, style:'cursor:pointer;'});
+    c.addEventListener('mouseenter', e=>{ showTip(tip, container, e, p.tip || `${p.label}<br><b>${(opts.valueFmt?opts.valueFmt(p.y):p.y)}</b>`); c.setAttribute('r','6'); });
+    c.addEventListener('mousemove', e=>showTip(tip, container, e, p.tip || `${p.label}<br><b>${(opts.valueFmt?opts.valueFmt(p.y):p.y)}</b>`));
+    c.addEventListener('mouseleave', ()=>{ hideTip(tip); c.setAttribute('r','4'); });
+    c.style.transition = 'r .15s var(--ease)';
+    svg.appendChild(c);
+    if(n<=14 || i%Math.ceil(n/12)===0 || i===n-1){
+      const t = svgEl('text', {x:cx, y:H-8, class:'axis-label', 'text-anchor':'middle'});
+      t.textContent = p.label;
+      svg.appendChild(t);
+    }
+  });
+
+  (opts.annotations||[]).forEach(a=>{
+    const x = xAt(a.index);
+    svg.appendChild(svgEl('line', {x1:x, x2:x, y1:padT, y2:padT+innerH, stroke:a.color||C.rose, 'stroke-width':1.5, 'stroke-dasharray':'4,4', opacity:'0.85'}));
+    const t = svgEl('text', {x:x+7, y:padT+13, class:'axis-label'});
+    t.setAttribute('fill', a.color||C.rose);
+    t.textContent = a.text;
+    svg.appendChild(t);
+  });
+
+  container.appendChild(svg);
+  return {xAt, yAt, yMin, yMax, padT, innerH, padL, padR, W};
+}
+
+/* ================= TABS ================= */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = {
+  overview: document.getElementById('panel-overview'),
+  facebook: document.getElementById('panel-facebook'),
+  instagram: document.getElementById('panel-instagram'),
+  trends: document.getElementById('panel-trends')
+};
+let rendered = {};
+function renderTab(name){
+  if(!rendered[name]){
+    rendered[name] = true;
+    try{
+      if(name==='overview') buildOverview();
+      if(name==='facebook') buildFacebook();
+      if(name==='instagram') buildInstagram();
+      if(name==='trends') buildTrends();
+    }catch(e){
+      console.error('render error', name, e);
+      panels[name].innerHTML = '<p style="color:#FB7185">Помилка рендеру: '+e.message+'</p>';
+    }
+  }
+}
+const moveTabSlider = initSlider('#tabs-inner', '#tabs-slider', '.tab-btn');
+tabBtns.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    tabBtns.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    if(moveTabSlider) moveTabSlider();
+    Object.values(panels).forEach(p=>p.classList.remove('active'));
+    const name = btn.dataset.tab;
+    panels[name].classList.add('active');
+    renderTab(name);
+  });
+});
+window.addEventListener('resize', ()=>{
+  rendered = {};
+  const activeTab = document.querySelector('.tab-btn.active').dataset.tab;
+  renderTab(activeTab);
+});
+
+/* ================= SHARED (quarter-level) ================= */
+const fbTotalImpr = sum(FB_ALL, p=>p.impressions);
+const fbTotalEng = sum(FB_ALL, p=>p.engagements);
+const igTotalReach = sum(IG_ALL, p=>p.reach);
+const igTotalEng = sum(IG_ALL, p=>p.engagement);
+const igTotalFollowsAttrib = sum(IG_ALL, p=>p.follows||0);
+
+const crossPairs = [
+  {label:'Junior Summit (реліз)', date:'2026-06-26'},
+  {label:'CASTROP формула', date:'2026-07-24'},
+  {label:'Кома чи крапка (ІОЛ)', date:'2026-08-12'}
+];
+const crossData = crossPairs.map(cp=>{
+  const fbp = FB_ALL.find(p=>p.date===cp.date && p.type==='reel');
+  const igp = IG_ALL.find(p=>p.date===cp.date && p.type==='REELS');
+  return {label:cp.label, fbEr:fbp?fbp.er:0, igEr:igp?igp.er:0};
+});
+const avgCrossFb = avg(crossData, c=>c.fbEr);
+const avgCrossIg = avg(crossData, c=>c.igEr);
+const crossGap = avgCrossIg/avgCrossFb;
+
+const fbFansDaily = [
+  ["2026-06-01",5113],["2026-06-04",5115],["2026-06-08",5115],["2026-06-10",5116],["2026-06-12",5119],["2026-06-15",5120],
+  ["2026-06-17",5121],["2026-06-19",5121],["2026-06-21",5123],["2026-06-22",5156],["2026-06-23",5175],["2026-06-24",5186],
+  ["2026-06-26",5192],["2026-06-28",5194],["2026-06-30",5197],["2026-07-03",5196],["2026-07-06",5205],["2026-07-09",5209],
+  ["2026-07-13",5220],["2026-07-17",5227],["2026-07-21",5233],["2026-07-24",5234],["2026-07-27",5237],["2026-07-31",5236],
+  ["2026-08-03",5243],["2026-08-07",5254],["2026-08-10",5257],["2026-08-14",5261],["2026-08-17",5262],["2026-08-21",5265],
+  ["2026-08-24",5267],["2026-08-26",5268],["2026-08-28",5269],["2026-08-31",5271]
+];
+
+const monthlyErFb = MONTHS.map(m=>({label:m.label, y: avg(byMonth(FB_ALL,m.key), p=>p.er)}));
+const monthlyErIg = MONTHS.map(m=>({label:m.label, y: avg(byMonth(IG_ALL,m.key), p=>p.er)}));
+
+/* ================= OVERVIEW ================= */
+function buildOverview(){
+  const el = panels.overview;
+  el.innerHTML = `
+  <div class="hero-stat">
+    <div class="hero-num" data-count data-target="${crossGap.toFixed(0)}" data-decimals="0">0</div>
+    <div class="hero-copy">
+      <h3>Різниця в залученні одного й того самого відео залежно від платформи</h3>
+      <p>Три reels цього кварталу — «Junior Summit», «CASTROP формула», «Кома чи крапка» — публікували в один день і на Facebook, і на Instagram, без переробки. На Facebook вони в середньому дали ER ${pct(avgCrossFb)}, на Instagram — ${pct(avgCrossIg)}. Це не про якість відео, а про те, що аудиторії двох платформ реагують на однаковий контент кардинально по-різному.</p>
+    </div>
+  </div>
+
+  <section>
+    <h2>На що дивитись і навіщо</h2>
+    <p class="lede">Три метрики відповідають на три різні питання. Плутати їх — головна причина хибних висновків у SMM-звітах.</p>
+    <div class="goal-framework">
+      <div class="gf-card card">
+        <div class="gf-icon">◎</div>
+        <h4>Охоплення / покази</h4>
+        <p>«Скільки людей нас побачили, зокрема нових». Дивимось, коли мета — впізнаваність і вихід за межі наявної аудиторії.</p>
+      </div>
+      <div class="gf-card card">
+        <div class="gf-icon">✦</div>
+        <h4>ER (залучення)</h4>
+        <p>«Наскільки контент резонує з тими, хто вже підписаний». Дивимось, коли мета — якість контенту й лояльність аудиторії.</p>
+      </div>
+      <div class="gf-card card">
+        <div class="gf-icon">↗</div>
+        <h4>Приріст підписників</h4>
+        <p>«Чи перетворюється увага на довгострокову аудиторію». Дивимось, коли мета — зростання спільноти.</p>
+      </div>
+    </div>
+    <div class="gf-priority">
+      <b>Пріоритет цього кварталу — зростання.</b> Підписників мало відносно охоплення (427 на IG, 5 271 на FB — і те, й інше набагато менше, ніж кількість людей, що фактично бачать контент). Тому фокус варто тримати саме на форматах, які одночасно і охоплюють, і конвертують у підписку — практичні довідники на Facebook, Reels і науковий дайджест на Instagram — а не лише гнатись за голим ER.
+    </div>
+  </section>
+
+  <section>
+    <h2>Акаунт у цифрах: червень – серпень</h2>
+    <p class="lede">3 місяці, 54 публікації сумарно на двох платформах.</p>
+    <div class="kpi-grid">
+      <div class="kpi card fb"><div class="accent"></div><div class="label">FB · публікацій</div><div class="value">32</div></div>
+      <div class="kpi card fb"><div class="accent"></div><div class="label">FB · підписників</div><div class="value" data-count data-target="5271">0</div><div class="delta up">↑ +158 за квартал</div></div>
+      <div class="kpi card fb"><div class="accent"></div><div class="label">FB · сумарні покази</div><div class="value" data-count data-target="${fbTotalImpr}">0</div></div>
+      <div class="kpi card fb"><div class="accent"></div><div class="label">FB · середній ER</div><div class="value" data-count data-target="${FB_AVG_ER.toFixed(2)}" data-decimals="2" data-suffix="%">0%</div></div>
+      <div class="kpi card ig"><div class="accent"></div><div class="label">IG · публікацій</div><div class="value">22</div></div>
+      <div class="kpi card ig"><div class="accent"></div><div class="label">IG · підписників</div><div class="value" data-count data-target="427">0</div><div class="delta up">↑ +30 за 30 днів</div></div>
+      <div class="kpi card ig"><div class="accent"></div><div class="label">IG · охоплення</div><div class="value" data-count data-target="${igTotalReach}">0</div></div>
+      <div class="kpi card ig"><div class="accent"></div><div class="label">IG · середній ER</div><div class="value" data-count data-target="${IG_AVG_ER.toFixed(2)}" data-decimals="2" data-suffix="%">0%</div></div>
+    </div>
+
+    <div class="callouts">
+      <div class="callout card">
+        <div class="tag">Найбільше охоплення кварталу</div>
+        <div class="num" data-count data-target="114895">0</div>
+        <p>показів набрав пост-довідник «Лікарські препарати, що можуть спричиняти зміни зору» (22.06) на Facebook — у 13× вище середнього поста сторінки, органічно, без просування.</p>
+      </div>
+      <div class="callout card">
+        <div class="tag">Схований драйвер підписників</div>
+        <div class="num" data-count data-target="47" data-suffix="%">0%</div>
+        <p>усього приросту фоловерів Facebook за квартал (74 з 158) прийшло за тиждень після ОДНОГО цього поста-довідника. Решта тижнів давали лише по кілька підписників.</p>
+      </div>
+      <div class="callout card">
+        <div class="tag">Реальність Instagram</div>
+        <div class="num">6 / 22</div>
+        <p>постів вийшли за межі бази підписників (427) за охопленням — переважно Reels і науковий дайджест. Це головний канал органічного зростання акаунту.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Динаміка по місяцях: Facebook проти Instagram</h2>
+    <p class="lede">Середній ER за кожен місяць окремо. Шкали різні навмисно — щоб бачити форму кривої на кожній платформі, а не лише те, що Instagram вище.</p>
+    <div class="two-col">
+      <div class="chart-card card">
+        <h4>Facebook — середній ER по місяцях</h4>
+        <div class="note">від показів</div>
+        <div class="chart-canvas-wrap" id="ov-fb-month"></div>
+      </div>
+      <div class="chart-card card">
+        <h4>Instagram — середній ER по місяцях</h4>
+        <div class="note">від охоплення</div>
+        <div class="chart-canvas-wrap" id="ov-ig-month"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Що це означає</h2>
+    <div class="split-two">
+      <div class="finding-card card">
+        <h4>Головні знахідки кварталу</h4>
+        <ul class="finding-list">
+          <li><b>Крос-постинг відео без адаптації системно провалюється на Facebook.</b><span class="small">Усі 3 випадки, коли один і той самий reel публікували на обох платформах, дали розрив у ${crossGap.toFixed(0)}× — і це не збіг, а стабільний патерн за квартал.</span></li>
+          <li><b>Найбільше охоплення ≠ найкраще залучення.</b><span class="small">Пост про 114К показів мав ER 0,68% — нижче середнього по сторінці (1,20%). Він чудово розповсюджувався (120 репостів), але не тому, що зачепив саме підписників.</span></li>
+          <li><b>Аудиторія Instagram систематично виходить за межі бази.</b><span class="small">Reels та науковий дайджест регулярно охоплюють більше людей, ніж є підписників — головний канал органічного зростання акаунту.</span></li>
+        </ul>
+      </div>
+      <div class="finding-card card">
+        <h4>Що варто зробити в вересні</h4>
+        <ul class="finding-list good">
+          <li><b>Перестати дублювати reels 1-в-1</b><span class="small">Публікувати відео нативно на Instagram, а для Facebook — адаптувати хук під перші 2 секунди стрічки або взагалі не дублювати без переробки.</span></li>
+          <li><b>Планово повторити формат «практичний довідник»</b><span class="small">Це єдиний тип посту, який реально запустив приплив нових підписників на Facebook — варто робити 1–2 такі на місяць свідомо.</span></li>
+          <li><b>Підняти частоту Instagram</b><span class="small">22 пости за 3 місяці (~1,7/тиждень) — нижче за галузевий орієнтир 4–7 постів/тиждень. Детальніше — у вкладці «Ринок і рекомендації».</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+  `;
+
+  lineChart(document.getElementById('ov-fb-month'), {
+    points: monthlyErFb.map(m=>({x:m.label,y:m.y,label:m.label,tip:`${m.label}<br><b>${m.y.toFixed(2)}%</b>`})),
+    color:C.fbA, area:true, height:230, yMin:0, valueFmt:v=>v.toFixed(1)+'%'
+  });
+  lineChart(document.getElementById('ov-ig-month'), {
+    points: monthlyErIg.map(m=>({x:m.label,y:m.y,label:m.label,tip:`${m.label}<br><b>${m.y.toFixed(2)}%</b>`})),
+    color:C.igA, area:true, height:230, yMin:0, valueFmt:v=>v.toFixed(1)+'%'
+  });
+
+  animateCounts(el);
+}
+
+/* ================= TOP THEME (per month, per platform) ================= */
+const FB_CAT_RATIONALE = {
+  'Клінічний розбір':"Структурований клінічний контент (буліти, чіткий алгоритм дій) дає читачам конкретну користь «на майбутнє» — такі пости зберігають і поширюють колегам.",
+  'Легкий контент / гумор':"Простий, неклінічний формат із питанням до колег знижує поріг для реакції — люди лайкають і коментують швидше, ніж під довгим фаховим текстом.",
+  'Свято/подія країни':"Емоційний, а не професійний контент резонує з людською, не лише фаховою частиною аудиторії — звідси аномально високий ER.",
+  'Освітній курс/подія (анонс)':"Анонси курсів і подій апелюють до вузького сегмента (тих, хто зараз шукає освіту) — тому охоплення гірше конвертується у реакцію.",
+  'Альбом без підпису':"Фотоальбом без тексту дає перегляди, але без приводу для реакції — люди гортають мовчки."
+};
+const IG_CAT_RATIONALE = {
+  'Науковий дайджест':"Новина з конкретним джерелом (FDA / дослідження) дає відчуття ексклюзивності й практичної цінності — аудиторія лайкає і зберігає, щоб не загубити.",
+  'Освітній розбір':"Глибокий розбір теми без прив'язки до інфоприводу — стабільна база залучення, але без вибухового ефекту.",
+  'Клінічний випадок (постав діагноз)':"Відкрите питання й заклик відповісти в коментарях напряму провокує участь — один із найкращих тригерів engagement у соцмережах.",
+  'МедГумор':"Легкий тон знижує бар'єр входу, але без прямого CTA перетворюється лише на лайки, а не на коментарі чи підписки.",
+  'Свято':"Загальнолюдська тема виходить за межі вузько-фахової аудиторії."
+};
+
+function renderTopTheme(container, monthData, rationaleMap){
+  if(!monthData.length){ container.innerHTML = '<p class="lede">Немає постів за цей період.</p>'; return; }
+  const catAgg = {};
+  monthData.forEach(p=>{ (catAgg[p.cat]=catAgg[p.cat]||[]).push(p); });
+  const cats = Object.keys(catAgg).map(c=>({cat:c, posts:catAgg[c], er:avg(catAgg[c],p=>p.er)}));
+  cats.sort((a,b)=>b.er-a.er);
+  const qualified = cats.filter(c=>c.posts.length>=2);
+  const top = qualified.length ? qualified[0] : cats[0];
+  const bestPost = [...top.posts].sort((a,b)=>b.er-a.er)[0];
+  const rationale = rationaleMap[top.cat] || 'Ця рубрика показала найвищий середній результат серед усіх, що виходили в цьому періоді.';
+  container.innerHTML = `
+    <div class="theme-block card">
+      <div class="tb-label">Топ-рубрика</div>
+      <h3>«${top.cat}» <span class="tb-er">— ${top.er.toFixed(2)}% ER</span></h3>
+      <p>${rationale}</p>
+      <div class="tb-evidence">На основі ${top.posts.length} пост(ів) · найкращий приклад: ${bestPost.date} · «${short(bestPost.msg,60)}» · ${bestPost.er.toFixed(2)}%</div>
+    </div>
+  `;
+}
+
+/* ================= FACEBOOK ================= */
+const FB_TYPE_LABELS = {photo:'Фото', album:'Альбом', reel:'Reel'};
+let fbMonthState = 'all';
+let fbTypeState = 'all';
+
+function buildFacebook(){
+  const el = panels.facebook;
+  el.innerHTML = `
+  <section>
+    <h2>Facebook: сторінка Всеукраїнського альянсу офтальмологів</h2>
+    <p class="lede">ER рахується від показів (impressions). Оберіть місяць, щоб побачити динаміку окремо.</p>
+    <div class="month-switch" id="fb-month-switch">
+      <div class="slider" id="fb-month-slider"></div>
+      <button data-m="all" class="active">Весь квартал</button>
+      ${MONTHS.map(m=>`<button data-m="${m.key}">${m.label}</button>`).join('')}
+    </div>
+    <div id="fb-kpi"></div>
+  </section>
+
+  <section>
+    <h2>Найсильніша тема місяця</h2>
+    <p class="lede">Автоматично перераховується під обраний період — яка рубрика дала найвищий ER і чому саме вона.</p>
+    <div id="fb-top-theme"></div>
+  </section>
+
+  <section>
+    <h2>Приріст підписників сторінки</h2>
+    <p class="lede" id="fb-fans-note"></p>
+    <div class="chart-card card"><div class="chart-canvas-wrap" id="fb-fans-chart"></div></div>
+  </section>
+
+  <section>
+    <h2>ER по кожному посту</h2>
+    <div class="filter-row" id="fb-filters">
+      <button class="filter-btn active" data-type="all">Усі</button>
+      <button class="filter-btn" data-type="photo">Фото</button>
+      <button class="filter-btn" data-type="album">Альбом</button>
+      <button class="filter-btn" data-type="reel">Reels</button>
+    </div>
+    <div class="chart-card card"><div class="chart-canvas-wrap" id="fb-er-chart"></div></div>
+  </section>
+
+  <section>
+    <div class="two-col">
+      <div class="chart-card card">
+        <h4>Формат: середній ER</h4>
+        <div class="note">Reels на Facebook — системно слабший формат.</div>
+        <div class="chart-canvas-wrap" id="fb-format-chart"></div>
+      </div>
+      <div class="chart-card card">
+        <h4>Рубрика: середній ER</h4>
+        <div class="note">Свята й легкий контент дають вищий ER, ніж анонси подій.</div>
+        <div class="chart-canvas-wrap" id="fb-cat-chart"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Охоплення по датах (логарифмічна шкала)</h2>
+    <p class="lede">Щоб пост на 114К показів не «з'їдав» решту стовпців.</p>
+    <div class="chart-card card"><div class="chart-canvas-wrap" id="fb-reach-log-chart"></div></div>
+  </section>
+
+  <section>
+    <h2>Що працює на цій сторінці <span class="badge">весь квартал</span></h2>
+    <div class="split-two">
+      <div class="finding-card card">
+        <h4>Сильні сторони</h4>
+        <ul class="finding-list good">
+          <li><b>Свята й пости-звернення до країни</b><span class="small">Середній ER 2,87% — найвищий серед усіх рубрик, попри відсутність клінічного контенту.</span></li>
+          <li><b>#назлобудня та легкі питання до читачів</b><span class="small">Середній ER 1,58%, друге місце. Формат простий у виробництві й стабільно працює.</span></li>
+          <li><b>Практичні довідники з чіткою структурою</b><span class="small">Пост про офтальмотоксичні препарати зібрав 114К показів — органічний виліт стається саме на структурованому контенті.</span></li>
+        </ul>
+      </div>
+      <div class="finding-card card">
+        <h4>Що не працює</h4>
+        <ul class="finding-list bad">
+          <li><b>Лекційні reels, скопійовані з Instagram без адаптації</b><span class="small">Усі 7 відео цього кварталу — внизу рейтингу ER (0,18–0,35%).</span></li>
+          <li><b>Анонси освітніх курсів/подій</b><span class="small">Найслабша рубрика за середнім ER (0,68%). Варто протестувати ту саму тему у форматі фото-картки.</span></li>
+          <li><b>Альбом без підпису (10.06)</b><span class="small">925 кліків, але лише 25 залучень і 0 коментарів.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Рубрики й візуал: що змінити</h2>
+    <div class="split-two">
+      <div class="finding-card card">
+        <h4 style="color:var(--pos)">Додати / підсилити</h4>
+        <ul class="finding-list good">
+          <li><b>Клінічний кейс «постав діагноз»</b><span class="small">На Instagram цей формат стабільно дає ER вище середнього — на Facebook його ще жодного разу не тестували в чистому вигляді.</span></li>
+          <li><b>Обкладинка-картка з заголовком для довгих текстів</b><span class="small">Пости з простим фото без тексту на зображенні гублять частину кліків — короткий заголовок на фото підвищить click-through.</span></li>
+          <li><b>Пряме питання в останньому реченні</b><span class="small">Пости з відкритим питанням до колег системно дають більше коментарів, ніж викладення факту.</span></li>
+        </ul>
+      </div>
+      <div class="finding-card card">
+        <h4 style="color:var(--neg)">Прибрати / скоротити</h4>
+        <ul class="finding-list bad">
+          <li><b>Довгі лекційні reels-кросспости з Instagram</b><span class="small">Жоден з 7 не вийшов навіть у середину рейтингу ER на Facebook — або адаптувати формат, або не дублювати.</span></li>
+          <li><b>Пости-«простирадла» без структури</b><span class="small">Суцільний текст на 1500+ символів без буліт-пунктів читають гірше, ніж структуровані довідники.</span></li>
+          <li><b>Публікації без жодного підпису (фотоальбоми)</b><span class="small">Дають кліки, але майже нуль залучення й коментарів.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Розбір кожного поста</h2>
+    <p class="lede">Клікніть на рядок, щоб розгорнути авто-аналіз відносно середнього по сторінці за весь квартал.</p>
+    <div class="table-card card">
+      <table class="post-table" id="fb-post-table">
+        <thead><tr>
+          <th data-sort="date">Дата</th><th data-sort="type">Формат</th><th>Тема</th>
+          <th data-sort="impressions" class="num">Покази</th><th data-sort="engagements" class="num">Залучення</th>
+          <th data-sort="er" class="num">ER</th>
+        </tr></thead>
+        <tbody id="fb-post-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+  `;
+
+  const container = document.getElementById('fb-month-switch');
+  const slider = document.getElementById('fb-month-slider');
+  function localMove(){
+    const active = container.querySelector('button.active');
+    if(!active) return;
+    slider.style.width = active.offsetWidth+'px';
+    slider.style.transform = `translateX(${active.offsetLeft-4}px)`;
+  }
+  RAF(localMove);
+  container.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      container.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      RAF(localMove);
+      fbMonthState = btn.dataset.m;
+      renderFacebookContent();
+    });
+  });
+  document.querySelectorAll('#fb-filters .filter-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#fb-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      fbTypeState = btn.dataset.type;
+      renderFacebookContent();
+    });
+  });
+
+  renderFacebookContent();
+  window.addEventListener('resize', localMove);
+}
+
+function renderFacebookContent(){
+  const monthData = byMonth(FB_ALL, fbMonthState);
+  const data = fbTypeState==='all' ? monthData : monthData.filter(p=>p.type===fbTypeState);
+  const monthLabel = fbMonthState==='all' ? 'за весь квартал' : MONTHS.find(m=>m.key===fbMonthState).label.toLowerCase();
+
+  const totalImpr = sum(monthData, p=>p.impressions);
+  const totalEng = sum(monthData, p=>p.engagements);
+  const avgEr = avg(monthData, p=>p.er);
+  const best = monthData.length ? [...monthData].sort((a,b)=>b.er-a.er)[0] : null;
+  const worst = monthData.length ? [...monthData].sort((a,b)=>a.er-b.er)[0] : null;
+
+  const kpiEl = document.getElementById('fb-kpi');
+  kpiEl.innerHTML = `
+    <div class="kpi-grid">
+      <div class="kpi card fb"><div class="accent"></div><div class="label">Публікацій, ${monthLabel}</div><div class="value" data-count data-target="${monthData.length}">0</div></div>
+      <div class="kpi card fb"><div class="accent"></div><div class="label">Сумарні покази</div><div class="value" data-count data-target="${totalImpr}">0</div></div>
+      <div class="kpi card fb"><div class="accent"></div><div class="label">Сумарні залучення</div><div class="value" data-count data-target="${totalEng}">0</div></div>
+      <div class="kpi card fb"><div class="accent"></div><div class="label">Середній ER</div><div class="value" data-count data-target="${avgEr.toFixed(2)}" data-decimals="2" data-suffix="%">0%</div></div>
+      <div class="kpi card fb"><div class="accent"></div><div class="label">Найкращий</div><div class="value" style="font-size:19px;">${best?pct(best.er):'—'}</div></div>
+      <div class="kpi card fb"><div class="accent"></div><div class="label">Найслабший</div><div class="value" style="font-size:19px;">${worst?pct(worst.er):'—'}</div></div>
+    </div>
+  `;
+  animateCounts(kpiEl);
+  renderTopTheme(document.getElementById('fb-top-theme'), monthData, FB_CAT_RATIONALE);
+
+  const fansFiltered = fbMonthState==='all' ? fbFansDaily : fbFansDaily.filter(d=>monthKey(d[0])===fbMonthState);
+  document.getElementById('fb-fans-note').textContent = fbMonthState==='all'
+    ? 'Пунктирна вертикаль — 22 червня, день публікації довідника про офтальмотоксичні препарати. За наступні 7 днів сторінка отримала 74 нових підписники — 47% усього приросту за квартал.'
+    : `Динаміка підписників за ${monthLabel}.`;
+  const annotations = [];
+  const june22idx = fansFiltered.findIndex(d=>d[0]==='2026-06-22');
+  if(june22idx>=0) annotations.push({index:june22idx, text:'22.06 — довідник', color:C.rose});
+  lineChart(document.getElementById('fb-fans-chart'), {
+    points: fansFiltered.map(d=>({x:d[0], y:d[1], label:dmy(d[0]), tip:`${dmy(d[0])}<br><b>${fmt(d[1])}</b> підписників`})),
+    color:C.fbA, area:true, height:260, annotations
+  });
+
+  barChart(document.getElementById('fb-er-chart'), {
+    data: data.map(p=>({
+      label:dmy(p.date), value:p.er,
+      color: p.type==='reel'?C.rose : p.type==='album'?C.amber : C.fbA,
+      color2: p.type==='reel'?'#F472B6' : p.type==='album'? '#FCD34D' : C.fbB,
+      tip:`${p.date} · ${FB_TYPE_LABELS[p.type]}<br>ER: <b>${p.er.toFixed(2)}%</b><br>${short(p.msg,50)}`
+    })),
+    height:260, valueFmt:v=>v.toFixed(1)+'%'
+  });
+
+  const typeAgg = {};
+  monthData.forEach(p=>{ (typeAgg[p.type]=typeAgg[p.type]||[]).push(p); });
+  barChart(document.getElementById('fb-format-chart'), {
+    data: Object.keys(typeAgg).map(t=>({
+      label:FB_TYPE_LABELS[t], value:avg(typeAgg[t],p=>p.er),
+      color: t==='reel'?C.rose:t==='album'?C.amber:C.fbA,
+      color2: t==='reel'?'#F472B6':t==='album'?'#FCD34D':C.fbB,
+      tip:`${FB_TYPE_LABELS[t]}: <b>${avg(typeAgg[t],p=>p.er).toFixed(2)}%</b> (n=${typeAgg[t].length})`
+    })),
+    height:220, valueFmt:v=>v.toFixed(1)+'%'
+  });
+
+  const catAgg = {};
+  monthData.forEach(p=>{ (catAgg[p.cat]=catAgg[p.cat]||[]).push(p); });
+  hBarChart(document.getElementById('fb-cat-chart'), {
+    data: Object.keys(catAgg).map(c=>({label:c, value:avg(catAgg[c],p=>p.er), color:C.tealDeep, color2:C.teal, tip:`${c}: <b>${avg(catAgg[c],p=>p.er).toFixed(2)}%</b> (n=${catAgg[c].length})`}))
+  });
+
+  const sortedByDate = [...monthData].sort((a,b)=>a.date.localeCompare(b.date));
+  const maxImpr = Math.max(...sortedByDate.map(p=>p.impressions), 10);
+  barChart(document.getElementById('fb-reach-log-chart'), {
+    data: sortedByDate.map(p=>({
+      label:dmy(p.date), value:Math.log10(p.impressions+1),
+      color: p.type==='reel'?C.rose:C.fbA, color2: p.type==='reel'?'#F472B6':C.fbB,
+      tip:`${p.date}<br>Покази: <b>${fmt(p.impressions)}</b>`
+    })),
+    height:240, yMax:Math.log10(maxImpr+1)*1.1, valueFmt:v=>fmt(Math.pow(10,v))
+  });
+
+  renderFbTable(monthData);
+}
+
+function renderAnalysisCard(p, avgErAll){
+  const a = p.analysis;
+  const brought = a.follow_verdict.startsWith('приніс');
+  const badgeColor = brought ? C.pos : (a.follow_verdict.includes('недоступні') ? C.text2 : C.neg);
+  return `
+    <div class="post-msg">${p.msg}</div>
+    <div class="metric-chip-row">
+      ${a.metrics.map(m=>`<div class="metric-chip"><span class="mc-label">${m.label}</span><span class="mc-value">${fmt(m.value)}</span></div>`).join('')}
+      <div class="metric-chip follow-chip" style="border-color:${badgeColor}55;">
+        <span class="mc-label">Нові підписники</span>
+        <span class="mc-value" style="color:${badgeColor}">${brought ? '✓ ' : (a.follow_verdict.includes('недоступні')?'– ':'✕ ')}${a.follow_verdict}</span>
+      </div>
+    </div>
+    <div class="pc-grid">
+      <div class="pc-col pc-good">
+        <div class="pc-head">Плюси</div>
+        <ul>${a.pros.map(x=>`<li>${x}</li>`).join('')}</ul>
+      </div>
+      <div class="pc-col pc-bad">
+        <div class="pc-head">Мінуси</div>
+        <ul>${a.cons.map(x=>`<li>${x}</li>`).join('')}</ul>
+      </div>
+    </div>
+    <div class="rec-callout"><span class="rec-tag">Як посилити</span>${a.recommendation}</div>
+  `;
+}
+
+function renderFbTable(monthData, sortKey='date', dir=1){
+  const tbody = document.getElementById('fb-post-tbody');
+  function erColor(er, a){ if(er>=a*1.4) return C.pos; if(er<=a*0.6) return C.neg; return C.text1; }
+  const dataSorted = [...monthData].sort((a,b)=> a[sortKey] > b[sortKey] ? dir : -dir);
+  tbody.innerHTML = dataSorted.map(p=>{
+    const idx = FB_ALL.indexOf(p);
+    const col = erColor(p.er,FB_AVG_ER);
+    return `
+    <tr class="row" data-idx="${idx}">
+      <td>${p.date}</td>
+      <td><span class="type-tag">${FB_TYPE_LABELS[p.type]}</span></td>
+      <td style="color:var(--text-0)"><span class="chev">›</span>${short(p.msg,50)}</td>
+      <td class="num">${fmt(p.impressions)}</td>
+      <td class="num">${fmt(p.engagements)}</td>
+      <td class="num"><span class="er-pill" style="color:${col}; background:${col}22;">${p.er.toFixed(2)}%</span></td>
+    </tr>
+    <tr class="post-detail" id="fb-detail-${idx}"><td colspan="6"><div class="post-detail-inner">
+      ${renderAnalysisCard(p, FB_AVG_ER)}
+    </div></td></tr>`;
+  }).join('');
+  tbody.querySelectorAll('tr.row').forEach(row=>{
+    row.addEventListener('click', ()=>{
+      row.classList.toggle('expanded');
+      document.getElementById('fb-detail-'+row.dataset.idx).classList.toggle('open');
+    });
+  });
+}
+
+let fbSortState = {key:'date', dir:1};
+document.addEventListener('click', e=>{
+  const th = e.target.closest('#fb-post-table thead th[data-sort]');
+  if(th){
+    const key = th.dataset.sort;
+    fbSortState.dir = (fbSortState.key===key) ? -fbSortState.dir : -1;
+    fbSortState.key = key;
+    renderFbTable(byMonth(FB_ALL, fbMonthState), key, fbSortState.dir);
+  }
+});
+
+/* ================= INSTAGRAM ================= */
+const IG_TYPE_LABELS = {IMAGE:'Фото', CAROUSEL:'Карусель', REELS:'Reel'};
+let igMonthState = 'all';
+let igTypeState = 'all';
+const IG_FOLLOWERS_NOW = 427;
+
+function buildInstagram(){
+  const el = panels.instagram;
+  el.innerHTML = `
+  <section>
+    <h2>Instagram: @ua_ophthalmologists</h2>
+    <p class="lede">ER рахується від охоплення (reach). Оберіть місяць для окремого розбору.</p>
+    <div class="month-switch" id="ig-month-switch">
+      <div class="slider" id="ig-month-slider"></div>
+      <button data-m="all" class="active">Весь квартал</button>
+      ${MONTHS.map(m=>`<button data-m="${m.key}">${m.label}</button>`).join('')}
+    </div>
+    <div id="ig-kpi"></div>
+  </section>
+
+  <section>
+    <h2>Найсильніша тема місяця</h2>
+    <p class="lede">Автоматично перераховується під обраний період — яка рубрика дала найвищий ER і чому саме вона.</p>
+    <div id="ig-top-theme"></div>
+  </section>
+
+  <section>
+    <h2>Хто саме прийшов новим: підписники по кожному посту</h2>
+    <p class="lede">Instagram напряму показує, скільки людей підписалось <b style="color:var(--text-0)">після перегляду конкретного посту</b> (метрика <span class="type-tag">media_follows</span>). Для Reels Meta цю метрику не віддає — позначено приглушеним кольором.</p>
+    <div class="chart-card card"><div class="chart-canvas-wrap" id="ig-follows-chart"></div></div>
+  </section>
+
+  <section>
+    <h2>Охоплення проти бази підписників (427)</h2>
+    <p class="lede">Пунктирна лінія — поточна кількість підписників. Точки вище лінії — пости, що вийшли за межі бази.</p>
+    <div class="chart-card card"><div class="chart-canvas-wrap" id="ig-reach-base-chart"></div></div>
+  </section>
+
+  <section>
+    <h2>ER по кожному посту</h2>
+    <div class="filter-row" id="ig-filters">
+      <button class="filter-btn active" data-type="all">Усі</button>
+      <button class="filter-btn" data-type="IMAGE">Фото</button>
+      <button class="filter-btn" data-type="CAROUSEL">Карусель</button>
+      <button class="filter-btn" data-type="REELS">Reels</button>
+    </div>
+    <div class="chart-card card"><div class="chart-canvas-wrap" id="ig-er-chart"></div></div>
+  </section>
+
+  <section>
+    <div class="two-col">
+      <div class="chart-card card">
+        <h4>Формат: середній ER</h4>
+        <div class="note">Reels дають найширше охоплення в середньому.</div>
+        <div class="chart-canvas-wrap" id="ig-format-chart"></div>
+      </div>
+      <div class="chart-card card">
+        <h4>Рубрика: середній ER</h4>
+        <div class="note">Науковий дайджест — найсильніша рубрика акаунту.</div>
+        <div class="chart-canvas-wrap" id="ig-cat-chart"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Що працює на цьому акаунті <span class="badge">весь квартал</span></h2>
+    <div class="split-two">
+      <div class="finding-card card">
+        <h4>Сильні сторони</h4>
+        <ul class="finding-list good">
+          <li><b>Науковий дайджест (новини FDA / дослідження)</b><span class="small">Середній ER 11,51% — найкраща рубрика.</span></li>
+          <li><b>Reels все ще головний канал охоплення</b><span class="small">Середнє охоплення 718 проти 392 у фото.</span></li>
+          <li><b>Клінічні кейси «постав діагноз»</b><span class="small">Стабільно тримає ER вище середнього і найвищий рівень збережень.</span></li>
+        </ul>
+      </div>
+      <div class="finding-card card">
+        <h4>Що не працює</h4>
+        <ul class="finding-list bad">
+          <li><b>Занадто довгі й «сухі» підписи</b><span class="small">Пост про алкоголь і пресбіопію — найслабший ER кварталу (3,23%).</span></li>
+          <li><b>МедГумор без чіткого CTA</b><span class="small">Гумор працює, коли є пряме запитання в коментарі, а не просто жарт.</span></li>
+          <li><b>Низька частота публікацій</b><span class="small">~1,7/тиждень — суттєво нижче за орієнтир 4–7/тиждень.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Рубрики й візуал: що змінити</h2>
+    <div class="split-two">
+      <div class="finding-card card">
+        <h4 style="color:var(--pos)">Додати / підсилити</h4>
+        <ul class="finding-list good">
+          <li><b>Провайдер-спотлайт</b><span class="small">Коротке знайомство з лікарями альянсу — такого контенту зараз немає, а це один із топ-форматів довіри для медичних брендів.</span></li>
+          <li><b>Відео-відповідь лікаря на одне запитання (30 сек)</b><span class="small">Найефективніший формат довіри для медичних акаунтів у 2026 — і природний привід для Reels.</span></li>
+          <li><b>CTA «підписуйся» в останньому кадрі Reels</b><span class="small">Зараз Reels дають найширше охоплення, але не мають прямого заклику підписатися — втрачена конверсія.</span></li>
+        </ul>
+      </div>
+      <div class="finding-card card">
+        <h4 style="color:var(--neg)">Прибрати / скоротити</h4>
+        <ul class="finding-list bad">
+          <li><b>Занадто довгі підписи під науковими постами</b><span class="small">Перші 1–2 рядки вирішують, чи людина розгорне текст — зараз багато постів «спалюють» інтригу одразу.</span></li>
+          <li><b>МедГумор без запитання наприкінці</b><span class="small">Жарт без прямого CTA конвертується тільки в лайки, а не в коментарі чи підписки.</span></li>
+          <li><b>Нерегулярність публікацій</b><span class="small">~1,7 посту/тиждень — розриви в кілька днів знижують передбачуваність для алгоритму й аудиторії.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Розбір кожного поста</h2>
+    <p class="lede">Клікніть на рядок, щоб розгорнути авто-аналіз.</p>
+    <div class="table-card card">
+      <table class="post-table" id="ig-post-table">
+        <thead><tr>
+          <th data-sort="date">Дата</th><th data-sort="type">Формат</th><th>Тема</th>
+          <th data-sort="reach" class="num">Охоплення</th><th data-sort="engagement" class="num">Залучення</th>
+          <th data-sort="follows" class="num">Нові фоловери</th>
+          <th data-sort="er" class="num">ER</th>
+        </tr></thead>
+        <tbody id="ig-post-tbody"></tbody>
+      </table>
+    </div>
+  </section>
+  `;
+
+  const container = document.getElementById('ig-month-switch');
+  const slider = document.getElementById('ig-month-slider');
+  function localMove(){
+    const active = container.querySelector('button.active');
+    if(!active) return;
+    slider.style.width = active.offsetWidth+'px';
+    slider.style.transform = `translateX(${active.offsetLeft-4}px)`;
+  }
+  RAF(localMove);
+  container.querySelectorAll('button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      container.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      RAF(localMove);
+      igMonthState = btn.dataset.m;
+      renderInstagramContent();
+    });
+  });
+  document.querySelectorAll('#ig-filters .filter-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#ig-filters .filter-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      igTypeState = btn.dataset.type;
+      renderInstagramContent();
+    });
+  });
+
+  renderInstagramContent();
+  window.addEventListener('resize', localMove);
+}
+
+function renderInstagramContent(){
+  const monthData = byMonth(IG_ALL, igMonthState);
+  const data = igTypeState==='all' ? monthData : monthData.filter(p=>p.type===igTypeState);
+  const monthLabel = igMonthState==='all' ? 'за весь квартал' : MONTHS.find(m=>m.key===igMonthState).label.toLowerCase();
+
+  const totalReach = sum(monthData, p=>p.reach);
+  const totalEng = sum(monthData, p=>p.engagement);
+  const avgEr = avg(monthData, p=>p.er);
+  const followsAttrib = sum(monthData, p=>p.follows||0);
+  const best = monthData.length ? [...monthData].sort((a,b)=>b.er-a.er)[0] : null;
+  const worst = monthData.length ? [...monthData].sort((a,b)=>a.er-b.er)[0] : null;
+
+  const kpiEl = document.getElementById('ig-kpi');
+  kpiEl.innerHTML = `
+    <div class="kpi-grid">
+      <div class="kpi card ig"><div class="accent"></div><div class="label">Публікацій, ${monthLabel}</div><div class="value" data-count data-target="${monthData.length}">0</div></div>
+      <div class="kpi card ig"><div class="accent"></div><div class="label">Сумарне охоплення</div><div class="value" data-count data-target="${totalReach}">0</div></div>
+      <div class="kpi card ig"><div class="accent"></div><div class="label">Сумарне залучення</div><div class="value" data-count data-target="${totalEng}">0</div></div>
+      <div class="kpi card ig"><div class="accent"></div><div class="label">Нові фоловери з постів</div><div class="value" data-count data-target="${followsAttrib}" data-suffix="+">0</div></div>
+      <div class="kpi card ig"><div class="accent"></div><div class="label">Середній ER</div><div class="value" data-count data-target="${avgEr.toFixed(2)}" data-decimals="2" data-suffix="%">0%</div></div>
+      <div class="kpi card ig"><div class="accent"></div><div class="label">Найкращий / найслабший</div><div class="value" style="font-size:16px;">${best?pct(best.er):'—'} / ${worst?pct(worst.er):'—'}</div></div>
+    </div>
+  `;
+  animateCounts(kpiEl);
+  renderTopTheme(document.getElementById('ig-top-theme'), monthData, IG_CAT_RATIONALE);
+
+  const sortedByDate = [...monthData].sort((a,b)=>a.date.localeCompare(b.date));
+
+  barChart(document.getElementById('ig-follows-chart'), {
+    data: sortedByDate.map(p=>({
+      label:dmy(p.date), value:p.follows===null?0:p.follows,
+      color: p.follows===null ? 'rgba(255,255,255,0.08)' : C.igA,
+      color2: p.follows===null ? 'rgba(255,255,255,0.08)' : C.igB,
+      tip: p.follows===null ? `${p.date}<br>Reel — метрика недоступна` : `${p.date}<br>Нові підписники: <b>${p.follows}</b>`
+    })),
+    height:230, yTicks:3
+  });
+
+  const lc = lineChart(document.getElementById('ig-reach-base-chart'), {
+    points: sortedByDate.map(p=>({x:p.date, y:p.reach, label:dmy(p.date), tip:`${p.date}<br>Охоплення: <b>${fmt(p.reach)}</b>`})),
+    color:C.igA, area:true, height:260, yMin:0
+  });
+  (function addBaseLine(){
+    const container = document.getElementById('ig-reach-base-chart');
+    const svg = container.querySelector('svg');
+    if(!svg || !lc) return;
+    if(IG_FOLLOWERS_NOW <= lc.yMax){
+      const yPix = lc.yAt(IG_FOLLOWERS_NOW);
+      const line = svgEl('line',{x1:lc.padL, x2:lc.W-lc.padR, y1:yPix, y2:yPix, stroke:C.text1, 'stroke-width':1.3, 'stroke-dasharray':'4,4', opacity:'0.7'});
+      svg.appendChild(line);
+      const t = svgEl('text', {x:lc.padL+4, y:yPix-6, class:'axis-label'});
+      t.setAttribute('fill', C.text1);
+      t.textContent = '427 підписників';
+      svg.appendChild(t);
+    }
+  })();
+
+  barChart(document.getElementById('ig-er-chart'), {
+    data: data.map(p=>({
+      label:dmy(p.date), value:p.er,
+      color: p.type==='REELS'?C.amber : p.type==='CAROUSEL'?C.tealDeep : C.igA,
+      color2: p.type==='REELS'?'#FCD34D' : p.type==='CAROUSEL'?C.teal : C.igB,
+      tip:`${p.date} · ${IG_TYPE_LABELS[p.type]}<br>ER: <b>${p.er.toFixed(2)}%</b><br>${short(p.msg,50)}`
+    })),
+    height:260, valueFmt:v=>v.toFixed(1)+'%'
+  });
+
+  const typeAgg = {};
+  monthData.forEach(p=>{ (typeAgg[p.type]=typeAgg[p.type]||[]).push(p); });
+  barChart(document.getElementById('ig-format-chart'), {
+    data: Object.keys(typeAgg).map(t=>({
+      label:IG_TYPE_LABELS[t], value:avg(typeAgg[t],p=>p.er),
+      color: t==='REELS'?C.amber:t==='CAROUSEL'?C.tealDeep:C.igA,
+      color2: t==='REELS'?'#FCD34D':t==='CAROUSEL'?C.teal:C.igB,
+      tip:`${IG_TYPE_LABELS[t]}: <b>${avg(typeAgg[t],p=>p.er).toFixed(2)}%</b> (n=${typeAgg[t].length})`
+    })),
+    height:220, valueFmt:v=>v.toFixed(1)+'%'
+  });
+
+  const catAgg = {};
+  monthData.forEach(p=>{ (catAgg[p.cat]=catAgg[p.cat]||[]).push(p); });
+  hBarChart(document.getElementById('ig-cat-chart'), {
+    data: Object.keys(catAgg).map(c=>({label:c, value:avg(catAgg[c],p=>p.er), color:C.igA, color2:C.igB, tip:`${c}: <b>${avg(catAgg[c],p=>p.er).toFixed(2)}%</b> (n=${catAgg[c].length})`}))
+  });
+
+  renderIgTable(monthData);
+}
+
+function renderIgTable(monthData, sortKey='date', dir=1){
+  const tbody = document.getElementById('ig-post-tbody');
+  function erColor(er, a){ if(er>=a*1.2) return C.pos; if(er<=a*0.8) return C.neg; return C.text1; }
+  const dataSorted = [...monthData].sort((a,b)=> a[sortKey] > b[sortKey] ? dir : -dir);
+  tbody.innerHTML = dataSorted.map(p=>{
+    const idx = IG_ALL.indexOf(p);
+    const col = erColor(p.er,IG_AVG_ER);
+    return `
+    <tr class="row" data-idx="${idx}">
+      <td>${p.date}</td>
+      <td><span class="type-tag">${IG_TYPE_LABELS[p.type]}</span></td>
+      <td style="color:var(--text-0)"><span class="chev">›</span>${short(p.msg,42)}</td>
+      <td class="num">${fmt(p.reach)}</td>
+      <td class="num">${fmt(p.engagement)}</td>
+      <td class="num">${p.follows===null?'—':p.follows}</td>
+      <td class="num"><span class="er-pill" style="color:${col}; background:${col}22;">${p.er.toFixed(2)}%</span></td>
+    </tr>
+    <tr class="post-detail" id="ig-detail-${idx}"><td colspan="7"><div class="post-detail-inner">
+      ${renderAnalysisCard(p, IG_AVG_ER)}
+    </div></td></tr>`;
+  }).join('');
+  tbody.querySelectorAll('tr.row').forEach(row=>{
+    row.addEventListener('click', ()=>{
+      row.classList.toggle('expanded');
+      document.getElementById('ig-detail-'+row.dataset.idx).classList.toggle('open');
+    });
+  });
+}
+
+let igSortState = {key:'date', dir:1};
+document.addEventListener('click', e=>{
+  const th = e.target.closest('#ig-post-table thead th[data-sort]');
+  if(th){
+    const key = th.dataset.sort;
+    igSortState.dir = (igSortState.key===key) ? -igSortState.dir : -1;
+    igSortState.key = key;
+    renderIgTable(byMonth(IG_ALL, igMonthState), key, igSortState.dir);
+  }
+});
+
+/* ================= TRENDS ================= */
+function buildTrends(){
+  const el = panels.trends;
+  el.innerHTML = `
+  <section>
+    <h2>Як акаунт виглядає на тлі ринку</h2>
+    <p class="lede">Опубліковані бенчмарки ER для медичної галузі сильно розходяться між постачальниками — методики різні (від підписників чи від охоплення/показів), тож замість однієї "правильної" цифри — діапазон із джерелами.</p>
+    <div class="card" style="padding:28px 28px 8px; margin-bottom:20px;">
+      <h4 style="margin-bottom:14px;">Facebook: наш ER (від показів) — <span style="color:var(--teal)">${pct(FB_AVG_ER)}</span></h4>
+      <div id="bench-fb"></div>
+    </div>
+    <div class="card" style="padding:28px 28px 8px;">
+      <h4 style="margin-bottom:14px;">Instagram: наш ER (від охоплення) — <span style="color:var(--teal)">${pct(IG_AVG_ER)}</span></h4>
+      <div id="bench-ig"></div>
+    </div>
+    <p class="lede" style="font-size:12.5px; margin-top:16px;">Акаунт малий (427 підписників на IG, 5 271 на FB) — маленькі спільноти природно дають вищий ER%. Це не порівняння яблука до яблука з великими брендами, але напрямок і динаміка місяць-до-місяця — коректний орієнтир.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2>Reels проти каруселей: що каже індустрія у 2026</h2>
+    <p class="lede">Дані 2026 року стабільно показують один патерн: Reels виграють за охопленням, карусель — за залученням.</p>
+    <div class="two-col">
+      <div class="chart-card card">
+        <h4>За охопленням (індекс, фото = 1×)</h4>
+        <div class="chart-canvas-wrap" id="bench-reach-chart"></div>
+      </div>
+      <div class="chart-card card">
+        <h4>За залученням (ER від підписників, Socialinsider Q2 2026)</h4>
+        <div class="chart-canvas-wrap" id="bench-er-chart"></div>
+      </div>
+    </div>
+    <p class="lede" style="margin-top:20px;">Reels охоплюють приблизно у 2,25× більше людей, ніж одиночні фото, і на 36% більше, ніж карусель — але карусель дає вищий ER і найбільше збережень. Рекомендований баланс на 2026 рік: 60–70% Reels, 20–30% каруселей, решта — одиночні фото.</p>
+    <h4 style="margin:26px 0 14px;">Наш поточний мікс на Instagram проти рекомендованого</h4>
+    <div class="chart-card card"><div class="chart-canvas-wrap" id="mix-chart"></div></div>
+    <p class="lede" style="margin-top:14px;">Зараз мікс перевернутий: 64% одиночних фото, 23% каруселей і лише 14% Reels — при тому, що саме Reels дають найширше охоплення на цьому акаунті.</p>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2>Український контекст 2026</h2>
+    <p class="lede">Прямих кількісних бенчмарків по українському ринку для нішевих медичних спільнот у відкритому доступі немає. Але якісні тренди 2026 року прямо стосуються цього акаунту:</p>
+    <div class="finding-card card">
+      <ul class="finding-list">
+        <li><b>Соцмережі стають пошуковою системою.</b><span class="small">Молодша аудиторія дедалі частіше шукає інформацію просто в Instagram, а не в Google — це підсилює цінність структурованого контенту на кшталт довідників і клінічних кейсів.</span></li>
+        <li><b>Реактивність вирішує.</b><span class="small">Тренди й інфоприводи живуть лічені години — бренди, які швидко реагують, отримують максимальне охоплення. Формат #назлобудня — саме така реактивність, і тому він у топі за ER.</span></li>
+        <li><b>Аудиторія хоче "трушності", а не корпоративного тону.</b><span class="small">Пости від першої особи з питанням у коментарях працюють краще за офіційні анонси.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2>Цілі на вересень</h2>
+    <div class="card" style="padding:8px 8px;">
+      <table class="goal-table">
+        <thead><tr><th>Показник</th><th>Зараз</th><th></th><th>Ціль</th><th>За рахунок чого</th></tr></thead>
+        <tbody>
+          <tr><td>FB середній ER</td><td>0,88%</td><td class="goal-arrow">→</td><td class="goal-target">1,1%</td><td>менше лекційних reels у стрічці, більше легкого й святкового контенту</td></tr>
+          <tr><td>IG постів/місяць</td><td>~7,3</td><td class="goal-arrow">→</td><td class="goal-target">12+</td><td>довести частоту до галузевих 4–7 постів/тиждень</td></tr>
+          <tr><td>IG частка Reels</td><td>14%</td><td class="goal-arrow">→</td><td class="goal-target">40–50%</td><td>наблизитись до рекомендованого міксу 60/30/10</td></tr>
+          <tr><td>Крос-постинг відео без адаптації</td><td>3/квартал</td><td class="goal-arrow">→</td><td class="goal-target">0</td><td>адаптувати хук під Facebook, або публікувати лише в Instagram</td></tr>
+          <tr><td>"Практичні довідники" на FB</td><td>1/квартал</td><td class="goal-arrow">→</td><td class="goal-target">1–2/місяць</td><td>свідомо повторити формат, що приніс 47% приросту фоловерів</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <h2>Джерела</h2>
+    <div class="source-list">
+      <div>Hootsuite — <a href="https://blog.hootsuite.com/social-media-benchmarks/" target="_blank">Social media benchmarks: 2026 data + tips</a></div>
+      <div>Growth-onomics — <a href="https://growth-onomics.com/2026-social-media-benchmarks-by-industry/" target="_blank">2026 Social Media Benchmarks by Industry</a></div>
+      <div>Socialinsider — <a href="https://www.socialinsider.io/social-media-benchmarks/instagram" target="_blank">2026 Instagram Organic Engagement Benchmarks</a></div>
+      <div>Apaya — <a href="https://apaya.com/blog/social-media-benchmarks-healthcare" target="_blank">Healthcare Social Media Benchmarks 2026</a>, <a href="https://apaya.com/blog/social-media-benchmarks-instagram" target="_blank">Instagram Engagement Rate Benchmarks 2026</a></div>
+      <div>Social Champ — <a href="https://www.socialchamp.com/blog/social-media-benchmarks/" target="_blank">Social Media Benchmarks 2026</a></div>
+      <div>Branding Pioneers — <a href="https://brandingpioneers.com/data/social-media-healthcare-benchmarks" target="_blank">Social Media Benchmarks for Healthcare 2026</a></div>
+      <div>ICUC Social — <a href="https://www.icuc.social/resources/blog/social-media-benchmarks" target="_blank">Social Media Benchmarks 2026 by Industry and Platform</a></div>
+      <div>Contentdrips — <a href="https://contentdrips.com/blog/2026/06/instagram-reels-vs-carousels-2026-guide/" target="_blank">Instagram Reels vs. Carousels (2026)</a></div>
+      <div>Web-Promo.ua — <a href="https://web-promo.ua/ua/blog/trendi-smm-na-2026-rik/" target="_blank">Тренди SMM на 2026 рік</a></div>
+      <div>Promodo — <a href="https://www.promodo.ua/blog/trendy-smm" target="_blank">Тренди SMM 2026</a></div>
+    </div>
+  </section>
+  `;
+
+  function benchRows(container, rows, maxVal){
+    container.innerHTML = rows.map(r=>`
+      <div class="bench-row">
+        <div class="bench-label">${r.label}</div>
+        <div class="bench-bar-wrap"><div class="bench-bar ${r.us?'us':''}" style="width:0%" data-w="${(r.val/maxVal*100).toFixed(1)}"></div></div>
+        <div class="bench-val">${r.val.toFixed(2)}%</div>
+      </div>
+    `).join('');
+    RAF(()=>RAF(()=>{
+      container.querySelectorAll('.bench-bar').forEach(b=>b.style.width = b.dataset.w+'%');
+    }));
+  }
+  benchRows(document.getElementById('bench-fb'), [
+    {label:'Наш акаунт (від показів)', val:FB_AVG_ER, us:true},
+    {label:'Growth-onomics, крос-індустрійний', val:0.15},
+    {label:'Social Champ, healthcare', val:0.30},
+    {label:'Branding Pioneers, healthcare', val:1.40},
+    {label:'Hootsuite, healthcare/pharma/biotech', val:1.90},
+  ], Math.max(FB_AVG_ER,1.9));
+  benchRows(document.getElementById('bench-ig'), [
+    {label:'Наш акаунт (від охоплення)', val:IG_AVG_ER, us:true},
+    {label:'Growth-onomics, healthcare (від фоловерів)', val:1.21},
+    {label:'Sprout Social, healthcare', val:3.20},
+    {label:'Hootsuite, healthcare/pharma/biotech', val:3.50},
+    {label:'Socialinsider, крос-індустрійний (від охоплення)', val:3.50},
+  ], Math.max(IG_AVG_ER,3.5));
+
+  barChart(document.getElementById('bench-reach-chart'), {
+    data:[
+      {label:'Фото', value:1, color:'rgba(255,255,255,0.12)'},
+      {label:'Карусель', value:1.65, color:C.tealDeep, color2:C.teal},
+      {label:'Reels', value:2.25, color:C.amber, color2:'#FCD34D'}
+    ], height:220, valueFmt:v=>v.toFixed(1)+'×'
+  });
+  barChart(document.getElementById('bench-er-chart'), {
+    data:[
+      {label:'Фото', value:0.33, color:'rgba(255,255,255,0.12)'},
+      {label:'Reels', value:0.48, color:C.amber, color2:'#FCD34D'},
+      {label:'Карусель', value:0.50, color:C.tealDeep, color2:C.teal}
+    ], height:220, valueFmt:v=>v.toFixed(2)+'%'
+  });
+
+  (function mixChart(){
+    const container = document.getElementById('mix-chart');
+    container.innerHTML = '';
+    const W = Math.max(container.clientWidth||640, 320), H = 156;
+    const padL = 150, padR = 60, padT = 16;
+    const innerW = W-padL-padR;
+    const rows = [
+      {label:'Наш мікс зараз', segs:[{v:14,c1:C.amber,c2:'#FCD34D',n:'Reels'},{v:23,c1:C.tealDeep,c2:C.teal,n:'Карусель'},{v:64,c1:'rgba(255,255,255,0.10)',c2:'rgba(255,255,255,0.06)',n:'Фото'}]},
+      {label:'Рекомендований мікс', segs:[{v:65,c1:C.amber,c2:'#FCD34D',n:'Reels'},{v:25,c1:C.tealDeep,c2:C.teal,n:'Карусель'},{v:10,c1:'rgba(255,255,255,0.10)',c2:'rgba(255,255,255,0.06)',n:'Фото'}]}
+    ];
+    const svg = svgEl('svg', {viewBox:`0 0 ${W} ${H}`, class:'svg-chart', style:'width:100%; height:auto;'});
+    const tip = ensureTooltip(container);
+    rows.forEach((r,ri)=>{
+      const y = padT + ri*64;
+      const lbl = svgEl('text', {x:padL-12, y:y+20, class:'axis-label', 'text-anchor':'end'});
+      lbl.textContent = r.label;
+      svg.appendChild(lbl);
+      svg.appendChild(svgEl('rect', {x:padL, y, width:innerW, height:36, fill:'rgba(255,255,255,0.03)', rx:8}));
+      let x = padL;
+      r.segs.forEach((s,si)=>{
+        const w = (s.v/100)*innerW;
+        GRAD_ID++;
+        const gid = 'mx'+GRAD_ID;
+        const fill = addLinearGradient(svg, gid, s.c1, s.c2, false);
+        const rect = svgEl('rect', {x, y, width:0, height:36, fill, rx: si===0?8:0});
+        rect.style.transition = `width .7s cubic-bezier(.16,1,.3,1) ${ri*120+si*80}ms`;
+        rect.addEventListener('mouseenter', e=>showTip(tip, container, e, `${s.n}: <b>${s.v}%</b>`));
+        rect.addEventListener('mousemove', e=>showTip(tip, container, e, `${s.n}: <b>${s.v}%</b>`));
+        rect.addEventListener('mouseleave', ()=>hideTip(tip));
+        svg.appendChild(rect);
+        RAF(()=>RAF(()=>rect.setAttribute('width', w)));
+        if(w>30){
+          const t = svgEl('text', {x:x+w/2, y:y+22, 'text-anchor':'middle', style:'font-size:11px; font-family:JetBrains Mono, monospace;', fill: si===2?C.text1:'#0A0C10'});
+          t.textContent = s.v+'%';
+          svg.appendChild(t);
+        }
+        x += w;
+      });
+    });
+    container.appendChild(svg);
+  })();
+}
+
+/* ================= INIT ================= */
+renderTab('overview');
+
+</script>
+</body>
+</html>
